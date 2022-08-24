@@ -11,7 +11,6 @@ import {NewPassword} from "./components/newPassword/NewPassword";
 import {TestPage} from "./components/testPage/TestPage";
 
 
-
 function App() {
     return (
         <HashRouter >
