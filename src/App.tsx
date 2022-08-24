@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Navbar} from "./components/navbar/Navbar";
+import { HashRouter, Route, Routes} from "react-router-dom";
+import {Login} from "./components/login/Login";
+import {Registration} from "./components/registration/Registration";
+import {Profile} from "./components/profile/Profile";
+import {ErrorPage} from "./components/errorPage/ErrorPage";
+import {RestorePassword} from "./components/restorePassword/RestorePassword";
+import {NewPassword} from "./components/newPassword/NewPassword";
+import {TestPage} from "./components/testPage/TestPage";
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <HashRouter >
+            <Navbar/>
+            <Routes>
+                <Route path={'/login'} element={<Login/>}/>
+                <Route path={'/registration'} element={<Registration/>}/>
+                <Route path={'/profile'} element={<Profile/>}/>
+                <Route path={'/restorepassword'} element={<RestorePassword/>}/>
+                <Route path={'/newpassword'} element={<NewPassword/>}/>
+                <Route path={'/testpage'} element={<TestPage/>}/>
+                <Route path={'/error'} element={<ErrorPage/>}/>
+            </Routes>
+        </HashRouter>
+    );
 }
 
 export default App;
