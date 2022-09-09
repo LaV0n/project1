@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {Navbar} from "./components/navbar/Navbar";
-import { HashRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import {Login} from "./components/login/Login";
 import {Registration} from "./components/registration/Registration";
 import {Profile} from "./components/profile/Profile";
@@ -12,8 +12,7 @@ import {TestPage} from "./components/testPage/TestPage";
 
 
 function App() {
-    return (
-        <HashRouter >
+    return (<>
             <Navbar/>
             <Routes>
                 <Route path={'/login'} element={<Login/>}/>
@@ -24,7 +23,7 @@ function App() {
                 <Route path={'/testpage'} element={<TestPage/>}/>
                 <Route path={'/error'} element={<ErrorPage/>}/>
             </Routes>
-        </HashRouter>
+    </>
     );
 }
 
