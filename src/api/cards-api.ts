@@ -6,10 +6,10 @@ const settings = {
 
     }
 }
-const instance = axios.create({
-    baseURL: '',
-    ...settings
+export const _instance = axios.create({
+    baseURL: 'http://localhost:7542/2.0/',
+    withCredentials: true
 })
-export const cardsAPI ={
+export const cardsAPI = {
 
 }
