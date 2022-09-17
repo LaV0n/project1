@@ -1,4 +1,4 @@
-import { ActionType } from "./store"
+import { ActionType } from "../../app/store"
 
 const newPasswordFirst = 'newPasswordReducer/FIRST_REDUCER'
 const newPasswordSecond = 'newPasswordReducer/SECOND_REDUCER'

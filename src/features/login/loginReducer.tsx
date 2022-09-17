@@ -1,4 +1,4 @@
-import { ActionType } from "./store"
+import { ActionType } from "../../app/store"
 
 const First = 'loginReducer/FIRST_REDUCER'
 const Second = 'loginReducer/SECOND_REDUCER'

@@ -1,4 +1,4 @@
-import { ActionType } from "./store"
+import { ActionType } from "../../app/store"
 
 const restoreFirst = 'restorePasswordReducer/THIRD_REDUCER'
 const restoreSecond = 'restorePasswordReducer/FOURTH_REDUCER'

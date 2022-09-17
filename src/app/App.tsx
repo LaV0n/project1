@@ -1,19 +1,18 @@
 import React from 'react';
 import './App.css';
-import {Navbar} from "./components/navbar/Navbar";
+import {Navbar} from "../features/navbar/Navbar";
 import {Route, Routes} from "react-router-dom";
-import {Login} from "./components/login/Login";
-import {Registration} from "./components/registration/Registration";
-import {Profile} from "./components/profile/Profile";
-import {ErrorPage} from "./components/errorPage/ErrorPage";
-import {RestorePassword} from "./components/restorePassword/RestorePassword";
-import {NewPassword} from "./components/newPassword/NewPassword";
-import {TestPage} from "./components/testPage/TestPage";
+import {Login} from "../features/login/Login";
+import {Registration} from "../features/registration/Registration";
+import {Profile} from "../features/profile/Profile";
+import {ErrorPage} from "../features/errorPage/ErrorPage";
+import {RestorePassword} from "../features/restorePassword/RestorePassword";
+import {NewPassword} from "../features/newPassword/NewPassword";
+import {TestPage} from "../features/testPage/TestPage";
 
 
 function App() {
     return (<>
-            <Navbar/>
             <Routes>
                 <Route path={'/login'} element={<Login/>}/>
                 <Route path={'/registration'} element={<Registration/>}/>
@@ -23,6 +22,7 @@ function App() {
                 <Route path={'/testpage'} element={<TestPage/>}/>
                 <Route path={'/error'} element={<ErrorPage/>}/>
             </Routes>
+            <Navbar/>
     </>
     );
 }

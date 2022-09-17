@@ -1,10 +1,10 @@
 import {applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux";
-import {firstReducerAC, loginReducer, secondReducerAC} from "./loginReducer";
+import {firstReducerAC, loginReducer, secondReducerAC} from "../features/login/loginReducer";
 import thunk from "redux-thunk";
-import {fourthReducerAC, registrationReducer, thirdReducerAC} from "./registrationReducer";
-import {restoreFirstAC, restorePasswordReducer, restoreSecondAC} from "./restorePasswordReducer";
-import {newPasswordFirstAC, newPasswordSecondAC} from "./newPasswordReducer";
-import {profileFirstAC, profileSecondAC} from "./profileReducer";
+import {fourthReducerAC, registrationReducer, thirdReducerAC} from "../features/registration/registrationReducer";
+import {restoreFirstAC, restorePasswordReducer, restoreSecondAC} from "../features/restorePassword/restorePasswordReducer";
+import {newPasswordFirstAC, newPasswordSecondAC} from "../features/newPassword/newPasswordReducer";
+import {profileFirstAC, profileSecondAC} from "../features/profile/profileReducer";
 
 export type ActionType =
     ReturnType<typeof firstReducerAC> |

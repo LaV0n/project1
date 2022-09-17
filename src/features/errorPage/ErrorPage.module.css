@@ -1,6 +1,6 @@
 .block {
     display: flex;
-    height: 100vh;
+    height: 50vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;
