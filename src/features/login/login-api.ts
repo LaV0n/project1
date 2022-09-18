@@ -1,4 +1,3 @@
-import axios from "axios"
 import { _instance } from "../../api/cards-api"
 
 export const loginAPI = {
