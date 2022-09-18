@@ -1,32 +1,32 @@
-import { ActionType } from "../../app/store"
-
-const profileFirst = 'profileReducer/FIRST_REDUCER'
-const profileSecond = 'profileReducer/SECOND_REDUCER'
-
-type ProfileStateType ={
-    first:string
-}
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Dispatch} from 'redux'
+import {cardsAPI} from "../../api/cards-apiP";
 
 const initialState = {
-    first:'hello word'
+    id:'',
+    name:'',
+    avatar:'',
+    isInitialized:false
 }
 
-export const profileReducer = (state:ProfileStateType = initialState, action: ActionType):ProfileStateType => {
-    switch (action.type) {
-        case profileFirst: {
-            return state
+const slice=createSlice({
+    name:'profile',
+    initialState:initialState,
+    reducers:{
+        setInitializedAC(state,action:PayloadAction<{isInitialized:boolean}>){
+            state.isInitialized=action.payload.isInitialized
         }
-        case profileSecond: {
-            return state
-        }
-        default:
-            return state
     }
+})
 
+export const profileReducer=slice.reducer;
+
+export const {setInitializedAC} = slice.actions
+
+export const initializeAppTC = () => (dispatch: Dispatch) => {
+    cardsAPI.me().then(res => {
+        if (res.data.email) {
+            dispatch(setInitializedAC({isInitialized:true}));
+        }
+    })
 }
-export const profileFirstAC = () => (
-     {type: profileFirst} as const
-)
-export const profileSecondAC = () => (
-     {type: profileSecond} as const
-)

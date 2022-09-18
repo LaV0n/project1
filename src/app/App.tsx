@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Navbar} from "../features/navbar/Navbar";
 import {Route, Routes} from "react-router-dom";
@@ -9,9 +9,17 @@ import {ErrorPage} from "../features/errorPage/ErrorPage";
 import {RestorePassword} from "../features/restorePassword/RestorePassword";
 import {NewPassword} from "../features/newPassword/NewPassword";
 import {TestPage} from "../features/testPage/TestPage";
+import {initializeAppTC} from "../features/profile/profileReducer";
+import {useDispatch} from "react-redux";
 
 
 function App() {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(initializeAppTC())
+    }, [])
+
     return (<>
             <Routes>
                 <Route path={'/login'} element={<Login/>}/>
@@ -23,7 +31,7 @@ function App() {
                 <Route path={'/error'} element={<ErrorPage/>}/>
             </Routes>
             <Navbar/>
-    </>
+        </>
     );
 }
 
