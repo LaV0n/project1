@@ -7,9 +7,10 @@ import {
     restoreSecondAC
 } from "../features/restorePassword/restorePasswordReducer";
 import {newPasswordFirstAC, newPasswordSecondAC} from "../features/newPassword/newPasswordReducer";
-import {profileReducer, setInitializedAC} from "../features/profile/profileReducer";
+import {profileReducer, setInitializedAC, setLoginAC} from "../features/profile/profileReducer";
 import {configureStore} from "@reduxjs/toolkit";
-import thunkMiddleware from 'redux-thunk'
+import thunkMiddleware, { ThunkDispatch } from 'redux-thunk'
+import { useDispatch } from "react-redux";
 
 export type ActionType =
     ReturnType<typeof firstReducerAC> |
@@ -20,7 +21,8 @@ export type ActionType =
     ReturnType<typeof restoreSecondAC> |
     ReturnType<typeof newPasswordFirstAC> |
     ReturnType<typeof newPasswordSecondAC> |
-    ReturnType<typeof setInitializedAC>
+    ReturnType<typeof setInitializedAC> |
+    ReturnType<typeof setLoginAC>
 
 const rootReducer = combineReducers({
     first: loginReducer,
@@ -35,6 +37,8 @@ export const store = configureStore({
 )
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
+export const useAppDispatch: () => AppDispatchType = useDispatch
+export type AppDispatchType = ThunkDispatch<AppRootStateType, unknown, ActionType>
 
 // @ts-ignore
 window.store = store;

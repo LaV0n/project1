@@ -10,17 +10,18 @@ import {RestorePassword} from "../features/restorePassword/RestorePassword";
 import {NewPassword} from "../features/newPassword/NewPassword";
 import {TestPage} from "../features/testPage/TestPage";
 import {initializeAppTC} from "../features/profile/profileReducer";
-import {useDispatch} from "react-redux";
+import {useAppDispatch} from "./store";
 
 
 function App() {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(initializeAppTC())
     }, [])
 
-    return (<>
+    return (
+        <>
             <Routes>
                 <Route path={'/login'} element={<Login/>}/>
                 <Route path={'/registration'} element={<Registration/>}/>

@@ -13,6 +13,14 @@ const instance = axios.create({
 export const cardsAPI ={
     me(){
         return instance.post('auth/me')
+    },
+    logout(){
+        return instance.delete('auth/me')
+    },
+    login(){
+        return instance.post('auth/login',{"email": "nya-admin@nya.nya" ,
+            "password": "1qazxcvBG" ,
+            "rememberMe": false })
     }
 
 }
