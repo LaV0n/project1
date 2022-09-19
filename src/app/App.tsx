@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import './App.css';
+import './App.scss';
 import {Navbar} from "../features/navbar/Navbar";
 import {Route, Routes} from "react-router-dom";
 import {Login} from "../features/login/Login";
@@ -22,6 +22,7 @@ function App() {
 
     return (
         <>
+
             <Routes>
                 <Route path={'/login'} element={<Login/>}/>
                 <Route path={'/registration'} element={<Registration/>}/>

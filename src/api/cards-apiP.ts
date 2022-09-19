@@ -21,6 +21,9 @@ export const cardsAPI ={
         return instance.post('auth/login',{"email": "nya-admin@nya.nya" ,
             "password": "1qazxcvBG" ,
             "rememberMe": false })
+    },
+    changeName(name:string){
+        return instance.put('auth/me',{"name": name,
+            "avatar": "https://www.placecage.com/c/140/200"})
     }
-
 }
