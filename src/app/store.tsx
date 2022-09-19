@@ -2,7 +2,7 @@ import {combineReducers} from "redux";
 import {firstReducerAC, loginReducer, secondReducerAC} from "../features/login/loginReducer";
 import {fourthReducerAC, registrationReducer, thirdReducerAC} from "../features/registration/registrationReducer";
 import {restorePasswordReducer, setSendStatusAC} from "../features/restorePassword/restorePasswordReducer";
-import { newPasswordReducer} from "../features/newPassword/newPasswordReducer";
+import {newPasswordReducer, setPasswordStatusAC} from "../features/newPassword/newPasswordReducer";
 import {
     getProfileDataAC,
     profileReducer,
@@ -23,7 +23,8 @@ export type ActionType =
     ReturnType<typeof setLoginAC> |
     ReturnType<typeof getProfileDataAC> |
     ReturnType<typeof setStatusAC> |
-    ReturnType<typeof setSendStatusAC>
+    ReturnType<typeof setSendStatusAC> |
+    ReturnType<typeof setPasswordStatusAC>
 
 
 const rootReducer = combineReducers({
