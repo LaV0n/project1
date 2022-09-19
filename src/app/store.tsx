@@ -1,7 +1,7 @@
 import {combineReducers} from "redux";
 import {firstReducerAC, loginReducer, secondReducerAC} from "../features/login/loginReducer";
 import {fourthReducerAC, registrationReducer, thirdReducerAC} from "../features/registration/registrationReducer";
-import {    restorePasswordReducer} from "../features/restorePassword/restorePasswordReducer";
+import {restorePasswordReducer, setSendStatusAC} from "../features/restorePassword/restorePasswordReducer";
 import { newPasswordReducer} from "../features/newPassword/newPasswordReducer";
 import {
     getProfileDataAC,
@@ -22,7 +22,8 @@ export type ActionType =
     ReturnType<typeof setInitializedAC> |
     ReturnType<typeof setLoginAC> |
     ReturnType<typeof getProfileDataAC> |
-    ReturnType<typeof setStatusAC>
+    ReturnType<typeof setStatusAC> |
+    ReturnType<typeof setSendStatusAC>
 
 
 const rootReducer = combineReducers({

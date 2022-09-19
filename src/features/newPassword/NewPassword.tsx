@@ -32,7 +32,7 @@ export const NewPassword = () => {
             />
             <Button onClick={onClickHandler}
                     variant='contained'
-            >Send Instructions</Button>
+            >Create new password</Button>
         </div>
     )
 }
