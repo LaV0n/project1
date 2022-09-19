@@ -1,32 +1,34 @@
-import { ActionType } from "../../app/store"
-
-const restoreFirst = 'restorePasswordReducer/THIRD_REDUCER'
-const restoreSecond = 'restorePasswordReducer/FOURTH_REDUCER'
-
-type RestorePasswordStateType ={
-    second:string
-}
+import { AppDispatchType} from "../../app/store"
+import {createSlice} from "@reduxjs/toolkit";
+import {cardsAPI} from "../../api/cards-apiP";
+import {setStatusAC} from "../profile/profileReducer";
+import { AxiosError } from "axios";
 
 const initialState = {
-    second:'bye'
+    email:''
 }
 
-export const restorePasswordReducer = (state:RestorePasswordStateType = initialState, action: ActionType):RestorePasswordStateType => {
-    switch (action.type) {
-        case restoreFirst: {
-            return state
-        }
-        case restoreSecond: {
-            return state
-        }
-        default:
-            return state
+const slice=createSlice({
+    name:'restorePassword',
+    initialState:initialState,
+    reducers:{
+
+    }
+})
+
+export const restorePasswordReducer = slice.reducer
+
+export const restorePasswordTC = (email:string) => async (dispatch:AppDispatchType)=>{
+    dispatch(setStatusAC({status:'pending'}))
+    try {
+        await cardsAPI.restorePassword(email)
+        dispatch(setStatusAC({status:'succeeded'}))
+        console.log('cool')
+    }
+    catch (err:any){
+        const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
+        alert(error)
+        dispatch(setStatusAC({status:'failed'}))
     }
 
 }
-export const restoreFirstAC = () => (
-     {type: restoreFirst} as const
-)
-export const restoreSecondAC = () => (
-    {type: restoreSecond} as const
-)

@@ -28,7 +28,7 @@ function App() {
                 <Route path={'/registration'} element={<Registration/>}/>
                 <Route path={'/profile'} element={<Profile/>}/>
                 <Route path={'/restorepassword'} element={<RestorePassword/>}/>
-                <Route path={'/newpassword'} element={<NewPassword/>}/>
+                <Route path={'/newpassword/:token'} element={<NewPassword/>}/>
                 <Route path={'/testpage'} element={<TestPage/>}/>
                 <Route path={'/error'} element={<ErrorPage/>}/>
             </Routes>

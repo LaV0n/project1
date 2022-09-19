@@ -11,7 +11,7 @@ export const Navbar = () => {
                <NavLink to="/profile" className={styles.link}>profile</NavLink>
                <NavLink to="/error" className={styles.link}>404</NavLink>
                <NavLink to="/restorepassword" className={styles.link}>restore password</NavLink>
-               <NavLink to="/newpassword" className={styles.link}>new password</NavLink>
+               <NavLink to="/newpassword/:token" className={styles.link}>new password</NavLink>
                <NavLink to="/testpage" className={styles.link}>test page</NavLink>
            </div>
         </nav>
