@@ -2,7 +2,7 @@ import logo from '../../assets/image/incubatorLogo.svg'
 import style from './header.module.scss'
 import { NavLink } from 'react-router-dom';
 import { appPath } from './../../common/path/appPath';
-import { AuthUser } from './../../components/AuthUser/AuthUser';
+import { LoginInfo } from '../../components/LoginInfo/LoginInfo';
 export const Header = () => {
    const isAuth = true
    return (
@@ -11,9 +11,9 @@ export const Header = () => {
             <img className={style.header__logo} src={logo} alt="incubator logo" />
          </NavLink>
          {
-            isAuth ? <AuthUser />
+            isAuth ? <LoginInfo />
                :
-               <NavLink className={style.header__link} to={appPath.LOGIN} onClick={(e) => e.preventDefault()}>
+               <NavLink className={style.header__link} to={appPath.LOGIN}>
                   <span>
                      Sign in
                   </span>
