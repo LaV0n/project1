@@ -42,43 +42,41 @@ export const LoginForm = () => {
    })
    return (
       <div className={style.login_form}>
-         <FormContainer>
-            <FormTitle title={'Sign in'} />
-            <form className={style.form} onSubmit={formik.handleSubmit}>
-               <FormEmail
-                  isError={formik.touched.email && !!formik.errors.email}
-                  errorText={formik.errors.email}
-                  onFocus={onEmailFocusHandler}
-                  fieldProps={formik.getFieldProps('email')}
-                  className={style.form__email}
-               />
-               <FormPassword
-                  isError={formik.touched.password && !!formik.errors.password}
-                  errorText={formik.errors.password}
-                  onFocus={onPasswordFocusHandler}
-                  fieldProps={formik.getFieldProps('password')}
-                  className={style.form__password}
-               />
-               <label className={style.form__remember} htmlFor="rememberMe">
-                  <Checkbox id="rememberMe" {...formik.getFieldProps('rememberMe')} />
-                  Remember me
-               </label>
-               <NavLink to={appPath.RESTOREPASSWORD} className={style.form__forgot}>
-                  Forgot Password?
-               </NavLink>
-               <FormFooter
-                  className={style.form__footer}
-                  onClick={formik.submitForm}
-                  buttonTitle="Sign In"
-                  linkTitle="Sign Up"
-                  pathTo={appPath.REGISTRATION}
-                  disabled={loginStatus === 'pending'}
-               >
-                  Don't have an account yet?
-               </FormFooter>
-            </form>
-            {loginStatus === 'pending' && <LoaderFullSize />}
-         </FormContainer>
+         <FormTitle title={'Sign in'} />
+         <form className={style.form} onSubmit={formik.handleSubmit}>
+            <FormEmail
+               isError={formik.touched.email && !!formik.errors.email}
+               errorText={formik.errors.email}
+               onFocus={onEmailFocusHandler}
+               fieldProps={formik.getFieldProps('email')}
+               className={style.form__email}
+            />
+            <FormPassword
+               isError={formik.touched.password && !!formik.errors.password}
+               errorText={formik.errors.password}
+               onFocus={onPasswordFocusHandler}
+               fieldProps={formik.getFieldProps('password')}
+               className={style.form__password}
+            />
+            <label className={style.form__remember} htmlFor="rememberMe">
+               <Checkbox id="rememberMe" {...formik.getFieldProps('rememberMe')} />
+               Remember me
+            </label>
+            <NavLink to={appPath.RESTOREPASSWORD} className={style.form__forgot}>
+               Forgot Password?
+            </NavLink>
+            <FormFooter
+               className={style.form__footer}
+               onClick={formik.submitForm}
+               buttonTitle="Sign In"
+               linkTitle="Sign Up"
+               pathTo={appPath.REGISTRATION}
+               disabled={loginStatus === 'pending'}
+            >
+               Don't have an account yet?
+            </FormFooter>
+         </form>
+         {loginStatus === 'pending' && <LoaderFullSize />}
       </div>
    )
 }
