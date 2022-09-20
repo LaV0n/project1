@@ -1,4 +1,4 @@
-import { AppDispatchType} from "../../app/store"
+import {AppDispatchType} from "../../app/store"
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {cardsAPI} from "../../api/cards-apiP";
 import {setStatusAC} from "../profile/profileReducer";

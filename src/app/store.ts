@@ -1,15 +1,14 @@
-import {applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux";
-import {firstReducerAC, loginReducer, secondReducerAC} from "../features/login/loginReducer";
-import thunk from "redux-thunk";
-import {fourthReducerAC, registrationReducer, thirdReducerAC} from "../features/registration/registrationReducer";
-import {restoreFirstAC, restorePasswordReducer, restoreSecondAC} from "../features/restorePassword/restorePasswordReducer";
-import {newPasswordFirstAC, newPasswordSecondAC} from "../features/newPassword/newPasswordReducer";
-import {profileFirstAC, profileSecondAC} from "../features/profile/profileReducer";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import {useSelector} from "react-redux";
+import {TypedUseSelectorHook} from "react-redux";
+import {useDispatch} from "react-redux";
+import {loginReducer} from "../features/login/loginReducer";
+import {newPasswordReducer, setPasswordStatusAC} from "../features/newPassword/newPasswordReducer";
+import {getProfileDataAC, profileReducer, setInitializedAC, setLoginAC, setStatusAC} from "../features/profile/profileReducer";
+import {registrationReducer} from "../features/registration/registrationReducer";
+import {restorePasswordReducer, setSendStatusAC} from "../features/restorePassword/restorePasswordReducer";
 
 export type ActionType =
-
-    ReturnType<typeof registrationReducerAC> |
-    ReturnType<typeof fourthReducerAC> |
     ReturnType<typeof setInitializedAC> |
     ReturnType<typeof setLoginAC> |
     ReturnType<typeof getProfileDataAC> |
@@ -17,20 +16,18 @@ export type ActionType =
     ReturnType<typeof setSendStatusAC> |
     ReturnType<typeof setPasswordStatusAC>
 
-
-const rootReducer= combineReducers({
-    login:loginReducer,
-    second:registrationReducer,
-    restore:restorePasswordReducer,
+const rootReducer = combineReducers({
+    login: loginReducer,
+    second: registrationReducer,
     restorePassword: restorePasswordReducer,
     profile: profileReducer,
-    newPassword:newPasswordReducer
+    newPassword: newPasswordReducer
 })
 // export const store =createStore(rootReducer,applyMiddleware(thunk))
 export const store = configureStore({reducer: rootReducer})
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
-export type AppDispatch = typeof store.dispatch
+export type AppDispatchType = typeof store.dispatch
 
 
 export const useAppDispatch = () => useDispatch<typeof store.dispatch>()

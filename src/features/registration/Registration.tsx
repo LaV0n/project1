@@ -1,9 +1,5 @@
-import React, {useEffect, useState} from "react";
-import SuperInputText from "../../components/c1-SuperInputText/SuperInputText";
-import SuperButton from "../../components/c2-SuperButton/SuperButton";
-import SuperCheckbox from "../../components/c3-SuperCheckbox/SuperCheckbox";
+import React from "react";
 import style from "./Registration.module.css"
-import {useDispatch} from "react-redux";
 import {registrTC} from "./registrationReducer";
 import {useAppDispatch} from "../../app/store";
 import {FormContainer} from "../../components/Form/FormContainer/FormContainer";
@@ -15,26 +11,20 @@ import {useFormik} from "formik";
 
 export const Registration = () => {
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-
-    const formik = useFormik({
+      const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
             rememberMe: false
         },
         onSubmit: values => {
-            alert(JSON.stringify(values));
+            dispatch(registrTC(values.email,values.password));
         },
     });
 
 
     const dispatch = useAppDispatch()
 
-    const onSubmit = () => {
-       dispatch(registrTC(email,password))
-    }
 
     return (
         <div className={style.container}>
@@ -54,20 +44,14 @@ export const Registration = () => {
                     <FormFooter buttonTitle='Sigh up'
                                 linkTitle='Sign in'
                                 pathTo='/login'
-                                onClick={onSubmit}
+                                onClick={formik.handleSubmit}
                     >Already have an account</FormFooter>
 
-                    {/*<input placeholder='email' onChange={(e) => setEmail(e.currentTarget.value)}/>*/}
-                    {/*<input type="password" onChange={(e) => setPassword(e.currentTarget.value)}/>*/}
-                    {/*<button onClick={onSubmit}>Reg</button>*/}
 
                 </form>
             </FormContainer>
 
-            {/*<SuperInputText />*/}
-            {/*<SuperInputText />*/}
-            {/*<SuperCheckbox />*/}
-            {/*<SuperButton />*/}
+
         </div>
     )
 }

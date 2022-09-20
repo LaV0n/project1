@@ -1,8 +1,8 @@
+import { Dispatch } from "redux"
+import { cardsAPI } from "../../api/cards-api"
 import { ActionType } from "../../app/store"
-import {cardsAPI} from "../../api/cards-api";
-import {Dispatch} from "redux";
 
-const Registration = 'registrationReducer/THIRD_REDUCER'
+const Third = 'registrationReducer/THIRD_REDUCER'
 const Fourth = 'registrationReducer/FOURTH_REDUCER'
 
 type RegistrationStateType ={
@@ -15,7 +15,7 @@ const initialState = {
 
 export const registrationReducer = (state:RegistrationStateType = initialState, action: ActionType):RegistrationStateType => {
     switch (action.type) {
-        case Registration: {
+        case Third: {
             return {...state}
         }
         case Fourth: {
@@ -26,11 +26,8 @@ export const registrationReducer = (state:RegistrationStateType = initialState, 
     }
 
 }
-
-export type RegistrationActionType = ReturnType<typeof registrationReducerAC>
-
-export const registrationReducerAC = () => (
-     {type: Registration} as const
+export const thirdReducerAC = () => (
+     {type: Third} as const
 )
 export const fourthReducerAC = () => (
     {type: Fourth} as const
@@ -39,6 +36,6 @@ export const fourthReducerAC = () => (
 export const registrTC = (email:string, password: string) => (dispatch: Dispatch) => {
     cardsAPI.registration({email, password})
         .then((res) => {
-            res.data
+          return  res.data
         })
 }

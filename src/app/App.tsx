@@ -11,6 +11,7 @@ import {NewPassword} from "../features/newPassword/NewPassword";
 import {TestPage} from "../features/testPage/TestPage";
 import {initializeAppTC} from "../features/profile/profileReducer";
 import {useAppDispatch} from "./store";
+import {Header} from "../features/header/Header";
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
 
     return (
         <>
-
+            <Header/>
             <Routes>
                 <Route path={'/login'} element={<Login/>}/>
                 <Route path={'/registration'} element={<Registration/>}/>

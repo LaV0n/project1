@@ -12,4 +12,3 @@ export const cardsAPI = {
         return _instance.post('/auth/register', data)
     }
 }
-
