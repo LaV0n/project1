@@ -1,16 +1,19 @@
 {
   "files": {
-    "main.css": "/project1/static/css/main.0ebb97bd.css",
-    "main.js": "/project1/static/js/main.fcb99d96.js",
+    "main.css": "/project1/static/css/main.3c1a66e5.css",
+    "main.js": "/project1/static/js/main.4d156889.js",
     "static/js/787.142da1d4.chunk.js": "/project1/static/js/787.142da1d4.chunk.js",
     "static/media/419.gif": "/project1/static/media/419.25353442322ca9a66207.gif",
+    "static/media/Montserrat-VariableFont_wght.ttf": "/project1/static/media/Montserrat-VariableFont_wght.3faa3eef13649db02044.ttf",
+    "static/media/ava.png": "/project1/static/media/ava.d7ee22f9718e06fc2500.png",
+    "static/media/incubatorLogo.svg": "/project1/static/media/incubatorLogo.f5da7f8bedc2bfe87aba97c3ef658738.svg",
     "index.html": "/project1/index.html",
-    "main.0ebb97bd.css.map": "/project1/static/css/main.0ebb97bd.css.map",
-    "main.fcb99d96.js.map": "/project1/static/js/main.fcb99d96.js.map",
+    "main.3c1a66e5.css.map": "/project1/static/css/main.3c1a66e5.css.map",
+    "main.4d156889.js.map": "/project1/static/js/main.4d156889.js.map",
     "787.142da1d4.chunk.js.map": "/project1/static/js/787.142da1d4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0ebb97bd.css",
-    "static/js/main.fcb99d96.js"
+    "static/css/main.3c1a66e5.css",
+    "static/js/main.4d156889.js"
   ]
 }
