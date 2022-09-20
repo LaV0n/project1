@@ -1,17 +1,15 @@
 import axios from 'axios'
 
-const settings = {
-    withCredentials: true,
-    headers: {
-
-    }
-}
-const instance = axios.create({
+export const _instance = axios.create({
     baseURL: 'http://localhost:7542/2.0/',
-    ...settings
+    withCredentials: true
 })
-export const cardsAPI ={
-    registration(email: string, password: string){
-        return instance.post('/auth/register',{email,password})
+
+type RegistrationType= {email: string, password: string}
+
+export const cardsAPI = {
+    registration(data:RegistrationType) {
+        return _instance.post('/auth/register', data)
     }
 }
+

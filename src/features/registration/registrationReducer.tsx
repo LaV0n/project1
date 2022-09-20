@@ -37,7 +37,7 @@ export const fourthReducerAC = () => (
 )
 
 export const registrTC = (email:string, password: string) => (dispatch: Dispatch) => {
-    cardsAPI.registration(email,password)
+    cardsAPI.registration({email, password})
         .then((res) => {
             res.data
         })
