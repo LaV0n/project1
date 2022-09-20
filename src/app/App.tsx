@@ -1,40 +1,47 @@
-import React, {useEffect} from 'react';
+import { useEffect } from 'react';
 import './App.scss';
-import {Navbar} from "../features/navbar/Navbar";
-import {Route, Routes} from "react-router-dom";
-import {Login} from "../features/login/Login";
-import {Registration} from "../features/registration/Registration";
-import {Profile} from "../features/profile/Profile";
-import {ErrorPage} from "../features/errorPage/ErrorPage";
-import {RestorePassword} from "../features/restorePassword/RestorePassword";
-import {NewPassword} from "../features/newPassword/NewPassword";
-import {TestPage} from "../features/testPage/TestPage";
-import {initializeAppTC} from "../features/profile/profileReducer";
-import {useAppDispatch} from "./store";
-import {Header} from "../features/header/Header";
+import { Navbar } from "../features/navbar/Navbar";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { Login } from "../features/login/Login";
+import { Registration } from "../features/registration/Registration";
+import { Profile } from "../features/profile/Profile";
+import { ErrorPage } from "../features/errorPage/ErrorPage";
+import { RestorePassword } from "../features/restorePassword/RestorePassword";
+import { TestPage } from "../features/testPage/TestPage";
+import { } from "../features/profile/profileReducer";
+import { useAppDispatch, useAppSelector } from "./store";
+import { Header } from "../features/header/Header";
+import { appPath } from '../common/path/appPath';
+import { initializeApp } from './appReducer';
+import { NewPassword } from '../features/newPassword/NewPassword';
 
 
 function App() {
     const dispatch = useAppDispatch()
-
+    const isInitialized = useAppSelector(state => state.app.isInitialized)
     useEffect(() => {
-        dispatch(initializeAppTC())
-    }, [])
-
+        dispatch(initializeApp())
+    }, [dispatch])
+    if (!isInitialized) { return <></> }
     return (
-        <>
-            <Header/>
-            <Routes>
-                <Route path={'/login'} element={<Login/>}/>
-                <Route path={'/registration'} element={<Registration/>}/>
-                <Route path={'/profile'} element={<Profile/>}/>
-                <Route path={'/restorepassword'} element={<RestorePassword/>}/>
-                <Route path={'/newpassword/:token'} element={<NewPassword/>}/>
-                <Route path={'/testpage'} element={<TestPage/>}/>
-                <Route path={'/error'} element={<ErrorPage/>}/>
-            </Routes>
-            <Navbar/>
-        </>
+        <div className='app'>
+            <Header />
+            <div className='container'>
+                <Routes>
+                    <Route path={appPath.LOGIN} element={<Login />} />
+                    <Route path={appPath.REGISTRATION} element={<Registration />} />
+                    <Route path={appPath.PROFILE} element={<Profile />} />
+                    <Route path={appPath.RESTOREPASSWORD} element={<RestorePassword />} />
+                    <Route path={appPath.NEWPASSWORD} element={<NewPassword />} />
+                    <Route path={appPath.ERRORPAGE} element={<ErrorPage />} />
+
+                    <Route path={'/'} element={<Navigate to={appPath.PROFILE} />} />
+                    <Route path={'*'} element={<Navigate to={appPath.ERRORPAGE} />} />
+                    <Route path={'/testpage'} element={<TestPage />} />
+                </Routes>
+                <Navbar />
+            </div>
+        </div>
     );
 }
 

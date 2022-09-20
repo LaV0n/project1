@@ -1,17 +1,16 @@
-import { FormContainer } from "../FormContainer/FormContainer"
-import { FormTitle } from "../FormTitle/FormTitle"
-import { FormEmail } from './../FormEmail/FormEmail';
-import { FormPassword } from './../FormPassword/FormPassword';
+import { FormTitle } from "../../../components/Form/FormTitle/FormTitle"
+import { FormEmail } from '../../../components/Form/FormEmail/FormEmail';
+import { FormPassword } from '../../../components/Form/FormPassword/FormPassword';
 import { NavLink } from 'react-router-dom';
-import { FormFooter } from './../FormFooter/FormFooter';
+import { FormFooter } from '../../../components/Form/FormFooter/FormFooter';
 import { useAppDispatch } from "../../../app/store";
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from './../../../app/store';
+import { useAppSelector } from '../../../app/store';
 import { useFormik } from 'formik';
-import { validator } from './../../../common/utils/validator';
-import { setLogin } from './../../../features/login/loginReducer';
-import { appPath } from './../../../common/path/appPath';
-import { LoaderFullSize } from './../../LoaderFullSize/LoaderFullSize';
+import { validator } from '../../../common/utils/validator';
+import { setLogin } from '../loginReducer';
+import { appPath } from '../../../common/path/appPath';
+import { LoaderFullSize } from '../../../components/LoaderFullSize/LoaderFullSize';
 import { Checkbox } from '@mui/material';
 import style from './loginForm.module.scss'
 export const LoginForm = () => {
