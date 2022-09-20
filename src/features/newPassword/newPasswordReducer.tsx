@@ -1,32 +1,35 @@
-import { ActionType } from "../../app/store"
-
-const newPasswordFirst = 'newPasswordReducer/FIRST_REDUCER'
-const newPasswordSecond = 'newPasswordReducer/SECOND_REDUCER'
-
-type NewPasswordStateType ={
-    second:string
-}
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AppDispatchType} from "../../app/store";
+import {setStatusAC} from "../profile/profileReducer";
+import {cardsAPI} from "../../api/cards-apiP";
+import {AxiosError} from "axios";
 
 const initialState = {
-    second:'bye'
+    passwordStatus: false
 }
 
-export const newPasswordReducer = (state:NewPasswordStateType = initialState, action: ActionType):NewPasswordStateType => {
-    switch (action.type) {
-        case newPasswordFirst: {
-            return state
+const slice = createSlice({
+    name: 'newPassword',
+    initialState: initialState,
+    reducers: {
+        setPasswordStatusAC(state, action: PayloadAction<{ passwordStatus: boolean }>) {
+            state.passwordStatus = action.payload.passwordStatus
         }
-        case newPasswordSecond: {
-            return state
-        }
-        default:
-            return state
     }
+})
 
+export const newPasswordReducer = slice.reducer
+export const {setPasswordStatusAC}=slice.actions
+
+export const newPasswordTC = (password: string, token: string) => async (dispatch: AppDispatchType) => {
+    dispatch(setStatusAC({status: 'pending'}))
+    try {
+        await cardsAPI.newPassword(password, token)
+        dispatch(setStatusAC({status: 'succeeded'}))
+        dispatch(setPasswordStatusAC({passwordStatus:true}))
+    } catch (err: any) {
+        const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
+        alert(error)
+        dispatch(setStatusAC({status: 'failed'}))
+    }
 }
-export const newPasswordFirstAC = () => (
-     {type: newPasswordFirst} as const
-)
-export const newPasswordSecondAC = () => (
-    {type: newPasswordSecond} as const
-)

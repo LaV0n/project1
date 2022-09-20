@@ -1,27 +1,30 @@
 import {applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux";
-import { loginReducer } from "../features/login/loginReducer";
-import {fourthReducerAC, registrationReducer, registrationReducerAC} from "../features/registration/registrationReducer";
+import {firstReducerAC, loginReducer, secondReducerAC} from "../features/login/loginReducer";
+import thunk from "redux-thunk";
+import {fourthReducerAC, registrationReducer, thirdReducerAC} from "../features/registration/registrationReducer";
 import {restoreFirstAC, restorePasswordReducer, restoreSecondAC} from "../features/restorePassword/restorePasswordReducer";
-import {profileFirstAC, profileSecondAC} from "../features/profile/profileReducer";
-import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {configureStore} from "@reduxjs/toolkit";
 import {newPasswordFirstAC, newPasswordSecondAC} from "../features/newPassword/newPasswordReducer";
+import {profileFirstAC, profileSecondAC} from "../features/profile/profileReducer";
 
 export type ActionType =
 
     ReturnType<typeof registrationReducerAC> |
     ReturnType<typeof fourthReducerAC> |
-    ReturnType<typeof restoreFirstAC> |
-    ReturnType<typeof restoreSecondAC> |
-    ReturnType<typeof newPasswordFirstAC> |
-    ReturnType<typeof newPasswordSecondAC> |
-    ReturnType<typeof profileFirstAC> |
-    ReturnType<typeof profileSecondAC>
+    ReturnType<typeof setInitializedAC> |
+    ReturnType<typeof setLoginAC> |
+    ReturnType<typeof getProfileDataAC> |
+    ReturnType<typeof setStatusAC> |
+    ReturnType<typeof setSendStatusAC> |
+    ReturnType<typeof setPasswordStatusAC>
+
 
 const rootReducer= combineReducers({
     login:loginReducer,
     second:registrationReducer,
-    restore:restorePasswordReducer
+    restore:restorePasswordReducer,
+    restorePassword: restorePasswordReducer,
+    profile: profileReducer,
+    newPassword:newPasswordReducer
 })
 // export const store =createStore(rootReducer,applyMiddleware(thunk))
 export const store = configureStore({reducer: rootReducer})
