@@ -5,42 +5,4 @@
    justify-content: center;
    align-items: center;
    width: 100%;
-   .form {
-      display: flex;
-      flex-direction: column;
-      &__email {
-         margin-bottom: 11px;
-      }
-      &__password {
-         margin-bottom: 9px;
-      }
-      &__remember {
-         display: flex;
-         align-items: center;
-         max-width: fit-content;
-         margin-bottom: 29px;
-         font-weight: 500;
-         font-size: 14px;
-         line-height: 17px;
-         text-align: center;
-         color: #000000;
-         span {
-            padding-left: 0;
-         }
-         svg {
-            width: 18px;
-            height: 18px;
-            margin-right: 3px;
-         }
-      }
-      &__forgot {
-         display: inline-block;
-         margin: 0 0 29px auto;
-         font-weight: 500;
-         font-size: 14px;
-         line-height: 17px;
-         text-align: center;
-         color: #000000;
-      }
-   }
 }
