@@ -1,12 +1,15 @@
 .container {
-  margin-top: 70px;
+  background: #f9f9fa;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
 
   .block {
     width: 413px;
-    height: 360px;
-    box-shadow: 0 0 20px -9px black;
+    height: 100%;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,6 +24,7 @@
     .avatarBlock {
       width: 95px;
       height: 95px;
+      margin-top: 30px;
 
       .avatar {
         width: 100%;
@@ -28,11 +32,15 @@
         border-radius: 47px;
       }
 
-      .photo {
+      .photoIcon {
         position: relative;
         bottom: 36px;
         left: 63px;
         z-index: 2;
+        cursor: pointer;
+        &:hover{
+          filter: invert(100%);
+        }
       }
     }
 
@@ -49,12 +57,14 @@
       line-height: 24px;
       color: rgba(0, 0, 0, 0.7);
     }
+
     .button {
       margin-top: 41px;
+      margin-bottom: 36px;
       border-radius: 30px;
-      box-shadow: 0 0 20px -9px black;
-     padding-right:15px ;
-     padding-left:15px ;
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
+      padding-right: 20px;
+      padding-left: 20px;
     }
   }
 }

@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import edit from "../../assets/icons/Edit.png";
 import {Button, TextField} from "@mui/material";
+import styles from './EditableSpan.module.scss'
 
 type EditableSpanPropsType = {
     value: string
@@ -24,19 +25,22 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
     }
 
     return editMode
-        ? <div><TextField value={title}
+        ? <div className={styles.inputField}>
+            <TextField value={title}
                      onChange={changeTitle}
                      autoFocus
                      label="Nickname"
                      variant="standard"
+                          className={styles.input}
                     />
             <Button variant='contained'
+                    className={styles.saveButton}
                     onClick={activateViewMode}
                     size='small'
             >SAVE</Button>
         </div>
         : <span>{props.value}<img src={edit}
-                                  style={{marginLeft:'15px',marginBottom:'-10px',cursor:'pointer'}}
+                                  className={styles.penImg}
                                   alt={'0'}
                                   onClick={activateEditMode}/></span>
 });

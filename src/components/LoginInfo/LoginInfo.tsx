@@ -1,10 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import { appPath } from '../../common/path/appPath';
 import style from './loginInfo.module.scss'
+import avatar from './../../assets/image/ava.png';
+import {useAppSelector} from "../../app/store";
+
 export const LoginInfo = () => {
    const userAvatar = false
-   const userName = 'Dream Team'
-   const defaultAvatar = "https://static.vecteezy.com/system/resources/thumbnails/008/215/293/small/funny-funky-monkey-line-pop-art-logo-colorful-design-with-dark-background-abstract-illustration-isolated-black-background-for-t-shirt-poster-clothing-merch-apparel-badge-design-vector.jpg"
+   const userName = useAppSelector(state => state.auth.data.name)
+   const defaultAvatar = avatar;
    return (
       <div className={style.login_info}>
          <NavLink className={style.login_info__nickname} to={appPath.PROFILE}>
