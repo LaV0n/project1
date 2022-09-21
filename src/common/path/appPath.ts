@@ -1,4 +1,5 @@
 export const appPath = {
+   MAIN: '/project1',
    LOGIN: '/login',
    PROFILE: '/profile',
    REGISTRATION: '/registration',

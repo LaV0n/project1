@@ -35,6 +35,7 @@ function App() {
                     <Route path={appPath.NEWPASSWORD} element={<NewPassword />} />
                     <Route path={appPath.ERRORPAGE} element={<ErrorPage />} />
 
+                    <Route path={appPath.MAIN} element={<Profile />} />
                     <Route path={'/'} element={<Navigate to={appPath.PROFILE} />} />
                     <Route path={'*'} element={<Navigate to={appPath.ERRORPAGE} />} />
                     <Route path={'/testpage'} element={<TestPage />} />
