@@ -1,5 +1,5 @@
 import style from "./Registration.module.scss"
-import { registrTC, setIsRegAC } from "./registrationReducer";
+import { registrTC, setIsRegistrationAC, setNotice } from "./registrationReducer";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import { FormTitle } from "../../components/Form/FormTitle/FormTitle";
 import { FormFooter } from "../../components/Form/FormFooter/FormFooter";
@@ -8,24 +8,48 @@ import { FormPassword } from "../../components/Form/FormPassword/FormPassword";
 import { useFormik } from "formik";
 import { appPath } from "../../common/path/appPath";
 import { Navigate } from 'react-router-dom'
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { validator } from "../../common/utils/validator";
+import { LoaderFullSize } from "../../components/LoaderFullSize/LoaderFullSize";
+import { CustomizedSnackbars } from "../../components/CustomizedSnackbars/CustomizedSnackbars";
 
 export const Registration = () => {
-
    const dispatch = useAppDispatch()
-   const reg = useAppSelector(state => state.registration.isReg)
+   const { isRegistration } = useAppSelector(state => state.registration)
+   const { notice } = useAppSelector(state => state.registration)
+   const registrationStatus = useAppSelector(state => state.registration.status)
    useEffect(() => {
       return () => {
-         dispatch(setIsRegAC(false))
+         dispatch(setIsRegistrationAC(false))
       }
    }, [dispatch])
-
+   const onEmailFocusHandler = () => {
+      formik.setTouched({
+         email: false,
+         password: formik.touched.password && !!formik.errors.password,
+         confirmPassword: formik.touched.confirmPassword && !!formik.errors.confirmPassword
+      })
+   }
+   const onPasswordFocusHandler = () => {
+      formik.setTouched({
+         password: false,
+         email: formik.touched.email && !!formik.errors.email,
+         confirmPassword: formik.touched.confirmPassword && !!formik.errors.confirmPassword
+      })
+   }
+   const onConfirmPassFocusHandler = () => {
+      formik.setTouched({
+         confirmPassword: false,
+         password: formik.touched.password && !!formik.errors.password,
+         email: formik.touched.email && !!formik.errors.email
+      })
+   }
+   const onCloseSnackbar = () => { dispatch(setNotice('')) }
    const formik = useFormik({
       initialValues: {
          email: '',
          password: '',
-         rememberMe: false
+         confirmPassword: ''
       },
       validate: values => {
          return validator(values)
@@ -34,18 +58,12 @@ export const Registration = () => {
          dispatch(registrTC(values.email, values.password));
       },
    });
-   const onEmailFocusHandler = () => {
-      formik.setTouched({ email: false, password: formik.touched.password && !!formik.errors.password })
-   }
-   const onPasswordFocusHandler = () => {
-      formik.setTouched({ password: false, email: formik.touched.email && !!formik.errors.email })
-   }
-   if (reg) {
+   if (isRegistration) {
       return <Navigate to={appPath.LOGIN} />
    }
    return (
       <div className={style.registration}>
-         <div className={style.login_form}>
+         <div className={style.registration_form}>
             <FormTitle title='Sign up' />
             <form className={style.form} onSubmit={formik.handleSubmit}>
                <FormEmail
@@ -62,18 +80,28 @@ export const Registration = () => {
                   fieldProps={formik.getFieldProps('password')}
                   className={style.form__password}
                />
+               <FormPassword
+                  isError={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
+                  errorText={formik.errors.confirmPassword}
+                  onFocus={onConfirmPassFocusHandler}
+                  fieldProps={formik.getFieldProps('confirmPassword')}
+                  className={style.form__password}
+                  label={'Confirm password'}
+               />
                <FormFooter
                   className={style.form__footer}
                   onClick={formik.submitForm}
                   buttonTitle="Sign Up"
                   linkTitle="Sign In"
                   pathTo={appPath.REGISTRATION}
-
+                  disabled={registrationStatus === 'pending'}
                >
                   Already have an account
                </FormFooter>
             </form>
+            {registrationStatus === 'pending' && <LoaderFullSize />}
          </div>
+         <CustomizedSnackbars message={notice} onClose={onCloseSnackbar} isError={registrationStatus === 'failed'} isOpen={!!notice} />
       </div>
    )
 }
