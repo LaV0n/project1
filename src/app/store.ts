@@ -5,10 +5,11 @@ import {useDispatch} from "react-redux";
 import {loginReducer} from "../features/login/loginReducer";
 import {newPasswordReducer, setPasswordStatusAC} from "../features/newPassword/newPasswordReducer";
 import {getProfileDataAC, profileReducer, setInitializedAC, setLoginAC, setStatusAC} from "../features/profile/profileReducer";
-import {registrationReducer} from "../features/registration/registrationReducer";
+import {registrationReducer, setIsRegAC} from "../features/registration/registrationReducer";
 import {restorePasswordReducer, setSendStatusAC} from "../features/restorePassword/restorePasswordReducer";
 
 export type ActionType =
+    ReturnType<typeof setIsRegAC> |
     ReturnType<typeof setInitializedAC> |
     ReturnType<typeof setLoginAC> |
     ReturnType<typeof getProfileDataAC> |
@@ -18,7 +19,7 @@ export type ActionType =
 
 const rootReducer = combineReducers({
     login: loginReducer,
-    second: registrationReducer,
+    registration: registrationReducer,
     restorePassword: restorePasswordReducer,
     profile: profileReducer,
     newPassword: newPasswordReducer
