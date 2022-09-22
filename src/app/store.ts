@@ -11,6 +11,10 @@ import { authReducer } from "./authReducer";
 import { appReducer } from './appReducer';
 
 export type ActionType =
+    ReturnType<typeof setIsRegAC> |
+    ReturnType<typeof setInitializedAC> |
+    ReturnType<typeof setLoginAC> |
+    ReturnType<typeof getProfileDataAC> |
     ReturnType<typeof setStatusAC> |
     ReturnType<typeof setSendStatusAC> |
     ReturnType<typeof setPasswordStatusAC>

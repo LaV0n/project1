@@ -2,40 +2,40 @@ import { Dispatch } from "redux"
 import { authAPI } from "../../api/auth-api"
 import { ActionType } from "../../app/store"
 
-const Third = 'registrationReducer/THIRD_REDUCER'
+const SET_IS_REG = 'SET-IS-REG'
 const Fourth = 'registrationReducer/FOURTH_REDUCER'
 
 type RegistrationStateType = {
-   second: string
+   isReg: boolean
 }
 
 const initialState = {
-   second: 'bye'
+   isReg: false
 }
 
-export const registrationReducer = (state: RegistrationStateType = initialState, action: ActionType): RegistrationStateType => {
+export const registrationReducer = (state: RegistrationStateType = initialState, action: ReturnType<typeof setIsRegAC>): RegistrationStateType => {
    switch (action.type) {
-      case Third: {
-         return { ...state }
+      case SET_IS_REG: {
+         return { ...state, isReg: action.isReg }
       }
-      case Fourth: {
-         return state
-      }
+
       default:
          return state
    }
 
 }
-export const thirdReducerAC = () => (
-   { type: Third } as const
+export const setIsRegAC = (isReg: boolean) => (
+   { type: 'SET-IS-REG', isReg } as const
 )
 export const fourthReducerAC = () => (
    { type: Fourth } as const
 )
 
 export const registrTC = (email: string, password: string) => (dispatch: Dispatch) => {
-   authAPI.registration({ email, password })
+   cardsAPI.registration({ email, password })
       .then((res) => {
+         dispatch(setIsRegAC(true))
          return res.data
+
       })
 }
