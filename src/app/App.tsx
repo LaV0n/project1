@@ -14,8 +14,7 @@ import { Header } from "../features/header/Header";
 import { appPath } from '../common/path/appPath';
 import { initializeApp } from './appReducer';
 import { NewPassword } from '../features/newPassword/NewPassword';
-
-
+import { Packs } from '../features/packs/Packs';
 function App() {
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector(state => state.app.isInitialized)
@@ -34,8 +33,8 @@ function App() {
                     <Route path={appPath.RESTOREPASSWORD} element={<RestorePassword />} />
                     <Route path={appPath.NEWPASSWORD} element={<NewPassword />} />
                     <Route path={appPath.ERRORPAGE} element={<ErrorPage />} />
-
                     <Route path={appPath.MAIN} element={<Profile />} />
+                    <Route path={appPath.PACKS} element={<Packs />} />
                     <Route path={'/'} element={<Navigate to={appPath.PROFILE} />} />
                     <Route path={'*'} element={<Navigate to={appPath.ERRORPAGE} />} />
                     <Route path={'/testpage'} element={<TestPage />} />
