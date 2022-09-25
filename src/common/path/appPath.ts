@@ -5,5 +5,6 @@ export const appPath = {
    REGISTRATION: '/registration',
    RESTOREPASSWORD: '/restorepassword',
    NEWPASSWORD: '/newpassword/:token',
-   ERRORPAGE: '/ErrorPage'
+   ERRORPAGE: '/ErrorPage',
+   CARDS:'/cards'
 }

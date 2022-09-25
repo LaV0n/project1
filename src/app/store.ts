@@ -9,6 +9,7 @@ import { registrationReducer } from "../features/registration/registrationReduce
 import { restorePasswordReducer } from "../features/restorePassword/restorePasswordReducer";
 import { authReducer } from "./authReducer";
 import { appReducer } from './appReducer';
+import {cardsReducer} from "../features/cards/cardsReducer";
 
 const rootReducer = combineReducers({
     app: appReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     registration: registrationReducer,
     restorePassword: restorePasswordReducer,
     profile: profileReducer,
-    newPassword: newPasswordReducer
+    newPassword: newPasswordReducer,
+    cards:cardsReducer
 })
 
 export const store = configureStore({ reducer: rootReducer })
