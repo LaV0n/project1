@@ -1,46 +1,35 @@
 import { PacksTable } from "./PacksTable/PacksTable"
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch } from "../../app/store";
-import { addNewPack, getPacks } from "./packsReducer";
+import { getPacks, setNotice } from "./packsReducer";
 import { useAppSelector } from './../../app/store';
 import { CustomizedSnackbars } from "../../components/CustomizedSnackbars/CustomizedSnackbars";
 import style from './packs.module.scss'
-import { Button, TextField } from "@mui/material";
+import { LoaderFullSize } from "../../components/LoaderFullSize/LoaderFullSize";
+import { SwitchShowPacks } from "./SwitchShowPacks/SwitchShowPacks";
+import { PacksFilterCount } from "./PacksCountFilter/PacksCountFilter";
+import { AddNewPack } from "./AddNewPack/AddNewPack";
+import { SearchPacks } from "./SearchPacks/SearchPacks";
 export const Packs = () => {
    const dispatch = useAppDispatch()
    const packsState = useAppSelector(state => state.packs)
+   const onCloseSnackbar = () => { dispatch(setNotice('')) }
    useEffect(() => {
       dispatch(getPacks())
-   }, [])
-   if (!packsState.isInitialized) {
-      return <></>
-   }
+   }, [dispatch, packsState.data.page, packsState.data.pageCount, packsState.params])
    return (
       <div className={style.packs}>
-         <NewPack />
-         <PacksTable packs={packsState.data.cardPacks} />
-         <CustomizedSnackbars message="" isOpen={true} isError={false} onClose={() => { }} />
-      </div>
-   )
-}
-
-const NewPack = () => {
-   const dispatch = useAppDispatch()
-   const [isOpen, setOpen] = useState(false)
-   const [value, setValue] = useState('')
-   const addNewPackHandler = () => {
-      dispatch(addNewPack({ name: value }))
-   }
-   return (
-      <div>
-         {
-            !isOpen ? <Button onClick={() => { setOpen(open => !open) }}>Add new pack</Button> :
-               <div>
-                  <Button onClick={() => { setOpen(false) }}>X</Button>
-                  <TextField value={value} onChange={(e) => { setValue(e.currentTarget.value) }} />
-                  <Button onClick={addNewPackHandler}>Add</Button>
-               </div>
+         <AddNewPack />
+         <SwitchShowPacks />
+         <SearchPacks />
+         {packsState.isInitialized &&
+            <>
+               <PacksFilterCount />
+               <PacksTable packs={packsState.data.cardPacks} />
+            </>
          }
+         {packsState.status === 'pending' && <LoaderFullSize />}
+         <CustomizedSnackbars message={packsState.notice} isOpen={!!packsState.notice} isError={true} onClose={onCloseSnackbar} />
       </div>
    )
 }

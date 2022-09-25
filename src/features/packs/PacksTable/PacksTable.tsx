@@ -49,7 +49,7 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs }) => {
                      <TableCell align="right">{pack.cardsCount}</TableCell>
                      <TableCell align="right">{dateFormat(pack.updated)}</TableCell>
                      <TableCell align="right">{pack.user_name}</TableCell>
-                     <TableCell align="center">
+                     <TableCell align="left">
                         <button className={style.action__button}><img src={teach} alt="learn pack" /></button>
                         {
                            authUserID === pack.user_id &&

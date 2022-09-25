@@ -16,13 +16,13 @@ export const packsAPI = {
 type GetPacksRequestType = {
    page: number
    pageCount: number
-   min?: number
-   max?: number
-   packName?: string
+   min: number | null
+   max: number | null
+   packName: string | null
    block?: boolean
    //then
    sortPacks?: string
-   user_id?: string
+   user_id?: string | null
 }
 export type CreateNewPackRequestType = {
    name: string

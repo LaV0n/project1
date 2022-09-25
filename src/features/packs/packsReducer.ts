@@ -1,73 +1,140 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppRootStateType } from "../../app/store";
 import { CreateNewPackRequestType, packsAPI, PacksDataType, UpdatePackNameRequestType } from './../../api/packs-api';
+import { errorAsString } from "../../common/utils/errorAsString";
+import { StatusType } from "../../common/types";
 const initialState = {
-   data: {} as PacksDataType,
-   params: {
+   data: {
       page: 1,
-      pageCount: 15
-   },
+      pageCount: 5
+   } as PacksDataType,
    isInitialized: false,
-   notice: ''
+   notice: '',
+   status: 'idle' as StatusType,
+   params: {
+      user_id: null as string | null,
+      searchPacksName: null as string | null,
+      filterValues: {
+         min: null as number | null,
+         max: null as number | null,
+      }
+   }
 }
 const slice = createSlice({
    name: 'packs',
    initialState,
    reducers: {
-
+      setNotice: (state, action: PayloadAction<string>) => { state.notice = action.payload },
+      setUserPacksId: (state, action: PayloadAction<string | null>) => { state.params.user_id = action.payload },
+      setPage: (state, action: PayloadAction<number>) => { state.data.page = action.payload },
+      setSearchPacksName: (state, action: PayloadAction<string | null>) => { state.params.searchPacksName = action.payload },
+      setFilterValues: (state, action: PayloadAction<{ min: number, max: number }>) => {
+         state.params.filterValues = action.payload
+         state.data.page = 1
+      }
    },
    extraReducers: (builder) => {
-      builder.addCase(getPacks.pending, () => { })
+      //pending CRUD operation
+      builder.addCase(getPacks.pending, state => {
+         state.status = 'pending'
+      })
+      builder.addCase(addNewPack.pending, state => {
+         state.status = 'pending'
+      })
+      builder.addCase(deletePack.pending, state => {
+         state.status = 'pending'
+      })
+      builder.addCase(editPackName.pending, state => {
+         state.status = 'pending'
+      })
+      //fulfilled CRUD operation
       builder.addCase(getPacks.fulfilled, (state, action) => {
          state.data = action.payload
+
          state.isInitialized = true
+         state.status = 'succeeded'
       })
-      builder.addCase(getPacks.rejected, () => { })
+      builder.addCase(addNewPack.fulfilled, state => {
+         state.status = 'succeeded'
+      })
+      builder.addCase(deletePack.fulfilled, state => {
+         state.status = 'succeeded'
+      })
+      builder.addCase(editPackName.fulfilled, state => {
+         state.status = 'succeeded'
+      })
+      //reject packs CRUD operation
+      builder.addCase(getPacks.rejected, (state, action) => {
+         state.status = 'failed'
+         state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
+      })
+      builder.addCase(addNewPack.rejected, (state, action) => {
+         state.status = 'failed'
+         state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
+      })
+      builder.addCase(deletePack.rejected, (state, action) => {
+         state.status = 'failed'
+         state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
+      })
+      builder.addCase(editPackName.rejected, (state, action) => {
+         state.status = 'failed'
+         state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
+      })
    }
 })
-export const packsReducer = slice.reducer
-export const getPacks = createAsyncThunk<PacksDataType, undefined, any>(
-   'packs\getpacks',
+
+export const getPacks = createAsyncThunk<PacksDataType, undefined, { rejectValue: { error: string } }>(
+   'packs/getpacks',
    async (_, { getState, rejectWithValue }) => {
-      const params = (getState() as AppRootStateType).packs.params
+      const { data, params } = (getState() as AppRootStateType).packs
+      const requestParams = {
+         page: data.page, pageCount: data.pageCount, packName: params.searchPacksName,
+         user_id: params.user_id, min: params.filterValues.min, max: params.filterValues.max
+      }
       try {
-         const res = await packsAPI.getPacks(params)
+         const res = await packsAPI.getPacks(requestParams)
          return res.data
       } catch (err) {
-         return rejectWithValue('')
+         const error = errorAsString(err)
+         return rejectWithValue({ error })
       }
    }
 )
-export const addNewPack = createAsyncThunk<any, CreateNewPackRequestType, any>(
+export const addNewPack = createAsyncThunk<unknown, CreateNewPackRequestType, { rejectValue: { error: string } }>(
    'packs/addNewPack',
    async (data, { dispatch, rejectWithValue }) => {
       try {
          await packsAPI.createNewPack(data)
          dispatch(getPacks())
       } catch (err) {
-         return rejectWithValue('')
+         const error = errorAsString(err)
+         return rejectWithValue({ error })
       }
    }
 )
-export const deletePack = createAsyncThunk<any, string, any>(
-   'packs/addNewPack',
+export const deletePack = createAsyncThunk<unknown, string, { rejectValue: { error: string } }>(
+   'packs/deletePack',
    async (id, { dispatch, rejectWithValue }) => {
       try {
          await packsAPI.deletePack(id)
          dispatch(getPacks())
       } catch (err) {
-         return rejectWithValue('')
+         const error = errorAsString(err)
+         return rejectWithValue({ error })
       }
    }
 )
-export const editPackName = createAsyncThunk<any, UpdatePackNameRequestType, any>(
-   'packs/addNewPack',
+export const editPackName = createAsyncThunk<unknown, UpdatePackNameRequestType, { rejectValue: { error: string } }>(
+   'packs/editPackName',
    async (data, { dispatch, rejectWithValue }) => {
       try {
          await packsAPI.updatePackName(data)
          dispatch(getPacks())
       } catch (err) {
-         return rejectWithValue('')
+         const error = errorAsString(err)
+         return rejectWithValue({ error })
       }
    }
 )
+export const packsReducer = slice.reducer
+export const { setNotice, setUserPacksId, setFilterValues, setPage, setSearchPacksName } = slice.actions
