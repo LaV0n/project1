@@ -24,8 +24,8 @@ export const cardsAPI = {
     editCard(id:string){
         const card ={
             _id: id,
-            question: 'new question',
-            comments: "new comments"
+            question: 'NEW question',
+            comments: "NEW comments"
         }
         return _instance.put('cards/card',{card:card})
     }

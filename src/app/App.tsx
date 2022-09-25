@@ -13,7 +13,7 @@ import { Header } from "../features/header/Header";
 import { appPath } from '../common/path/appPath';
 import { initializeApp } from './appReducer';
 import { NewPassword } from '../features/newPassword/NewPassword';
-import {Cards} from "../features/cards/Cards.";
+import {Cards, packId} from "../features/cards/Cards.";
 
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
                     <Route path={appPath.RESTOREPASSWORD} element={<RestorePassword />} />
                     <Route path={appPath.NEWPASSWORD} element={<NewPassword />} />
                     <Route path={appPath.ERRORPAGE} element={<ErrorPage />} />
-                    <Route path={appPath.CARDS} element={<Cards/>} />
+                    <Route path={appPath.CARDS} element={<Cards packId={packId}/>} />
                     <Route path={appPath.MAIN} element={<Profile />} />
                     <Route path={'/'} element={<Navigate to={appPath.PROFILE} />} />
                     <Route path={'*'} element={<Navigate to={appPath.ERRORPAGE} />} />

@@ -7,6 +7,7 @@ import {RatingStars} from "../../../components/RatingStars/RatingStars";
 import {useAppDispatch} from "../../../app/store";
 import editIcon from "../../../assets/icons/Edit.png"
 import deleteIcon from "../../../assets/icons/Delete.png"
+import {BurgerMenu} from "../../../components/BurgerMenu/BurgerMenu";
 
 type CardsTablePropsType = {
     cards: CardsType[]
@@ -29,6 +30,13 @@ const formatDate = (dateCard: string) => {
     return `${dd}.${mm}.${yyyy}`
 }
 
+const items = [
+    'Edit',
+    'Delete',
+    'Learn',
+]
+
+
 export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, status}) => {
 
     const dispatch = useAppDispatch()
@@ -50,8 +58,9 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
         <div className={styles.container}>
             {isOwner
                 ? <div className={styles.headerBlock}>
-                    <div className={styles.title}>MyPack
-                        <span> ... </span>
+                    <div className={styles.title}>
+                        <span>My Pack</span>
+                        <span><BurgerMenu items={items}/></span>
                     </div>
                     <Button variant='contained'
                             className={styles.button}
@@ -70,7 +79,7 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
             }
             <div className={styles.searchBlock}>
                 <div className={styles.searchTitle}>Search</div>
-                <input type={'search'} placeholder={'text'}/>
+                <input type={'search'} placeholder={'Provide your text'} style={{width:'100%',height:'30px', border:'1px solid rgba(0, 0, 0, 0.1)'}}/>
             </div>
             <div>
                 <TableContainer className={styles.table}>
@@ -81,7 +90,7 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
                                 <TableCell className={styles.headerTitle} align="right">Answer</TableCell>
                                 <TableCell className={styles.headerTitle} align="right">Last Updated</TableCell>
                                 <TableCell className={styles.headerTitle} align="right">Grade</TableCell>
-                                <TableCell className={styles.headerTitle} align="right"></TableCell>
+                                {isOwner && <TableCell className={styles.headerTitle} align="right"></TableCell>}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -122,7 +131,6 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
                     </Table>
                 </TableContainer>
             </div>
-
         </div>
 
     );

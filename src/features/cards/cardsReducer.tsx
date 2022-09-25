@@ -1,16 +1,18 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AppDispatchType} from "../../app/store";
 import {cardsAPI} from "../../api/cards-api";
+import {AxiosError} from "axios";
 
 const CardsData = {
     cards: [] as CardsType[],
-    cardPacksTotalCount: 0,
+    cardsTotalCount: 0,
     maxCardsCount: 0,
     minCardsCount: 0,
     page: 0,
     pageCount: 0,
     packUserId: '',
-    status: false
+    status: false,
+    notice: ''
 }
 
 export  type CardsType = {
@@ -46,27 +48,31 @@ const slice = createSlice({
             state.pageCount = action.payload.data.pageCount
             state.minCardsCount = action.payload.data.minCardsCount
             state.maxCardsCount = action.payload.data.maxCardsCount
-            state.cardPacksTotalCount = action.payload.data.cardPacksTotalCount
+            state.cardsTotalCount = action.payload.data.cardsTotalCount
             state.packUserId = action.payload.data.packUserId
         },
         setStatus(state, action: PayloadAction<{ status: boolean }>) {
             state.status = action.payload.status
+        },
+        setErrorNotice(state, action: PayloadAction<{ notice: string }>) {
+            state.notice = action.payload.notice
         }
     }
 })
 
 export const cardsReducer = slice.reducer
 
-export const {getCardsData, setStatus} = slice.actions
+export const {getCardsData, setStatus, setErrorNotice} = slice.actions
 
 export const getCardsTC = (id: string) => async (dispatch: AppDispatchType) => {
     dispatch(setStatus({status: true}))
     try {
         const response = await cardsAPI.getCards(id)
-        dispatch(getCardsData({data: response.data}))
+        await dispatch(getCardsData({data: response.data}))
         dispatch(setStatus({status: false}))
-    } catch (err) {
-        alert(err)
+    } catch (err: any) {
+        const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
+        dispatch(setErrorNotice({notice: error}))
     }
 }
 
@@ -74,10 +80,11 @@ export const addNewCardTC = (packId: string) => async (dispatch: AppDispatchType
     dispatch(setStatus({status: true}))
     try {
         await cardsAPI.addCard(packId)
-        dispatch(getCardsTC(packId))
+        await dispatch(getCardsTC(packId))
         dispatch(setStatus({status: false}))
-    } catch (err) {
-        alert(err)
+    } catch (err: any) {
+        const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
+        dispatch(setErrorNotice({notice: error}))
     }
 }
 
@@ -85,10 +92,11 @@ export const deleteCardTC = (cardId: string, packId: string) => async (dispatch:
     dispatch(setStatus({status: true}))
     try {
         await cardsAPI.deleteCard(cardId)
-        dispatch(getCardsTC(packId))
+        await dispatch(getCardsTC(packId))
         dispatch(setStatus({status: false}))
-    } catch (err) {
-        alert(err)
+    } catch (err: any) {
+        const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
+        dispatch(setErrorNotice({notice: error}))
     }
 }
 
@@ -96,9 +104,10 @@ export const editCardTC = (cardId: string, packId: string) => async (dispatch: A
     dispatch(setStatus({status: true}))
     try {
         await cardsAPI.editCard(cardId)
-        dispatch(getCardsTC(packId))
+        await dispatch(getCardsTC(packId))
         dispatch(setStatus({status: false}))
-    } catch (err) {
-        alert(err)
+    } catch (err: any) {
+        const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
+        dispatch(setErrorNotice({notice: error}))
     }
 }
