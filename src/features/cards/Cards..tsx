@@ -31,19 +31,18 @@ export const Cards:FC<CardsType> = ({packId}) => {
         dispatch(getCardsTC(packId))
     }, [])
 
-
     return (
         <div className={styles.container}>
             {data.status && <CircularProgress style={{zIndex: '3', position: 'absolute', left: '50vw', top: '50vh'}}/>}
-            <NavLink to={appPath.MAIN} className={styles.link}>                                      {/* temp link*/}
+           <NavLink to={appPath.MAIN} className={styles.link}>                                       {/*//temp link*/}
                 <img src={vectorIcon} alt={''}/> Back to Packs list
             </NavLink>
-            <CardsTable cards={data.cards}
-                        isOwner={userId === data.packUserId}
+              <CardsTable cards={data.data.cards}
+                        isOwner={userId === data.data.packUserId}
                         packId={packId}
                         status={data.status}
             />
-            pageCount : {data.cardsTotalCount}
+            cardsCount : {data.data.cardsTotalCount}
             <CustomizedSnackbars message={notice} isOpen={!!notice} onClose={onCloseSnackbar}
                                  isError={true}/>
         </div>

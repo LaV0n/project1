@@ -1,5 +1,5 @@
 import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {FC} from "react";
+import {FC, useState} from "react";
 import React from "react";
 import {addNewCardTC, CardsType, deleteCardTC, editCardTC} from "../cardsReducer";
 import styles from "./cardsTable.module.scss"
@@ -8,6 +8,7 @@ import {useAppDispatch} from "../../../app/store";
 import editIcon from "../../../assets/icons/Edit.png"
 import deleteIcon from "../../../assets/icons/Delete.png"
 import {BurgerMenu} from "../../../components/BurgerMenu/BurgerMenu";
+import {SortArrows} from "./sortArrows/sortArrows";
 
 type CardsTablePropsType = {
     cards: CardsType[]
@@ -40,7 +41,10 @@ const items = [
 export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, status}) => {
 
     const dispatch = useAppDispatch()
-
+    const [questionSort, setQuestionSort] = useState(false)
+    const [answerSort, setAnswerSort] = useState(false)
+    const [updateSort, setUpdateSort] = useState(false)
+    const [gradeSort, setGradeSort] = useState(false)
     const addNewCardHandler = () => {
         dispatch(addNewCardTC(packId))
     }
@@ -79,24 +83,45 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
             }
             <div className={styles.searchBlock}>
                 <div className={styles.searchTitle}>Search</div>
-                <input type={'search'} placeholder={'Provide your text'} style={{width:'100%',height:'30px', border:'1px solid rgba(0, 0, 0, 0.1)'}}/>
+                <input type={'search'} placeholder={'Provide your text'}
+                       style={{width: '100%', height: '30px', border: '1px solid rgba(0, 0, 0, 0.1)'}}/>
             </div>
             <div>
                 <TableContainer className={styles.table}>
                     <Table aria-label="simple table">
                         <TableHead>
                             <TableRow className={styles.tableHeader}>
-                                <TableCell className={styles.headerTitle}>Question</TableCell>
-                                <TableCell className={styles.headerTitle} align="right">Answer</TableCell>
-                                <TableCell className={styles.headerTitle} align="right">Last Updated</TableCell>
-                                <TableCell className={styles.headerTitle} align="right">Grade</TableCell>
+                                <TableCell className={styles.headerTitle}
+                                           onClick={() => setQuestionSort(true)}
+                                           onMouseLeave={() => setQuestionSort(false)}>
+                                    Question
+                                    {questionSort && <SortArrows packId={packId} value={'question'}/>}
+                                </TableCell>
+                                <TableCell className={styles.headerTitle} align="right"
+                                           onClick={() => setAnswerSort(true)}
+                                           onMouseLeave={() => setAnswerSort(false)}>
+                                    Answer
+                                    {answerSort && <SortArrows packId={packId} value={'answer'}/>}
+                                </TableCell>
+                                <TableCell className={styles.headerTitle} align="right"
+                                           onClick={() => setUpdateSort(true)}
+                                           onMouseLeave={() => setUpdateSort(false)}>
+                                    Last Updated
+                                    {updateSort && <SortArrows packId={packId} value={'update'}/>}
+                                </TableCell>
+                                <TableCell className={styles.headerTitle} align="right"
+                                           onClick={() => setGradeSort(true)}
+                                           onMouseLeave={() => setGradeSort(false)}>
+                                    Grade
+                                    {gradeSort && <SortArrows packId={packId} value={'grade'}/>}
+                                </TableCell>
                                 {isOwner && <TableCell className={styles.headerTitle} align="right"></TableCell>}
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {cards.map((card) => (
                                 <TableRow
-                                    key={card.question}
+                                    key={card._id}
                                     sx={{'&:last-child td, &:last-child th': {border: 0}, backgroundColor: 'white'}}
                                 >
                                     <TableCell component="th" scope="row">
