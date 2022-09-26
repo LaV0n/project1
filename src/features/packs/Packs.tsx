@@ -6,10 +6,7 @@ import { useAppSelector } from './../../app/store';
 import { CustomizedSnackbars } from "../../components/CustomizedSnackbars/CustomizedSnackbars";
 import style from './packs.module.scss'
 import { LoaderFullSize } from "../../components/LoaderFullSize/LoaderFullSize";
-import { SwitchShowPacks } from "./SwitchShowPacks/SwitchShowPacks";
-import { PacksFilterCount } from "./PacksCountFilter/PacksCountFilter";
-import { AddNewPack } from "./AddNewPack/AddNewPack";
-import { SearchPacks } from "./SearchPacks/SearchPacks";
+import { PacksHeader } from "./PacksHeader/PacksHeader";
 export const Packs = () => {
    const dispatch = useAppDispatch()
    const packsState = useAppSelector(state => state.packs)
@@ -19,13 +16,10 @@ export const Packs = () => {
    }, [dispatch, packsState.data.page, packsState.data.pageCount, packsState.params])
    return (
       <div className={style.packs}>
-         <AddNewPack />
-         <SwitchShowPacks />
-         <SearchPacks />
          {packsState.isInitialized &&
             <>
-               <PacksFilterCount />
-               <PacksTable packs={packsState.data.cardPacks} />
+               <PacksHeader />
+               <PacksTable packs={packsState.data.cardPacks} sortPacksValue={packsState.params.sortPacks} />
             </>
          }
          {packsState.status === 'pending' && <LoaderFullSize />}

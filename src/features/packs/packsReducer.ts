@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppRootStateType } from "../../app/store";
 import { CreateNewPackRequestType, packsAPI, PacksDataType, UpdatePackNameRequestType } from './../../api/packs-api';
 import { errorAsString } from "../../common/utils/errorAsString";
-import { StatusType } from "../../common/types";
+import { SortType, StatusType } from "../../common/types";
 const initialState = {
    data: {
       page: 1,
@@ -14,11 +14,9 @@ const initialState = {
    params: {
       user_id: null as string | null,
       searchPacksName: null as string | null,
-      sortPacks: null as string | null,
-      filterValues: {
-         min: null as number | null,
-         max: null as number | null,
-      }
+      sortPacks: null as SortType,
+      min: null as number | null,
+      max: null as number | null,
    }
 }
 const slice = createSlice({
@@ -26,13 +24,24 @@ const slice = createSlice({
    initialState,
    reducers: {
       setNotice: (state, action: PayloadAction<string>) => { state.notice = action.payload },
-      setUserPacksId: (state, action: PayloadAction<string | null>) => { state.params.user_id = action.payload },
+      setUserPacksId: (state, action: PayloadAction<string | null>) => {
+         state.params.user_id = action.payload
+         state.params.min = null
+         state.params.max = null
+      },
       setPage: (state, action: PayloadAction<number>) => { state.data.page = action.payload },
       setSearchPacksName: (state, action: PayloadAction<string | null>) => { state.params.searchPacksName = action.payload },
-      setSortPacks: (state, action: PayloadAction<string | null>) => { state.params.sortPacks = action.payload },
+      setSortPacks: (state, action: PayloadAction<SortType>) => { state.params.sortPacks = action.payload },
       setFilterValues: (state, action: PayloadAction<{ min: number, max: number }>) => {
-         state.params.filterValues = action.payload
+         state.params.min = action.payload.min
+         state.params.max = action.payload.max
          state.data.page = 1
+      },
+      resetParams: (state) => {
+         state.params.searchPacksName = null
+         state.params.min = null
+         state.params.max = null
+         state.params.sortPacks = null
       }
    },
    extraReducers: (builder) => {
@@ -52,7 +61,6 @@ const slice = createSlice({
       //fulfilled CRUD operation
       builder.addCase(getPacks.fulfilled, (state, action) => {
          state.data = action.payload
-
          state.isInitialized = true
          state.status = 'succeeded'
       })
@@ -91,7 +99,7 @@ export const getPacks = createAsyncThunk<PacksDataType, undefined, { rejectValue
       const { data, params } = (getState() as AppRootStateType).packs
       const requestParams = {
          page: data.page, pageCount: data.pageCount, packName: params.searchPacksName, sortPacks: params.sortPacks,
-         user_id: params.user_id, min: params.filterValues.min, max: params.filterValues.max
+         user_id: params.user_id, min: params.min, max: params.max
       }
       try {
          const res = await packsAPI.getPacks(requestParams)
@@ -139,4 +147,4 @@ export const editPackName = createAsyncThunk<unknown, UpdatePackNameRequestType,
    }
 )
 export const packsReducer = slice.reducer
-export const { setNotice, setUserPacksId, setFilterValues, setPage, setSearchPacksName, setSortPacks } = slice.actions
+export const { setNotice, setUserPacksId, setFilterValues, setPage, setSearchPacksName, setSortPacks, resetParams } = slice.actions

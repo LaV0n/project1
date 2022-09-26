@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,15 +9,17 @@ import { FC } from 'react';
 import { PackType } from '../../../api/packs-api';
 import { dateFormat } from '../../../common/utils/dateFormat';
 import { useAppDispatch, useAppSelector } from './../../../app/store';
-import teach from '../../../assets/icons/packs/teach.svg'
-import edit from '../../../assets/icons/packs/edit.svg'
-import trash from '../../../assets/icons/packs/trash.svg'
 import style from './packsTable.module.scss';
-import { deletePack } from '../packsReducer';
+import { deletePack, setSortPacks } from '../packsReducer';
 import { editPackName } from './../packsReducer';
-import { TableCellSort } from './TableCellSort/TableCellSort';
-export const PacksTable: FC<PacksTablePropsType> = ({ packs }) => {
+import { SortByType, SortFrom, TableCellSort } from './TableCellSort/TableCellSort';
+import { SortType } from '../../../common/types';
+import { ActionTableCell } from './ActionTableCell/ActionTableCell';
+import { useNavigate } from 'react-router-dom';
+import { appPath } from '../../../common/path/appPath';
+export const PacksTable: FC<PacksTablePropsType> = ({ packs, sortPacksValue }) => {
    const authUserID = useAppSelector(state => state.auth.data._id)
+   const navigate = useNavigate()
    const dispatch = useAppDispatch()
    const deletePackHandler = (id: string) => {
       dispatch(deletePack(id))
@@ -26,51 +27,39 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs }) => {
    const editPackNameHandler = (_id: string) => {
       dispatch(editPackName({ _id, name: 'updated' }))
    }
+   const navigateToCards = (id: string) => {
+      navigate(`${appPath.CARDSDEFAULT}${id}`)
+   }
+   const sortPacks = (sortBy: SortByType) => {
+      if (sortPacksValue === null || sortPacksValue.slice(1, sortPacksValue.length) !== sortBy) {
+         dispatch(setSortPacks(`${SortFrom.largest}${sortBy}`))
+      } else {
+         const sortValue: SortType = sortPacksValue === `${SortFrom.smallest}${sortBy}` ? `${SortFrom.largest}${sortBy}` : `${SortFrom.smallest}${sortBy}`
+         dispatch(setSortPacks(sortValue))
+      }
+   }
    return (
       <TableContainer component={Paper}>
          <Table sx={{ minWidth: 650 }} size="small" >
             <TableHead>
                <TableRow style={{ height: '48px' }}>
-                  <TableCell>Name</TableCell>
-                  <TableCellSort title='Cards' align="center" />
-                  <TableCellSort title='Last Updated' align="center" />
-                  <TableCellSort title='Created by' align="center" />
-                  <TableCell align="center">
-                     Actions
-                  </TableCell>
+                  <TableCell className={style.head_name}>Name</TableCell>
+                  <TableCellSort onClick={() => { sortPacks('cardsCount') }} showArrow={true} currentSort={sortPacksValue} sortBy={'cardsCount'} title='Cards' align="center" />
+                  <TableCellSort onClick={() => { sortPacks('updated') }} showArrow={true} currentSort={sortPacksValue} sortBy={'updated'} title='Last Updated' align="center" />
+                  <TableCellSort onClick={() => { sortPacks('created') }} title='Created by' align="center" />
+                  <TableCell align="center">Actions</TableCell>
                </TableRow>
             </TableHead>
             <TableBody>
                {packs.map((pack) => (
-                  <TableRow
-                     key={pack._id}
-                     sx={{ 'height:48px ,&:last-child td, &:last-child th': { border: 0 } }}
-                     style={{ height: '48px' }}
-                  >
-                     <TableCell component="th" scope="row">
+                  <TableRow key={pack._id} sx={{ 'height:48px ,&:last-child td, &:last-child th': { border: 0 } }} style={{ height: '48px' }} >
+                     <TableCell onClick={() => { navigateToCards(pack._id) }} className={style.pack_name} component="th" scope="row">
                         {pack.name}
                      </TableCell>
-                     <TableCell align="center">
-                        {pack.cardsCount}
-                     </TableCell>
-                     <TableCell align="center">
-                        {dateFormat(pack.updated)}
-                     </TableCell>
-                     <TableCell align="center">
-                        {pack.user_name}
-                     </TableCell>
-                     <TableCell align="center">
-                        <button className={style.action__button}><img src={teach} alt="learn pack" /></button>
-                        {
-                           authUserID === pack.user_id &&
-                           <>
-                              <button onClick={() => { editPackNameHandler(pack._id) }}
-                                 className={style.action__button}><img src={edit} alt="edit pack" /></button>
-                              <button onClick={() => { deletePackHandler(pack._id) }}
-                                 className={style.action__button}><img src={trash} alt="delete pack" /></button>
-                           </>
-                        }
-                     </TableCell>
+                     <TableCell align="center">{pack.cardsCount}</TableCell>
+                     <TableCell align="center">{dateFormat(pack.updated)}</TableCell>
+                     <TableCell className={style.pack_created} align="center">{pack.user_name}</TableCell>
+                     <ActionTableCell onDeleteClick={deletePackHandler} onEditClick={editPackNameHandler} packID={pack._id} packUserID={pack.user_id} authUserID={authUserID} />
                   </TableRow>
                ))}
             </TableBody>
@@ -80,5 +69,6 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs }) => {
 }
 type PacksTablePropsType = {
    packs: PackType[]
+   sortPacksValue: SortType
 }
 

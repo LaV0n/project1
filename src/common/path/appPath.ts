@@ -6,5 +6,7 @@ export enum appPath {
    RESTOREPASSWORD = '/restorepassword',
    NEWPASSWORD = '/newpassword/:token',
    ERRORPAGE = '/ErrorPage',
-   PACKS = '/packs'
+   PACKS = '/packs',
+   CARDS = '/cards/:id',
+   CARDSDEFAULT = '/cards/'
 }

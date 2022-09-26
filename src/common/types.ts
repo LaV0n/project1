@@ -26,3 +26,4 @@ export type NewPasswordRequestType = {
    password: string
    resetPasswordToken: string
 }
+export type SortType = '0cardsCount' | '1cardsCount' | '0updated' | '1updated' | '0created' | '1created' | null

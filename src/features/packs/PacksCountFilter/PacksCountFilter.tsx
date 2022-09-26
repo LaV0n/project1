@@ -7,10 +7,19 @@ import "./thumb.scss"
 export const PacksFilterCount = () => {
    const dispatch = useAppDispatch()
    const { minCardsCount, maxCardsCount } = useAppSelector(state => state.packs.data)
-   const [values, setValues] = useState({ min: minCardsCount, max: maxCardsCount })
+   const { min, max } = useAppSelector(state => state.packs.params)
+   const minValue = min !== null ? min : minCardsCount
+   const maxValue = max !== null ? max : maxCardsCount
+   const [values, setValues] = useState({ min: minValue, max: maxValue })
    const [isChanged, setIsChanged] = useState(false)
    useEffect(() => {
-      if (isChanged) { dispatch(setFilterValues(values)) }
+      setValues({ min: minValue, max: maxValue })
+   }, [minValue, maxValue])
+   useEffect(() => {
+      if (isChanged) {
+         //   dispatch(setFilterValues(values))
+         setIsChanged(false)
+      }
    }, [isChanged, dispatch, values])
    const onMouseUp = () => {
       setIsChanged(true)
@@ -27,16 +36,20 @@ export const PacksFilterCount = () => {
    }
    return (
       <div className={`${style.filter} packs-filter`}>
-         <div className={style.filter__display_value}>{values.min}</div>
-         <Slider
-            getAriaLabel={() => 'Temperature range'}
-            value={[values.min, values.max]}
-            onMouseDown={onMouseDownHandler}
-            onChange={onChangeHandler}
-            min={minCardsCount}
-            max={maxCardsCount}
-         />
-         <div className={style.filter__display_value}>{values.max}</div>
+         <div className={style.filter__title}>Number of cards</div>
+         <div className={style.filter__row}>
+            <div className={style.filter__display_value}>{values.min}</div>
+            {maxCardsCount > 1 && <>
+               <Slider
+                  value={[values.min, values.max]}
+                  onMouseDown={onMouseDownHandler}
+                  onChange={onChangeHandler}
+                  min={minCardsCount}
+                  max={maxCardsCount}
+                  onChangeCommitted={() => { console.log(dispatch(setFilterValues(values))); }}
+               />
+               <div className={style.filter__display_value}>{values.max}</div></>}
+         </div>
       </div>
    )
 }
