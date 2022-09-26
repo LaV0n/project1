@@ -1,14 +1,15 @@
 import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {FC, useState} from "react";
+import {ChangeEvent, FC, useEffect, useState} from "react";
 import React from "react";
-import {addNewCardTC, CardsType, deleteCardTC, editCardTC} from "../cardsReducer";
+import {addNewCardTC, CardsType, deleteCardTC, editCardTC, findCardTC} from "../cardsReducer";
 import styles from "./cardsTable.module.scss"
 import {RatingStars} from "../../../components/RatingStars/RatingStars";
-import {useAppDispatch} from "../../../app/store";
+import {useAppDispatch, useAppSelector} from "../../../app/store";
 import editIcon from "../../../assets/icons/Edit.png"
 import deleteIcon from "../../../assets/icons/Delete.png"
 import {BurgerMenu} from "../../../components/BurgerMenu/BurgerMenu";
 import {SortArrows} from "./sortArrows/sortArrows";
+import useDebounce from "../../../common/utils/hooks";
 
 type CardsTablePropsType = {
     cards: CardsType[]
@@ -37,7 +38,6 @@ const items = [
     'Learn',
 ]
 
-
 export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, status}) => {
 
     const dispatch = useAppDispatch()
@@ -45,6 +45,10 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
     const [answerSort, setAnswerSort] = useState(false)
     const [updateSort, setUpdateSort] = useState(false)
     const [gradeSort, setGradeSort] = useState(false)
+    const packName = useAppSelector(state => state.cards.data.packName)
+    const [searchInput, setSearchInput] = useState<string>('')
+    const debouncedValue = useDebounce<string>(searchInput, 1000)
+
     const addNewCardHandler = () => {
         dispatch(addNewCardTC(packId))
     }
@@ -57,13 +61,20 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
     const deleteCardHandler = (cardId: string, packId: string) => {
         dispatch(deleteCardTC(cardId, packId))
     }
+    const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchInput(event.target.value)
+    }
+    useEffect(() => {
+        dispatch(findCardTC(packId, debouncedValue))
+    }, [debouncedValue])
 
     return (
         <div className={styles.container}>
             {isOwner
                 ? <div className={styles.headerBlock}>
                     <div className={styles.title}>
-                        <span>My Pack</span>
+                        <span>"{packName}"</span>
+                        <span className={styles.owner}>My Pack</span>
                         <span><BurgerMenu items={items}/></span>
                     </div>
                     <Button variant='contained'
@@ -73,7 +84,10 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
                     >Add New Card</Button>
                 </div>
                 : <div className={styles.headerBlock}>
-                    <div className={styles.title}>Friends Pack</div>
+                    <div className={styles.title}>
+                        <span>"{packName}"</span>
+                        <span className={styles.owner}> Friend's Pack</span>
+                    </div>
                     <Button variant='contained'
                             className={styles.button}
                             onClick={learnCardHandler}
@@ -84,7 +98,9 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
             <div className={styles.searchBlock}>
                 <div className={styles.searchTitle}>Search</div>
                 <input type={'search'} placeholder={'Provide your text'}
-                       style={{width: '100%', height: '30px', border: '1px solid rgba(0, 0, 0, 0.1)'}}/>
+                       style={{width: '100%', height: '30px', border: '1px solid rgba(0, 0, 0, 0.1)'}}
+                       onChange={onChangeHandler}
+                />
             </div>
             <div>
                 <TableContainer className={styles.table}>
@@ -119,39 +135,49 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {cards.map((card) => (
-                                <TableRow
-                                    key={card._id}
-                                    sx={{'&:last-child td, &:last-child th': {border: 0}, backgroundColor: 'white'}}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {card.question}
-                                    </TableCell>
-                                    <TableCell align="right">{card.answer}</TableCell>
-                                    <TableCell align="right">
-                                        {formatDate(card.updated)}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <RatingStars stars={card.grade}/>
-                                    </TableCell>
-                                    {isOwner &&
-                                        <TableCell align="right" style={{width: '60px'}}>
-                                            <div className={styles.toolsIcon}>
-                                                <button onClick={() => editCardHandler(card._id, card.cardsPack_id)}
-                                                        disabled={status} style={{backgroundColor: 'white'}}
-                                                >
-                                                    <img src={editIcon} alt={'0'} className={styles.Icon}/>
-                                                </button>
-                                                <button onClick={() => deleteCardHandler(card._id, card.cardsPack_id)}
-                                                        disabled={status} style={{backgroundColor: 'white'}}
-                                                >
-                                                    <img src={deleteIcon} alt={'0'} className={styles.Icon}/>
-                                                </button>
-                                            </div>
-                                        </TableCell>
-                                    }
+                            {cards.length === 0
+                                ? <TableRow style={{
+                                    paddingTop: '20px',
+                                    height: '50px',
+                                    display: "flex",
+                                    justifyContent: 'center'
+                                }}>
+                                    <span style={{marginLeft: "400px"}}>no cards</span>
                                 </TableRow>
-                            ))}
+                                : cards.map((card) => (
+                                    <TableRow
+                                        key={card._id}
+                                        sx={{'&:last-child td, &:last-child th': {border: 0}, backgroundColor: 'white'}}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            {card.question}
+                                        </TableCell>
+                                        <TableCell align="right">{card.answer}</TableCell>
+                                        <TableCell align="right">
+                                            {formatDate(card.updated)}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            <RatingStars stars={card.grade}/>
+                                        </TableCell>
+                                        {isOwner &&
+                                            <TableCell align="right" style={{width: '60px'}}>
+                                                <div className={styles.toolsIcon}>
+                                                    <button onClick={() => editCardHandler(card._id, card.cardsPack_id)}
+                                                            disabled={status} style={{backgroundColor: 'white'}}
+                                                    >
+                                                        <img src={editIcon} alt={'0'} className={styles.Icon}/>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => deleteCardHandler(card._id, card.cardsPack_id)}
+                                                        disabled={status} style={{backgroundColor: 'white'}}
+                                                    >
+                                                        <img src={deleteIcon} alt={'0'} className={styles.Icon}/>
+                                                    </button>
+                                                </div>
+                                            </TableCell>
+                                        }
+                                    </TableRow>
+                                ))}
                         </TableBody>
                     </Table>
                 </TableContainer>

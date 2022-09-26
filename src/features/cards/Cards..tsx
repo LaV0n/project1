@@ -1,6 +1,5 @@
-import React, {FC} from "react";
+import React, {FC, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {useEffect} from "react";
 import {getCardsTC, setErrorNotice} from "./cardsReducer";
 import {CardsTable} from "./cardsTable/cardsTable";
 import styles from "./Cards.module.scss"

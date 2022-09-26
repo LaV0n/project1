@@ -41,6 +41,7 @@ const initialState = {
     data: Data,
     status: false,
     notice: '',
+    allCards: [] as CardsType[]
 }
 
 export type CardsType = {
@@ -78,7 +79,7 @@ const slice = createSlice({
         },
         setErrorNotice(state, action: PayloadAction<{ notice: string }>) {
             state.notice = action.payload.notice
-        }
+        },
     }
 })
 
@@ -138,6 +139,18 @@ export const dataSortTC = (packId: string, direction: number, value: string) => 
     dispatch(setStatus({status: true}))
     try {
         const response = await cardsAPI.sortData(packId, direction, value)
+        dispatch(getCardsData({data: response.data}))
+        dispatch(setStatus({status: false}))
+    } catch (err: any) {
+        const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
+        dispatch(setErrorNotice({notice: error}))
+    }
+}
+
+export const findCardTC = (packId: string, cardQuestion: string) => async (dispatch: AppDispatchType) => {
+    dispatch(setStatus({status: true}))
+    try {
+        const response = await cardsAPI.findQuestion(packId, cardQuestion)
         dispatch(getCardsData({data: response.data}))
         dispatch(setStatus({status: false}))
     } catch (err: any) {

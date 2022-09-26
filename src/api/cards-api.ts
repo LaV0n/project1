@@ -2,15 +2,15 @@ import {_instance} from "./_instance"
 import { DataType} from "../features/cards/cardsReducer";
 
 export const cardsAPI = {
-    getCards(id:string) {
+    getCards(id:string,min?:number,max?:number,page?:number,pageCount?:number,cardQuestion?:string) {
         return _instance.get<DataType>(`cards/card?cardsPack_id=${id}`)
     },
     addCard(id:string){
         const card ={
             cardsPack_id: id,
-            question: "wow question" ,
-            answer: "wow answer",
-            grade: 0,
+            question: "34 question" ,
+            answer: "22 answer",
+            grade: 2,
             shots: 0,
             answerImg: "url or base 64",
             questionImg: "url or base 64",
@@ -33,4 +33,7 @@ export const cardsAPI = {
     sortData(idPack:string,direction:number,value:string){
        return  _instance.get<DataType>(`cards/card?cardsPack_id=${idPack}&sortCards=${direction}${value}`)
     },
+    findQuestion(id:string,cardQuestion:string){
+        return _instance.get<DataType>(`cards/card?cardsPack_id=${id}&cardQuestion=${cardQuestion}`)
+    }
   }

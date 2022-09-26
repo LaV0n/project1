@@ -24,6 +24,11 @@
     font-size: 22px;
     line-height: 27px;
     display: flex;
+    justify-items: end;
+    .owner {
+      font-size: 12px;
+      margin-left: 10px;
+    }
   }
   .searchBlock {
     margin-top: 28px;
