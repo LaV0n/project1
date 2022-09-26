@@ -14,6 +14,7 @@ const initialState = {
    params: {
       user_id: null as string | null,
       searchPacksName: null as string | null,
+      sortPacks: null as string | null,
       filterValues: {
          min: null as number | null,
          max: null as number | null,
@@ -28,6 +29,7 @@ const slice = createSlice({
       setUserPacksId: (state, action: PayloadAction<string | null>) => { state.params.user_id = action.payload },
       setPage: (state, action: PayloadAction<number>) => { state.data.page = action.payload },
       setSearchPacksName: (state, action: PayloadAction<string | null>) => { state.params.searchPacksName = action.payload },
+      setSortPacks: (state, action: PayloadAction<string | null>) => { state.params.sortPacks = action.payload },
       setFilterValues: (state, action: PayloadAction<{ min: number, max: number }>) => {
          state.params.filterValues = action.payload
          state.data.page = 1
@@ -88,7 +90,7 @@ export const getPacks = createAsyncThunk<PacksDataType, undefined, { rejectValue
    async (_, { getState, rejectWithValue }) => {
       const { data, params } = (getState() as AppRootStateType).packs
       const requestParams = {
-         page: data.page, pageCount: data.pageCount, packName: params.searchPacksName,
+         page: data.page, pageCount: data.pageCount, packName: params.searchPacksName, sortPacks: params.sortPacks,
          user_id: params.user_id, min: params.filterValues.min, max: params.filterValues.max
       }
       try {
@@ -137,4 +139,4 @@ export const editPackName = createAsyncThunk<unknown, UpdatePackNameRequestType,
    }
 )
 export const packsReducer = slice.reducer
-export const { setNotice, setUserPacksId, setFilterValues, setPage, setSearchPacksName } = slice.actions
+export const { setNotice, setUserPacksId, setFilterValues, setPage, setSearchPacksName, setSortPacks } = slice.actions

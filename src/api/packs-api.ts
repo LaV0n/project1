@@ -19,10 +19,11 @@ type GetPacksRequestType = {
    min: number | null
    max: number | null
    packName: string | null
-   block?: boolean
+   sortPacks: string | null
+   user_id: string | null
    //then
-   sortPacks?: string
-   user_id?: string | null
+
+   block?: boolean
 }
 export type CreateNewPackRequestType = {
    name: string

@@ -16,6 +16,7 @@ import trash from '../../../assets/icons/packs/trash.svg'
 import style from './packsTable.module.scss';
 import { deletePack } from '../packsReducer';
 import { editPackName } from './../packsReducer';
+import { TableCellSort } from './TableCellSort/TableCellSort';
 export const PacksTable: FC<PacksTablePropsType> = ({ packs }) => {
    const authUserID = useAppSelector(state => state.auth.data._id)
    const dispatch = useAppDispatch()
@@ -27,29 +28,38 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs }) => {
    }
    return (
       <TableContainer component={Paper}>
-         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+         <Table sx={{ minWidth: 650 }} size="small" >
             <TableHead>
-               <TableRow>
+               <TableRow style={{ height: '48px' }}>
                   <TableCell>Name</TableCell>
-                  <TableCell align="right">Cards</TableCell>
-                  <TableCell align="right">Last Updated</TableCell>
-                  <TableCell align="right">Created by</TableCell>
-                  <TableCell align="center">Actions</TableCell>
+                  <TableCellSort title='Cards' align="center" />
+                  <TableCellSort title='Last Updated' align="center" />
+                  <TableCellSort title='Created by' align="center" />
+                  <TableCell align="center">
+                     Actions
+                  </TableCell>
                </TableRow>
             </TableHead>
             <TableBody>
                {packs.map((pack) => (
                   <TableRow
                      key={pack._id}
-                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                     sx={{ 'height:48px ,&:last-child td, &:last-child th': { border: 0 } }}
+                     style={{ height: '48px' }}
                   >
                      <TableCell component="th" scope="row">
                         {pack.name}
                      </TableCell>
-                     <TableCell align="right">{pack.cardsCount}</TableCell>
-                     <TableCell align="right">{dateFormat(pack.updated)}</TableCell>
-                     <TableCell align="right">{pack.user_name}</TableCell>
-                     <TableCell align="left">
+                     <TableCell align="center">
+                        {pack.cardsCount}
+                     </TableCell>
+                     <TableCell align="center">
+                        {dateFormat(pack.updated)}
+                     </TableCell>
+                     <TableCell align="center">
+                        {pack.user_name}
+                     </TableCell>
+                     <TableCell align="center">
                         <button className={style.action__button}><img src={teach} alt="learn pack" /></button>
                         {
                            authUserID === pack.user_id &&
