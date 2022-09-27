@@ -1,7 +1,7 @@
 import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {ChangeEvent, FC, useEffect, useState} from "react";
 import React from "react";
-import {addNewCardTC, CardsType, deleteCardTC, editCardTC,  getCardsTC} from "../cardsReducer";
+import {addNewCardTC, CardsType, deleteCardTC, editCardTC, getCardsTC, setPage, setPageCount} from "../cardsReducer";
 import styles from "./cardsTable.module.scss"
 import {RatingStars} from "../../../components/RatingStars/RatingStars";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
@@ -10,6 +10,7 @@ import deleteIcon from "../../../assets/icons/packs/trash.svg"
 import {BurgerMenu} from "../../../components/BurgerMenu/BurgerMenu";
 import {SortArrows} from "./sortArrows/sortArrows";
 import useDebounce from "../../../common/utils/hooks";
+import {CardsFooter} from "../cardsFooter/cardsFooter";
 
 type CardsTablePropsType = {
     cards: CardsType[]
@@ -35,13 +36,16 @@ const formatDate = (dateCard: string) => {
 export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, status}) => {
 
     const dispatch = useAppDispatch()
+    const data = useAppSelector(state => state.cards.data)
+    const pageCount = useAppSelector(state => state.cards.pageCount)
+    const page=useAppSelector(state => state.cards.page)
     const [questionSort, setQuestionSort] = useState(false)
     const [answerSort, setAnswerSort] = useState(false)
     const [updateSort, setUpdateSort] = useState(false)
     const [gradeSort, setGradeSort] = useState(false)
-    let packName = useAppSelector(state => state.cards.data.packName)
+    const packName = useAppSelector(state => state.cards.data.packName)
     const localSearchItem = localStorage.getItem('searchItem')
-    const [searchInput, setSearchInput] = useState<string>(localSearchItem?localSearchItem:'')
+    const [searchInput, setSearchInput] = useState<string>(localSearchItem ? localSearchItem : '')
     const debouncedValue = useDebounce<string>(searchInput, 700)
 
     const addNewCardHandler = () => {
@@ -59,11 +63,17 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchInput(event.target.value)
     }
+    const onChangePageCountHandler = (pageCount: number) => {
+        dispatch(setPageCount(pageCount))
+    }
+    const onChangePageHandler = (page: number) => {
+        dispatch(setPage(page))
+    }
 
     useEffect(() => {
         localStorage.setItem('searchItem', debouncedValue)
-        dispatch(getCardsTC({cardsPack_id:packId, cardQuestion:debouncedValue}))
-    }, [debouncedValue])
+        dispatch(getCardsTC({cardsPack_id: packId, cardQuestion: debouncedValue}))
+    }, [debouncedValue, pageCount, page])
 
     return (
         <div className={styles.container}>
@@ -178,6 +188,11 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
                         </TableBody>
                     </Table>
                 </TableContainer>
+            </div>
+            <div>
+                <CardsFooter page={data.page} cardsTotalCount={data.cardsTotalCount}
+                             pageCount={data.pageCount} onChangePageCount={onChangePageCountHandler}
+                             onChangePage={onChangePageHandler}/>
             </div>
         </div>
 

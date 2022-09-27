@@ -32,7 +32,6 @@ export const Cards = () => {
                 packId={packId}
                 status={data.status}
             />
-            cardsCount : {data.data.cardsTotalCount}
             <CustomizedSnackbars message={notice} isOpen={!!notice} onClose={onCloseSnackbar}
                 isError={true} />
         </div>

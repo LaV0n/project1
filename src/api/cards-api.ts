@@ -28,14 +28,17 @@ export const cardsAPI = {
         return _instance.put(`cards/card`, {card: card})
     },
     sortData(idPack: string, direction: number, value: string) {
-        return _instance.get<DataType>(`cards/card?cardsPack_id=${idPack}&sortCards=${direction}${value}`)
+        return _instance.get<DataType>(`cards/card`,{params:{
+                cardsPack_id:idPack,sortCards:direction+value
+            }})
     },
     getCards(data: CardGetType) {
         return _instance.get<DataType>(`cards/card`,
             {
                 params: {
                     cardsPack_id: data.cardsPack_id, min: data.min, max: data.max,
-                    cardQuestion: data.cardQuestion, pageCount: data.pageCount, page: data.page
+                    cardQuestion: data.cardQuestion, pageCount: data.pageCount, page: data.page,
+                    sortCards:`${data.direction}${data.value}`
                 }
             })
     },
@@ -48,4 +51,6 @@ export type CardGetType = {
     page?: number | null
     pageCount?: number | null
     cardQuestion?: string | null
+    direction?:number | null
+    value?:string | null
 }
