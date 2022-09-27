@@ -30,6 +30,7 @@ const slice = createSlice({
          state.params.max = null
       },
       setPage: (state, action: PayloadAction<number>) => { state.data.page = action.payload },
+      setPageCount: (state, action: PayloadAction<number>) => { state.data.pageCount = action.payload },
       setSearchPacksName: (state, action: PayloadAction<string | null>) => { state.params.searchPacksName = action.payload },
       setSortPacks: (state, action: PayloadAction<SortType>) => { state.params.sortPacks = action.payload },
       setFilterValues: (state, action: PayloadAction<{ min: number, max: number }>) => {
@@ -147,4 +148,4 @@ export const editPackName = createAsyncThunk<unknown, UpdatePackNameRequestType,
    }
 )
 export const packsReducer = slice.reducer
-export const { setNotice, setUserPacksId, setFilterValues, setPage, setSearchPacksName, setSortPacks, resetParams } = slice.actions
+export const { setNotice, setUserPacksId, setFilterValues, setPage, setSearchPacksName, setSortPacks, resetParams, setPageCount } = slice.actions
