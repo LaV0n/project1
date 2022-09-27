@@ -46,8 +46,11 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
     const [updateSort, setUpdateSort] = useState(false)
     const [gradeSort, setGradeSort] = useState(false)
     const packName = useAppSelector(state => state.cards.data.packName)
-    const [searchInput, setSearchInput] = useState<string>('')
+    const localSearchItem = localStorage.getItem('searchItem')
+    const [searchInput, setSearchInput] = useState<string>( '')
     const debouncedValue = useDebounce<string>(searchInput, 1000)
+
+    // if(localSearchItem){setSearchInput(localSearchItem)}
 
     const addNewCardHandler = () => {
         dispatch(addNewCardTC(packId))
@@ -64,8 +67,10 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchInput(event.target.value)
     }
+
     useEffect(() => {
         dispatch(findCardTC(packId, debouncedValue))
+        localStorage.setItem('searchItem', debouncedValue)
     }, [debouncedValue])
 
     return (
@@ -99,8 +104,7 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
                 <div className={styles.searchTitle}>Search</div>
                 <input type={'search'} placeholder={'Provide your text'}
                        style={{width: '100%', height: '30px', border: '1px solid rgba(0, 0, 0, 0.1)'}}
-                       onChange={onChangeHandler}
-                />
+                       onChange={onChangeHandler} value={searchInput} />
             </div>
             <div>
                 <TableContainer className={styles.table}>
@@ -136,13 +140,14 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
                         </TableHead>
                         <TableBody>
                             {cards.length === 0
-                                ? <TableRow style={{
-                                    paddingTop: '20px',
-                                    height: '50px',
-                                    display: "flex",
-                                    justifyContent: 'center'
-                                }}>
-                                    <span style={{marginLeft: "400px"}}>no cards</span>
+                                ? <TableRow>
+                                    <TableCell style={{
+                                        paddingTop: '20px',
+                                        height: '50px',
+                                        display: "flex",
+                                        justifyContent: 'center',
+                                        marginLeft: "400px"
+                                    }}>no cards</TableCell>
                                 </TableRow>
                                 : cards.map((card) => (
                                     <TableRow
