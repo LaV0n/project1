@@ -24,16 +24,15 @@ export const PacksFilterCount = () => {
       <div className={`${style.filter} packs-filter`}>
          <div className={style.filter__title}>Number of cards</div>
          <div className={style.filter__row}>
-            {maxCardsCount > 1 &&
-               <> <div className={style.filter__display_value}>{values.min}</div>
-                  <Slider
-                     value={[values.min, values.max]}
-                     onChange={onChangeHandler}
-                     min={minCardsCount}
-                     max={maxCardsCount}
-                     onChangeCommitted={setFilterChanges}
-                  />
-               </>}
+            <> <div className={style.filter__display_value}>{values.min}</div>
+               <Slider
+                  value={[values.min, values.max]}
+                  onChange={onChangeHandler}
+                  min={minCardsCount}
+                  max={maxCardsCount}
+                  onChangeCommitted={setFilterChanges}
+               />
+            </>
             <div className={style.filter__display_value}>{values.max}</div>
          </div>
       </div>

@@ -4,7 +4,6 @@ import { setSearchPacksName } from '../packsReducer';
 import { ReactComponent as SearchIcon } from "../../../assets/icons/packs/searchIcon.svg"
 import style from './searchPacks.module.scss'
 export const SearchPacks = () => {
-   const pn = useAppSelector(state => state.packs.params.searchPacksName)
    const [value, setValue] = useState<string>('')
    const [isSearching, setIsSearching] = useState(false)
    const dispatch = useAppDispatch()
@@ -13,10 +12,9 @@ export const SearchPacks = () => {
       const id = setTimeout(() => {
          search(value)
       }, 1000)
-      return () => {
-         clearTimeout(id)
-      }
+      return () => { clearTimeout(id) }
    }, [value, isSearching])
+   useEffect(() => { }, [])
    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.currentTarget.value
       setValue(value)
