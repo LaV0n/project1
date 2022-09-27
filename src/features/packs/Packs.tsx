@@ -19,7 +19,7 @@ export const Packs = () => {
          {packsState.isInitialized &&
             <>
                <PacksHeader />
-               <PacksTable packs={packsState.data.cardPacks} sortPacksValue={packsState.params.sortPacks} />
+               <PacksTable status={packsState.status} packs={packsState.data.cardPacks} sortPacksValue={packsState.params.sortPacks} />
             </>
          }
          {packsState.status === 'pending' && <LoaderFullSize />}

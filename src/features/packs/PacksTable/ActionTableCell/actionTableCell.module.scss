@@ -6,5 +6,8 @@ td.action {
    }
    button {
       background-color: transparent;
+      &:disabled {
+         opacity: 0.8;
+      }
    }
 }
