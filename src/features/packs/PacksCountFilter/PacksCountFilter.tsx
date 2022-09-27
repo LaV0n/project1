@@ -19,6 +19,7 @@ export const PacksFilterCount = () => {
       if (valuesAsArr[1] < 1) return
       setValues(values => values = { min: valuesAsArr[0], max: valuesAsArr[1] })
    }
+   const setFilterChanges = () => { dispatch(setFilterValues(values)) }
    return (
       <div className={`${style.filter} packs-filter`}>
          <div className={style.filter__title}>Number of cards</div>
@@ -30,7 +31,7 @@ export const PacksFilterCount = () => {
                      onChange={onChangeHandler}
                      min={minCardsCount}
                      max={maxCardsCount}
-                     onChangeCommitted={() => { dispatch(setFilterValues(values)) }}
+                     onChangeCommitted={setFilterChanges}
                   />
                </>}
             <div className={style.filter__display_value}>{values.max}</div>
