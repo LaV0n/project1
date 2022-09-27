@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/store";
-import { setErrorNotice } from "./cardsReducer";
+import {setErrorNotice} from "./cardsReducer";
 import { CardsTable } from "./cardsTable/cardsTable";
 import styles from "./Cards.module.scss"
 import { NavLink, useParams } from "react-router-dom";

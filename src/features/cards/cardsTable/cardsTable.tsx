@@ -5,8 +5,8 @@ import {addNewCardTC, CardsType, deleteCardTC, editCardTC,  getCardsTC} from "..
 import styles from "./cardsTable.module.scss"
 import {RatingStars} from "../../../components/RatingStars/RatingStars";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
-import editIcon from "../../../assets/icons/Edit.png"
-import deleteIcon from "../../../assets/icons/Delete.png"
+import editIcon from "../../../assets/icons/packs/edit.svg"
+import deleteIcon from "../../../assets/icons/packs/trash.svg"
 import {BurgerMenu} from "../../../components/BurgerMenu/BurgerMenu";
 import {SortArrows} from "./sortArrows/sortArrows";
 import useDebounce from "../../../common/utils/hooks";
@@ -32,12 +32,6 @@ const formatDate = (dateCard: string) => {
     return `${dd}.${mm}.${yyyy}`
 }
 
-const items = [
-    'Edit',
-    'Delete',
-    'Learn',
-]
-
 export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, status}) => {
 
     const dispatch = useAppDispatch()
@@ -45,7 +39,7 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
     const [answerSort, setAnswerSort] = useState(false)
     const [updateSort, setUpdateSort] = useState(false)
     const [gradeSort, setGradeSort] = useState(false)
-    const packName = useAppSelector(state => state.cards.data.packName)
+    let packName = useAppSelector(state => state.cards.data.packName)
     const localSearchItem = localStorage.getItem('searchItem')
     const [searchInput, setSearchInput] = useState<string>(localSearchItem?localSearchItem:'')
     const debouncedValue = useDebounce<string>(searchInput, 700)
@@ -78,7 +72,7 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
                     <div className={styles.title}>
                         <span>"{packName}"</span>
                         <span className={styles.owner}>My Pack</span>
-                        <span><BurgerMenu items={items}/></span>
+                        <span><BurgerMenu _id={packId}/></span>
                     </div>
                     <Button variant='contained'
                             className={styles.button}
