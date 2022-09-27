@@ -9,6 +9,7 @@ import { registrationReducer } from "../features/registration/registrationReduce
 import { restorePasswordReducer } from "../features/restorePassword/restorePasswordReducer";
 import { authReducer } from "./authReducer";
 import { appReducer } from './appReducer';
+import { cardsReducer } from "../features/cards/cardsReducer";
 import { packsReducer } from './../features/packs/packsReducer';
 
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     restorePassword: restorePasswordReducer,
     profile: profileReducer,
     newPassword: newPasswordReducer,
+    cards: cardsReducer,
     packs: packsReducer
 })
 
