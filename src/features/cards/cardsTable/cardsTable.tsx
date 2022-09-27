@@ -1,7 +1,7 @@
 import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {ChangeEvent, FC, useEffect, useState} from "react";
 import React from "react";
-import {addNewCardTC, CardsType, deleteCardTC, editCardTC, findCardTC} from "../cardsReducer";
+import {addNewCardTC, CardsType, deleteCardTC, editCardTC,  getCardsTC} from "../cardsReducer";
 import styles from "./cardsTable.module.scss"
 import {RatingStars} from "../../../components/RatingStars/RatingStars";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
@@ -47,10 +47,8 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
     const [gradeSort, setGradeSort] = useState(false)
     const packName = useAppSelector(state => state.cards.data.packName)
     const localSearchItem = localStorage.getItem('searchItem')
-    const [searchInput, setSearchInput] = useState<string>( '')
-    const debouncedValue = useDebounce<string>(searchInput, 1000)
-
-    // if(localSearchItem){setSearchInput(localSearchItem)}
+    const [searchInput, setSearchInput] = useState<string>(localSearchItem?localSearchItem:'')
+    const debouncedValue = useDebounce<string>(searchInput, 700)
 
     const addNewCardHandler = () => {
         dispatch(addNewCardTC(packId))
@@ -69,8 +67,8 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
     }
 
     useEffect(() => {
-        dispatch(findCardTC(packId, debouncedValue))
         localStorage.setItem('searchItem', debouncedValue)
+        dispatch(getCardsTC({cardsPack_id:packId, cardQuestion:debouncedValue}))
     }, [debouncedValue])
 
     return (
@@ -104,7 +102,7 @@ export const CardsTable: FC<CardsTablePropsType> = ({cards, isOwner, packId, sta
                 <div className={styles.searchTitle}>Search</div>
                 <input type={'search'} placeholder={'Provide your text'}
                        style={{width: '100%', height: '30px', border: '1px solid rgba(0, 0, 0, 0.1)'}}
-                       onChange={onChangeHandler} value={searchInput} />
+                       onChange={onChangeHandler} value={searchInput}/>
             </div>
             <div>
                 <TableContainer className={styles.table}>
