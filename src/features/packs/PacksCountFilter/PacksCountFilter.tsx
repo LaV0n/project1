@@ -11,24 +11,9 @@ export const PacksFilterCount = () => {
    const minValue = min !== null ? min : minCardsCount
    const maxValue = max !== null ? max : maxCardsCount
    const [values, setValues] = useState({ min: minValue, max: maxValue })
-   const [isChanged, setIsChanged] = useState(false)
    useEffect(() => {
       setValues({ min: minValue, max: maxValue })
    }, [minValue, maxValue])
-   useEffect(() => {
-      if (isChanged) {
-         //   dispatch(setFilterValues(values))
-         setIsChanged(false)
-      }
-   }, [isChanged, dispatch, values])
-   const onMouseUp = () => {
-      setIsChanged(true)
-      window.removeEventListener('mouseup', onMouseUp)
-   }
-   const onMouseDownHandler = () => {
-      setIsChanged(false)
-      window.addEventListener('mouseup', onMouseUp)
-   }
    const onChangeHandler = (event: Event, value: number | number[]) => {
       const valuesAsArr = value as number[]
       if (valuesAsArr[1] < 1) return
@@ -42,11 +27,10 @@ export const PacksFilterCount = () => {
             {maxCardsCount > 1 && <>
                <Slider
                   value={[values.min, values.max]}
-                  onMouseDown={onMouseDownHandler}
                   onChange={onChangeHandler}
                   min={minCardsCount}
                   max={maxCardsCount}
-                  onChangeCommitted={() => { console.log(dispatch(setFilterValues(values))); }}
+                  onChangeCommitted={() => { dispatch(setFilterValues(values)) }}
                />
                <div className={style.filter__display_value}>{values.max}</div></>}
          </div>
