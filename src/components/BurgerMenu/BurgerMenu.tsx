@@ -4,22 +4,47 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {FC} from "react";
+import {useAppDispatch} from "../../app/store";
+import {deletePack, editPackName} from "../../features/packs/packsReducer";
+import editIcon from "../../assets/icons/packs/edit.svg"
+import deleteIcon from "../../assets/icons/packs/trash.svg"
+import learnIcon from "../../assets/icons/packs/teach.svg"
+import {useNavigate} from "react-router-dom";
+import {appPath} from "../../common/path/appPath";
+import {getCardsTC} from "../../features/cards/cardsReducer";
 
 const ITEM_HEIGHT = 36;
 
 type BurgerMenuType = {
-    items:string[]
+    _id: string
 }
 
-export const BurgerMenu:FC<BurgerMenuType>  = ({items})=> {
+export const BurgerMenu: FC<BurgerMenuType> = ({_id}) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const dispatch=useAppDispatch()
+    const navigate = useNavigate()
+
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const editHandler = async () => {
+        setAnchorEl(null)
+       await dispatch(editPackName({_id , name: 'updated byBurger' }))
+        dispatch(getCardsTC({cardsPack_id:_id}))
+    }
+    const deleteHandler = () => {
+        setAnchorEl(null)
+        dispatch(deletePack(_id))
+        navigate(appPath.PACKS)
+    }
+    const learnHandler = () => {
+        setAnchorEl(null)
+        alert(`learn pack#${_id}`)
+    }
 
     return (
         <div>
@@ -31,7 +56,7 @@ export const BurgerMenu:FC<BurgerMenuType>  = ({items})=> {
                 aria-haspopup="true"
                 onClick={handleClick}
             >
-                <MoreVertIcon />
+                <MoreVertIcon/>
             </IconButton>
             <Menu
                 id="long-menu"
@@ -48,11 +73,18 @@ export const BurgerMenu:FC<BurgerMenuType>  = ({items})=> {
                     },
                 }}
             >
-                {items.map((option) => (
-                    <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-                        {option}
-                    </MenuItem>
-                ))}
+                <MenuItem onClick={editHandler}>
+                    <img src={editIcon} alt={'0'} style={{marginRight: '10px'}}/>
+                    Edit
+                </MenuItem>
+                <MenuItem onClick={deleteHandler}>
+                    <img src={deleteIcon} alt={'0'} style={{marginRight: '10px'}}/>
+                    Delete
+                </MenuItem>
+                <MenuItem onClick={learnHandler}>
+                    <img src={learnIcon} alt={'0'} style={{marginRight: '10px'}}/>
+                    Learn
+                </MenuItem>
             </Menu>
         </div>
     );
