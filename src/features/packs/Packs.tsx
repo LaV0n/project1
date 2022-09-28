@@ -10,8 +10,9 @@ import { PacksHeader } from "./PacksHeader/PacksHeader";
 import { PacksFooter } from "./PacksFooter/PacksFooter";
 import { Navigate, useSearchParams } from 'react-router-dom';
 import { appPath } from "../../common/path/appPath";
+import { useNavigate } from 'react-router-dom';
 export const Packs = () => {
-
+   const navigate = useNavigate()
    const dispatch = useAppDispatch()
    const { isAuth } = useAppSelector(state => state.auth)
    const [searchParams, setSearchParams] = useSearchParams()
@@ -36,9 +37,12 @@ export const Packs = () => {
          }
          return
       }
+      if (!isAuth) {
+         navigate(appPath.LOGIN)
+         return
+      }
       dispatch(getPacks())
    }, [dispatch, packsState.data.page, packsState.data.pageCount, packsState.params, packsState.isSettings])
-   if (!isAuth) { return <Navigate to={appPath.LOGIN} /> }
    return (
       <div className={style.packs}>
          {packsState.isInitialized &&
