@@ -4,14 +4,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {FC} from "react";
-import {useAppDispatch} from "../../app/store";
-import {deletePack, editPackName} from "../../features/packs/packsReducer";
-import editIcon from "../../assets/icons/packs/edit.svg"
-import deleteIcon from "../../assets/icons/packs/trash.svg"
-import learnIcon from "../../assets/icons/packs/teach.svg"
+import {useAppDispatch} from "../../../app/store";
+import editIcon from "../../../assets/icons/packs/edit.svg"
+import deleteIcon from "../../../assets/icons/packs/trash.svg"
+import learnIcon from "../../../assets/icons/packs/teach.svg"
 import {useNavigate} from "react-router-dom";
-import {appPath} from "../../common/path/appPath";
-import {getCardsTC} from "../../features/cards/cardsReducer";
+import {appPath} from "../../../common/path/appPath";
+import {deletePackFromCards, editPackNameFromCards, getCardsTC} from "../cardsReducer";
 
 const ITEM_HEIGHT = 36;
 
@@ -33,12 +32,12 @@ export const BurgerMenu: FC<BurgerMenuType> = ({_id}) => {
     };
     const editHandler = async () => {
         setAnchorEl(null)
-       await dispatch(editPackName({_id , name: 'updated byBurger' }))
+       await dispatch(editPackNameFromCards({_id , name: 'illis legio' }))
         dispatch(getCardsTC({cardsPack_id:_id}))
     }
     const deleteHandler = () => {
         setAnchorEl(null)
-        dispatch(deletePack(_id))
+        dispatch(deletePackFromCards(_id))
         navigate(appPath.PACKS)
     }
     const learnHandler = () => {

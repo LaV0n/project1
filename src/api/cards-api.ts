@@ -5,9 +5,9 @@ export const cardsAPI = {
     addCard(id: string) {
         const card = {
             cardsPack_id: id,
-            question: "NEW question",
-            answer: "NEW answer",
-            grade: 2,
+            question: "Ultimate Question of Life, The Universe, and Everything",
+            answer: "42",
+            grade: 5,
             shots: 0,
             answerImg: "url or base 64",
             questionImg: "url or base 64",
@@ -22,8 +22,8 @@ export const cardsAPI = {
     editCard(id: string) {
         const card = {
             _id: id,
-            question: 'UPDATE question',
-            comments: "Update comments"
+            question: `What's love?`,
+            answer: "Oh baby, don't hurt me"
         }
         return _instance.put(`cards/card`, {card: card})
     },

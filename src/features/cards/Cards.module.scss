@@ -1,14 +1,14 @@
 .container {
   background: #f9f9fa;
   min-height: 100vh;
-  padding-top: 20px;
-  margin: 60px auto;
-  width: 1008px;
+  padding: 60px;
+  margin:  auto;
   .link{
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
     text-align: center;
+    margin-top: 20px;
     display: flex;
     gap: 10px;
     img {
