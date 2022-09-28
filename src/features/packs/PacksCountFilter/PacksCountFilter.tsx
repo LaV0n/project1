@@ -10,7 +10,7 @@ export const PacksFilterCount = () => {
    const { min, max } = useAppSelector(state => state.packs.params)
    const minValue = min !== null ? min : minCardsCount
    const maxValue = max !== null ? max : maxCardsCount
-   const [values, setValues] = useState({ min: minValue, max: maxValue })
+   const [values, setValues] = useState({ min: minValue === maxValue ? 0 : minValue, max: maxValue })
    useEffect(() => {
       setValues({ min: minValue, max: maxValue })
    }, [minValue, maxValue])
@@ -24,7 +24,7 @@ export const PacksFilterCount = () => {
       <div className={`${style.filter} packs-filter`}>
          <div className={style.filter__title}>Number of cards</div>
          <div className={style.filter__row}>
-            <> <div className={style.filter__display_value}>{values.min}</div>
+            <> <div className={style.filter__display_value}>{minValue}</div>
                <Slider
                   value={[values.min, values.max]}
                   onChange={onChangeHandler}
@@ -33,7 +33,7 @@ export const PacksFilterCount = () => {
                   onChangeCommitted={setFilterChanges}
                />
             </>
-            <div className={style.filter__display_value}>{values.max}</div>
+            <div className={style.filter__display_value}>{maxValue}</div>
          </div>
       </div>
    )
