@@ -1,8 +1,8 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AppDispatchType, AppRootStateType} from "../../app/store";
 import {CardGetType, cardsAPI} from "../../api/cards-api";
 import {AxiosError} from "axios";
-
+import {packsAPI, UpdatePackNameRequestType} from "../../api/packs-api";
 
 const Data = {
     cards: [] as CardsType[],
@@ -147,10 +147,33 @@ export const editCardTC = (cardId: string, packId: string) => async (dispatch: A
 export const dataSortTC = (packId: string, direction: number, value: string) => async(dispatch: AppDispatchType) => {
     dispatch(setStatus({status: true}))
     try {
-        dispatch(getCardsTC({cardsPack_id:packId, direction:direction,value:value}))
+        await dispatch(getCardsTC({cardsPack_id:packId, direction:direction,value:value}))
         dispatch(setStatus({status: false}))
     } catch (err: any) {
         const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
         dispatch(setErrorNotice({notice: error}))
     }
 }
+
+export const editPackNameFromCards = createAsyncThunk<unknown, UpdatePackNameRequestType, { rejectValue: { error: string } }>(
+    'packs/editPackName',
+    async (data, { dispatch }) => {
+        try {
+            await packsAPI.updatePackName(data)
+        } catch (err:any) {
+            const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
+            dispatch(setErrorNotice({notice: error}))
+        }
+    }
+)
+export const deletePackFromCards = createAsyncThunk<unknown, string, { rejectValue: { error: string } }>(
+    'packs/deletePack',
+    async (id, { dispatch }) => {
+        try {
+            await packsAPI.deletePack(id)
+        } catch (err:any) {
+            const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
+            dispatch(setErrorNotice({notice: error}))
+        }
+    }
+)
