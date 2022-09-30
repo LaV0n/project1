@@ -1,8 +1,8 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {AppDispatchType, AppRootStateType} from "../../app/store";
-import {CardGetType, cardsAPI} from "../../api/cards-api";
-import {AxiosError} from "axios";
-import {packsAPI, UpdatePackNameRequestType} from "../../api/packs-api";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AppDispatchType, AppRootStateType } from "../../app/store";
+import { CardGetType, cardsAPI } from "../../api/cards-api";
+import { AxiosError } from "axios";
+import { packsAPI, UpdatePackNameRequestType } from "../../api/packs-api";
 
 const Data = {
     cards: [] as CardsType[],
@@ -93,87 +93,89 @@ const slice = createSlice({
 
 export const cardsReducer = slice.reducer
 
-export const {getCardsData, setStatus, setErrorNotice, setPageCount, setPage} = slice.actions
+export const { getCardsData, setStatus, setErrorNotice, setPageCount, setPage } = slice.actions
 
 export const getCardsTC = (data: CardGetType) => async (dispatch: AppDispatchType, getState: () => AppRootStateType) => {
-    dispatch(setStatus({status: true}))
+    dispatch(setStatus({ status: true }))
     try {
         const state = getState()
-        const response = await cardsAPI.getCards({...data,pageCount:state.cards.pageCount,page:state.cards.page})
-        dispatch(getCardsData({data: response.data}))
-        dispatch(setStatus({status: false}))
+        const response = await cardsAPI.getCards({ ...data, pageCount: state.cards.pageCount, page: state.cards.page })
+        dispatch(getCardsData({ data: response.data }))
+        dispatch(setStatus({ status: false }))
     } catch (err: any) {
         const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
-        dispatch(setErrorNotice({notice: error}))
+        dispatch(setErrorNotice({ notice: error }))
     }
 }
 
 export const addNewCardTC = (packId: string) => async (dispatch: AppDispatchType) => {
-    dispatch(setStatus({status: true}))
+    dispatch(setStatus({ status: true }))
     try {
         await cardsAPI.addCard(packId)
-        dispatch(getCardsTC({cardsPack_id: packId}))
-        dispatch(setStatus({status: false}))
+        dispatch(getCardsTC({ cardsPack_id: packId }))
+        dispatch(setStatus({ status: false }))
     } catch (err: any) {
         const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
-        dispatch(setErrorNotice({notice: error}))
+        dispatch(setErrorNotice({ notice: error }))
     }
 }
 
 export const deleteCardTC = (cardId: string, packId: string) => async (dispatch: AppDispatchType) => {
-    dispatch(setStatus({status: true}))
+    dispatch(setStatus({ status: true }))
     try {
         await cardsAPI.deleteCard(cardId)
-        dispatch(getCardsTC({cardsPack_id: packId}))
-        dispatch(setStatus({status: false}))
+        dispatch(getCardsTC({ cardsPack_id: packId }))
+        dispatch(setStatus({ status: false }))
     } catch (err: any) {
         const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
-        dispatch(setErrorNotice({notice: error}))
+        dispatch(setErrorNotice({ notice: error }))
     }
 }
 
 export const editCardTC = (cardId: string, packId: string) => async (dispatch: AppDispatchType) => {
-    dispatch(setStatus({status: true}))
+    dispatch(setStatus({ status: true }))
     try {
         await cardsAPI.editCard(cardId)
-        dispatch(getCardsTC({cardsPack_id: packId}))
-        dispatch(setStatus({status: false}))
+        dispatch(getCardsTC({ cardsPack_id: packId }))
+        dispatch(setStatus({ status: false }))
     } catch (err: any) {
         const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
-        dispatch(setErrorNotice({notice: error}))
+        dispatch(setErrorNotice({ notice: error }))
     }
 }
 
-export const dataSortTC = (packId: string, direction: number, value: string) => async(dispatch: AppDispatchType) => {
-    dispatch(setStatus({status: true}))
+export const dataSortTC = (packId: string, direction: number, value: string) => async (dispatch: AppDispatchType) => {
+    dispatch(setStatus({ status: true }))
     try {
-        await dispatch(getCardsTC({cardsPack_id:packId, direction:direction,value:value}))
-        dispatch(setStatus({status: false}))
+        await dispatch(getCardsTC({ cardsPack_id: packId, direction: direction, value: value }))
+        dispatch(setStatus({ status: false }))
     } catch (err: any) {
         const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
-        dispatch(setErrorNotice({notice: error}))
+        dispatch(setErrorNotice({ notice: error }))
     }
 }
 
 export const editPackNameFromCards = createAsyncThunk<unknown, UpdatePackNameRequestType, { rejectValue: { error: string } }>(
-    'packs/editPackName',
-    async (data, { dispatch }) => {
+    'cards/editPackName',
+    async (data, { dispatch, rejectWithValue }) => {
         try {
             await packsAPI.updatePackName(data)
-        } catch (err:any) {
+        } catch (err: any) {
             const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
-            dispatch(setErrorNotice({notice: error}))
+            dispatch(setErrorNotice({ notice: error }))
+            return rejectWithValue({ error })
         }
     }
 )
 export const deletePackFromCards = createAsyncThunk<unknown, string, { rejectValue: { error: string } }>(
-    'packs/deletePack',
-    async (id, { dispatch }) => {
+    'cards/deletePack',
+    async (id, { dispatch, rejectWithValue }) => {
         try {
             await packsAPI.deletePack(id)
-        } catch (err:any) {
+        } catch (err: any) {
             const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
-            dispatch(setErrorNotice({notice: error}))
+            dispatch(setErrorNotice({ notice: error }))
+            return rejectWithValue({ error })
         }
     }
 )
