@@ -1,19 +1,25 @@
 {
   "files": {
-    "main.css": "/project1/static/css/main.1408a679.css",
-    "main.js": "/project1/static/js/main.44a40bf4.js",
+    "main.css": "/project1/static/css/main.32b91be7.css",
+    "main.js": "/project1/static/js/main.c31c2d70.js",
     "static/js/787.142da1d4.chunk.js": "/project1/static/js/787.142da1d4.chunk.js",
     "static/media/419.gif": "/project1/static/media/419.25353442322ca9a66207.gif",
     "static/media/Montserrat-VariableFont_wght.ttf": "/project1/static/media/Montserrat-VariableFont_wght.3faa3eef13649db02044.ttf",
     "static/media/ava.png": "/project1/static/media/ava.d7ee22f9718e06fc2500.png",
     "static/media/incubatorLogo.svg": "/project1/static/media/incubatorLogo.f5da7f8bedc2bfe87aba97c3ef658738.svg",
+    "static/media/filterRemove.svg": "/project1/static/media/filterRemove.8ace35d0bbba3a3375e90825a0ecbf4c.svg",
+    "static/media/trash.svg": "/project1/static/media/trash.b791b8fa7991d0e4e9535dd5338d2caa.svg",
+    "static/media/edit.svg": "/project1/static/media/edit.2e348c1bdb88ec143e7247e644135a0c.svg",
+    "static/media/teach.svg": "/project1/static/media/teach.61316ef9f9bb14acdf57faf399645aeb.svg",
+    "static/media/searchIcon.svg": "/project1/static/media/searchIcon.21d49aad92e6d122c55fd16d8ffcadbb.svg",
     "index.html": "/project1/index.html",
-    "main.1408a679.css.map": "/project1/static/css/main.1408a679.css.map",
-    "main.44a40bf4.js.map": "/project1/static/js/main.44a40bf4.js.map",
+    "static/media/drop.svg": "/project1/static/media/drop.fea3ba07db5a1e87b16c9acd04731f72.svg",
+    "main.32b91be7.css.map": "/project1/static/css/main.32b91be7.css.map",
+    "main.c31c2d70.js.map": "/project1/static/js/main.c31c2d70.js.map",
     "787.142da1d4.chunk.js.map": "/project1/static/js/787.142da1d4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1408a679.css",
-    "static/js/main.44a40bf4.js"
+    "static/css/main.32b91be7.css",
+    "static/js/main.c31c2d70.js"
   ]
 }
