@@ -43,6 +43,8 @@ const slice = createSlice({
          state.params.searchPacksName = null
          state.params.min = null
          state.params.max = null
+         state.data.maxCardsCount = 0
+         state.data.minCardsCount = 0
          state.params.sortPacks = null
       },
       initSettings: (state, action: PayloadAction<{ [key: string]: string | null }>) => {
