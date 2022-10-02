@@ -11,6 +11,7 @@ import { authReducer } from "./authReducer";
 import { appReducer } from './appReducer';
 import { cardsReducer } from "../features/cards/cardsReducer";
 import { packsReducer } from './../features/packs/packsReducer';
+import {learningReducer} from "../features/learning/learningReducer";
 
 const rootReducer = combineReducers({
     app: appReducer,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     newPassword: newPasswordReducer,
     cards: cardsReducer,
-    packs: packsReducer
+    packs: packsReducer,
+    learning:learningReducer
 })
 
 export const store = configureStore({ reducer: rootReducer })

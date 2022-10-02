@@ -15,6 +15,7 @@ import { initializeApp } from './appReducer';
 import { NewPassword } from '../features/newPassword/NewPassword';
 import { Cards } from "../features/cards/Cards.";
 import { Packs } from '../features/packs/Packs';
+import {Learning} from "../features/learning/Learning";
 function App() {
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector(state => state.app.isInitialized)
@@ -36,6 +37,7 @@ function App() {
                     <Route path={appPath.CARDS} element={<Cards />} />
                     <Route path={appPath.MAIN} element={<Profile />} />
                     <Route path={appPath.PACKS} element={<Packs />} />
+                    <Route path={appPath.LEARNING} element={<Learning />} />
                     <Route path={'/'} element={<Navigate to={appPath.PROFILE} />} />
                     <Route path={'*'} element={<Navigate to={appPath.ERRORPAGE} />} />
                     <Route path={'/testpage'} element={<TestPage />} />
