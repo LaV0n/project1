@@ -58,6 +58,7 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
                      <TableCell align="center">{dateFormat(pack.updated)}</TableCell>
                      <TableCell className={style.pack_created} align="center">{pack.user_name}</TableCell>
                      <ActionTableCell
+                        cardsCount={pack.cardsCount}
                         openDeleteModal={() => { openDeleteModal({ packName: pack.name, id: pack._id }) }}
                         openEditModal={() => { openEditModal({ packName: pack.name, id: pack._id }) }}
                         packUserID={pack.user_id}
