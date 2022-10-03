@@ -3,16 +3,16 @@ import { RatingStars } from "../../../../components/RatingStars/RatingStars";
 import styles from "../cardsTable.module.scss";
 import editIcon from "../../../../assets/icons/packs/edit.svg";
 import deleteIcon from "../../../../assets/icons/packs/trash.svg";
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
-import { deleteCardTC, editCardTC } from "../../cardsReducer";
+import { deleteCardTC } from "../../cardsReducer";
 import { DeleteCardModal } from "../../CardsModals/DeleteCardModal/DeleteCardModal";
 import { EditCardModal } from "../../CardsModals/EditCardModal/EditCardModal";
 
 type TableCardBodyType = {
    isOwner: boolean
 }
-type SelectedCardType = { cardId: string, packId: string, cardQuestion: string, cardAnswer: string }
+type SelectedCardType = { cardId: string, packId: string, question: string, answer: string }
 const formatDate = (dateCard: string) => {
    const date = new Date(dateCard)
    const yyyy = date.getFullYear();
@@ -34,7 +34,7 @@ export const TableCardBody: FC<TableCardBodyType> = ({ isOwner }) => {
    const cards = useAppSelector(state => state.cards.data.cards)
    const status = useAppSelector(state => state.cards.status)
    //actions 
-   const [selectedCard, setSelectedCard] = useState<SelectedCardType>({ cardId: '', packId: '', cardAnswer: '', cardQuestion: '' })
+   const [selectedCard, setSelectedCard] = useState<SelectedCardType>({ cardId: '', packId: '', question: '', answer: '' })
    //delete card
    const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
    const openDeleteModal = (data: SelectedCardType) => {
@@ -51,9 +51,8 @@ export const TableCardBody: FC<TableCardBodyType> = ({ isOwner }) => {
       setSelectedCard(data)
       setIsOpenEditModal(true)
    }
-   const onChangeQuestionHandler = (value: string) => { setSelectedCard(data => ({ ...data, cardQuestion: value })) }
-   const onChangeAnswerHandler = (value: string) => { setSelectedCard(data => ({ ...data, cardAnswer: value })) }
-   //!
+   const onChangeQuestionHandler = (value: string) => { setSelectedCard(data => ({ ...data, question: value })) }
+   const onChangeAnswerHandler = (value: string) => { setSelectedCard(data => ({ ...data, answer: value })) }
    return (
       <TableBody>
          {cards.length === 0
@@ -86,7 +85,7 @@ export const TableCardBody: FC<TableCardBodyType> = ({ isOwner }) => {
                         <div className={styles.toolsIcon}>
                            <button onClick={() => {
                               openEditModal(
-                                 { cardId: card._id, packId: card.cardsPack_id, cardQuestion: card.question, cardAnswer: card.answer }
+                                 { cardId: card._id, packId: card.cardsPack_id, question: card.question, answer: card.answer }
                               )
                            }}
                               disabled={status} style={{ backgroundColor: 'white' }}
@@ -96,7 +95,7 @@ export const TableCardBody: FC<TableCardBodyType> = ({ isOwner }) => {
                            <button
                               onClick={() => {
                                  openDeleteModal(
-                                    { cardId: card._id, packId: card.cardsPack_id, cardQuestion: card.question, cardAnswer: card.answer }
+                                    { cardId: card._id, packId: card.cardsPack_id, question: card.question, answer: card.answer }
                                  )
                               }}
                               disabled={status} style={{ backgroundColor: 'white' }}
@@ -109,15 +108,15 @@ export const TableCardBody: FC<TableCardBodyType> = ({ isOwner }) => {
                </TableRow>
             ))}
          <DeleteCardModal
-            cardName={selectedCard.cardQuestion}
+            cardName={selectedCard.question}
             isOpen={isOpenDeleteModal}
             onClose={() => { setIsOpenDeleteModal(false) }}
             onDeleteCard={deleteCardHandler}
             isLoading={status}
          />
          <EditCardModal
-            cardQuestion={selectedCard.cardQuestion}
-            cardAnswer={selectedCard.cardAnswer}
+            question={selectedCard.question}
+            answer={selectedCard.answer}
             cardId={selectedCard.cardId}
             packId={selectedCard.packId}
             isLoading={status}

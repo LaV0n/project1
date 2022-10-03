@@ -2,19 +2,8 @@ import { instance } from "./instance"
 import { DataType } from "../features/cards/cardsReducer";
 
 export const cardsAPI = {
-    addCard(id: string) {
-        const card = {
-            cardsPack_id: id,
-            question: "Ultimate Question of Life, The Universe, and Everything",
-            answer: "42",
-            grade: 5,
-            shots: 0,
-            answerImg: "url or base 64",
-            questionImg: "url or base 64",
-            questionVideo: "url or base 64",
-            answerVideo: "url or base 64",
-        }
-        return instance.post('cards/card', { card: card })
+    addCard(card: AddNewCardRequestType) {
+        return instance.post('cards/card', { card })
     },
     deleteCard(id: string) {
         return instance.delete(`cards/card?id=${id}`)
@@ -40,12 +29,22 @@ export const cardsAPI = {
             })
     },
 }
+export type AddNewCardRequestType = {
+    cardsPack_id: string,
+    question: string,
+    answer: string,
+    //optional
+    grade?: number,
+    shots?: number,
+    answerImg?: string,
+    questionImg?: string,
+    questionVideo?: string,
+    answerVideo?: string,
+}
 export type EditCardRequestType = {
     _id: string
-    question: string
-    answer: string
     comments?: string
-}
+} & Pick<AddNewCardRequestType, 'question' | 'answer'>
 export type CardGetType = {
     cardsPack_id: string
     min?: number | null

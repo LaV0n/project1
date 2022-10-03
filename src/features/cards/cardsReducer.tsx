@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatchType, AppRootStateType } from "../../app/store";
-import { CardGetType, cardsAPI, EditCardRequestType } from "../../api/cards-api";
+import { AddNewCardRequestType, CardGetType, cardsAPI, EditCardRequestType } from "../../api/cards-api";
 import { AxiosError } from "axios";
 import { packsAPI, UpdatePackNameRequestType } from "../../api/packs-api";
 
@@ -108,15 +108,17 @@ export const getCardsTC = (data: CardGetType) => async (dispatch: AppDispatchTyp
     }
 }
 
-export const addNewCardTC = (packId: string) => async (dispatch: AppDispatchType) => {
+export const addNewCardTC = (card: AddNewCardRequestType) => async (dispatch: AppDispatchType) => {
     dispatch(setStatus({ status: true }))
     try {
-        await cardsAPI.addCard(packId)
-        dispatch(getCardsTC({ cardsPack_id: packId }))
+        await cardsAPI.addCard(card)
+        dispatch(getCardsTC({ cardsPack_id: card.cardsPack_id }))
         dispatch(setStatus({ status: false }))
+        return true
     } catch (err: any) {
         const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
         dispatch(setErrorNotice({ notice: error }))
+        return false
     }
 }
 

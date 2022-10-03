@@ -1,20 +1,31 @@
+import { TextField } from "@mui/material"
 import { ChangeEvent, FC, useState } from "react"
 import { useAppDispatch } from "../../../../app/store"
 import { BasicModal } from "../../../../components/BasicModal/BasicModal"
-import style from './editCardModal.module.scss'
-import { TextField } from '@mui/material';
-import { editCardTC } from "../../cardsReducer";
-
-export const EditCardModal: FC<EditCardModalPropsType> = (
-   { isOpen, onClosehandler, isLoading, question, answer, onChangeQuestionHandler, onChangeAnswerHandler, cardId, packId }
+import style from './addNewCardModal.module.scss'
+import { addNewCardTC } from './../../cardsReducer';
+export const AddNewCardModal: FC<AddNewCardModalPropsType> = (
+   { isOpen, onClosehandler, isLoading, packId }
 ) => {
    const dispatch = useAppDispatch()
+   const [question, setQuestion] = useState('')
+   const [answer, setAnswer] = useState('')
    const [questionError, setQuestionError] = useState('')
    const [answerError, setAnswerError] = useState('')
+   const onChangeQuestion = (e: ChangeEvent<HTMLInputElement>) => {
+      setQuestionError('')
+      setQuestion(e.currentTarget.value)
+   }
+   const onChangeAnswer = (e: ChangeEvent<HTMLInputElement>) => {
+      setAnswerError('')
+      setAnswer(e.currentTarget.value)
+   }
    const onClose = () => {
-      onClosehandler()
       setQuestionError('')
       setAnswerError('')
+      setAnswer('')
+      setQuestion('')
+      onClosehandler()
    }
    const setEditedCard = async () => {
       if (!question.trim()) {
@@ -25,27 +36,20 @@ export const EditCardModal: FC<EditCardModalPropsType> = (
       }
       if (!!question.trim() && !!answer.trim()) {
          const card = {
-            _id: cardId,
+            cardsPack_id: packId,
             question: question,
             answer: answer
          }
-         const action = await dispatch(editCardTC(card, packId))
+         const action = await dispatch(addNewCardTC(card))
          if (action) {
-            onClosehandler()
+            onClose()
          }
       }
    }
-   const onChangeQuestion = (e: ChangeEvent<HTMLInputElement>) => {
-      setQuestionError('')
-      onChangeQuestionHandler(e.currentTarget.value)
-   }
-   const onChangeAnswer = (e: ChangeEvent<HTMLInputElement>) => {
-      setAnswerError('')
-      onChangeAnswerHandler(e.currentTarget.value)
-   }
+
    return (
       <BasicModal
-         className={style.editCard}
+         className={style.addCard}
          open={isOpen}
          title='Edit card'
          onClose={onClose}
@@ -85,14 +89,9 @@ export const EditCardModal: FC<EditCardModalPropsType> = (
       </BasicModal>
    )
 }
-type EditCardModalPropsType = {
+type AddNewCardModalPropsType = {
    isLoading: boolean
    isOpen: boolean
    onClosehandler: () => void
-   question: string
-   answer: string
-   onChangeQuestionHandler: (value: string) => void
-   onChangeAnswerHandler: (value: string) => void
-   cardId: string
    packId: string
 }
