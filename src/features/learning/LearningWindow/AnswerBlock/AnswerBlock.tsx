@@ -1,20 +1,23 @@
-import {useAppSelector} from "../../../../app/store";
+import {useAppDispatch} from "../../../../app/store";
 import {Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 import style from "../LearningWindow.module.scss";
 import {ChangeEvent, useState} from "react";
+import {changeGradeCardTC} from "../../learningReducer";
 
 type AnswerBlockType ={
     setAnswerBlock:(value:boolean)=>void
+    cardId:string
+    answer:string
 }
 
-export const AnswerBlock =({setAnswerBlock}:AnswerBlockType)=>{
+export const AnswerBlock =({setAnswerBlock, cardId, answer}:AnswerBlockType)=>{
 
-    const answer=useAppSelector(state => state.learning.data[0].answer)
     const [rating,setRating]=useState('1')
+    const dispatch=useAppDispatch()
 
     const nextButtonHandler=()=>{
         setAnswerBlock(false)
-        alert(rating)
+        dispatch(changeGradeCardTC(cardId,Number(rating)))
     }
     const setRatingHandler=(e:ChangeEvent<HTMLInputElement>)=>{
         setRating(e.target.value)

@@ -7,7 +7,7 @@ export const cardsAPI = {
             cardsPack_id: id,
             question: "Ultimate Question of Life, The Universe, and Everything",
             answer: "42",
-            grade: 5,
+            grade: 0,
             shots: 0,
             answerImg: "url or base 64",
             questionImg: "url or base 64",
@@ -42,6 +42,9 @@ export const cardsAPI = {
                 }
             })
     },
+    addGrade(grade:number,cardId:string){
+        return _instance.put('cards/grade',{grade: grade, card_id:cardId})
+    }
 }
 
 export type CardGetType = {
