@@ -18,8 +18,9 @@ import { useState } from 'react';
 import { PacksTableHead } from './PacksTableHead/PacksTableHead';
 import { DeletePackModal } from '../PackModals/DeletePackModal/DeletePackModal';
 import { EditPackModal } from './../PackModals/EditPackModal/EditPackModal';
+import { auth } from './../../../common/selectors/selectors';
 export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
-   const authUserID = useAppSelector(state => state.auth.data._id)
+   const authUserID = useAppSelector(auth).data._id
    const navigate = useNavigate()
    const dispatch = useAppDispatch()
    const [selectedPack, setSelectedPack] = useState<SelectedPackType>({ packName: '', id: '' })

@@ -3,8 +3,9 @@ import { useState, ChangeEvent, useEffect } from 'react';
 import { setSearchPacksName } from '../../packsReducer';
 import { ReactComponent as SearchIcon } from "../../../../assets/icons/packs/searchIcon.svg"
 import style from './searchPacks.module.scss'
+import { packs } from '../../../../common/selectors/selectors';
 export const SearchPacks = () => {
-   const { searchPacksName } = useAppSelector(state => state.packs.params)
+   const { searchPacksName } = useAppSelector(packs).params
    const [value, setValue] = useState<string>('')
    const [isSearching, setIsSearching] = useState(false)
    const dispatch = useAppDispatch()

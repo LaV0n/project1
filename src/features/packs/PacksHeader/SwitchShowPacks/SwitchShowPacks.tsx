@@ -1,13 +1,14 @@
 import { Button } from "@mui/material"
 import { useSearchParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../../app/store"
+import { auth, packs } from "../../../../common/selectors/selectors"
 import { setUserPacksId } from "../../packsReducer"
 import style from "./switchShowPacks.module.scss"
 import "./switchShowPacks.scss"
 export const SwitchShowPacks = () => {
    const dispatch = useAppDispatch()
-   const authUserId = useAppSelector(state => state.auth.data._id)
-   const packsForUserId = useAppSelector(state => state.packs.params.user_id)
+   const authUserId = useAppSelector(auth).data._id
+   const packsForUserId = useAppSelector(packs).params.user_id
    const isMyPacks = packsForUserId === authUserId
    const [searchParams, setSearchParams] = useSearchParams()
    const onMyPacks = () => {

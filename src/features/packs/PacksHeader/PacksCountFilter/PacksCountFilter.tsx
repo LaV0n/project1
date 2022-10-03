@@ -4,9 +4,10 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store';
 import { setFilterValues } from '../../packsReducer';
 import style from "./packsCountFilter.module.scss"
 import "./thumb.scss"
+import { packs } from '../../../../common/selectors/selectors';
 export const PacksCountFilter = () => {
    const dispatch = useAppDispatch()
-   const { minCardsCount, maxCardsCount } = useAppSelector(state => state.packs.data)
+   const { minCardsCount, maxCardsCount } = useAppSelector(packs).data
    const [values, setValues] = useState({ min: minCardsCount, max: maxCardsCount })
    useEffect(() => {
       setValues({ min: minCardsCount, max: maxCardsCount })
