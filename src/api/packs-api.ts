@@ -1,16 +1,16 @@
-import { _instance } from './_instance';
+import { instance } from './instance';
 export const packsAPI = {
    getPacks: (params: GetPacksRequestType) => {
-      return _instance.get<PacksDataType>('/cards/pack', { params })
+      return instance.get<PacksDataType>('/cards/pack', { params })
    },
    createNewPack: (cardsPack: CreateNewPackRequestType) => {
-      return _instance.post('/cards/pack', { cardsPack })
+      return instance.post('/cards/pack', { cardsPack })
    },
    deletePack: (id: string) => {
-      return _instance.delete(`/cards/pack?id=${id}`)
+      return instance.delete(`/cards/pack?id=${id}`)
    },
    updatePackName: (cardsPack: UpdatePackNameRequestType) => {
-      return _instance.put('/cards/pack', { cardsPack })
+      return instance.put('/cards/pack', { cardsPack })
    },
 }
 type GetPacksRequestType = {
@@ -27,12 +27,13 @@ type GetPacksRequestType = {
 }
 export type CreateNewPackRequestType = {
    name: string
+   private: boolean
    deckCover?: string | null
-   private?: boolean
 }
 export type UpdatePackNameRequestType = {
    _id: string
    name: string
+   private: boolean
 }
 export type PackType = {
    _id: string

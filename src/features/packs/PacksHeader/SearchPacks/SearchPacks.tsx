@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from './../../../app/store';
+import { useAppDispatch, useAppSelector } from '../../../../app/store';
 import { useState, ChangeEvent, useEffect } from 'react';
-import { setSearchPacksName } from '../packsReducer';
-import { ReactComponent as SearchIcon } from "../../../assets/icons/packs/searchIcon.svg"
+import { setSearchPacksName } from '../../packsReducer';
+import { ReactComponent as SearchIcon } from "../../../../assets/icons/packs/searchIcon.svg"
 import style from './searchPacks.module.scss'
 export const SearchPacks = () => {
    const { searchPacksName } = useAppSelector(state => state.packs.params)

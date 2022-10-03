@@ -4,21 +4,18 @@ import teach from '../../../../assets/icons/packs/teach.svg'
 import edit from '../../../../assets/icons/packs/edit.svg'
 import trash from '../../../../assets/icons/packs/trash.svg'
 import style from './actionTableCell.module.scss'
-import { StatusType } from '../../../../common/types';
-export const ActionTableCell: FC<ActionTableCellPropsType> = ({ packID, authUserID, packUserID, onDeleteClick, onEditClick, status }) => {
+export const ActionTableCell: FC<ActionTableCellPropsType> = ({ authUserID, packUserID, openDeleteModal, openEditModal }) => {
    return (
       <TableCell align="center" className={style.action}>
-         <button className={style.action__button} disabled={status === 'pending'}>
-            <img src={teach} alt="learn pack" />
-         </button>
+         <button disabled={authUserID !== packUserID} className={style.action__button} ><img src={teach} alt="learn pack" /></button>
          {
             authUserID === packUserID &&
             <>
-               <button onClick={() => { onEditClick(packID) }} disabled={status === 'pending'}
+               <button onClick={() => { openEditModal() }}
                   className={style.action__button}>
                   <img src={edit} alt="edit pack" />
                </button>
-               <button onClick={() => { onDeleteClick(packID) }} disabled={status === 'pending'}
+               <button onClick={() => { openDeleteModal() }}
                   className={style.action__button}>
                   <img src={trash} alt="delete pack" />
                </button>
@@ -28,10 +25,8 @@ export const ActionTableCell: FC<ActionTableCellPropsType> = ({ packID, authUser
    )
 }
 type ActionTableCellPropsType = {
-   status: StatusType
    packUserID: string
-   packID: string
    authUserID: string
-   onDeleteClick: (packID: string) => void
-   onEditClick: (packID: string) => void
+   openDeleteModal: () => void
+   openEditModal: () => void
 }

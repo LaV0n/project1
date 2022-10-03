@@ -1,8 +1,8 @@
 import TableCell from '@mui/material/TableCell';
 import { FC } from 'react';
 import style from './tableCellSort.module.scss'
-import { ReactComponent as Drop } from '../../../../assets/icons/packs/drop.svg'
-import { SortType } from '../../../../common/types';
+import { ReactComponent as Drop } from '../../../../../assets/icons/packs/drop.svg'
+import { SortType } from '../../../../../common/types';
 export enum SortFrom {
    smallest = '1',
    largest = '0'

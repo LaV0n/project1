@@ -1,7 +1,7 @@
 import { Button } from "@mui/material"
 import { useSearchParams } from "react-router-dom"
-import { useAppDispatch, useAppSelector } from "../../../app/store"
-import { setUserPacksId } from "../packsReducer"
+import { useAppDispatch, useAppSelector } from "../../../../app/store"
+import { setUserPacksId } from "../../packsReducer"
 import style from "./switchShowPacks.module.scss"
 import "./switchShowPacks.scss"
 export const SwitchShowPacks = () => {

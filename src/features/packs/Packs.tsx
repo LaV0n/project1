@@ -8,15 +8,17 @@ import style from './packs.module.scss'
 import { LoaderFullSize } from "../../components/LoaderFullSize/LoaderFullSize";
 import { PacksHeader } from "./PacksHeader/PacksHeader";
 import { PacksFooter } from "./PacksFooter/PacksFooter";
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { appPath } from "../../common/path/appPath";
 import { useNavigate } from 'react-router-dom';
+import { auth, packs } from "../../common/selectors/selectors";
+
 export const Packs = () => {
    const navigate = useNavigate()
    const dispatch = useAppDispatch()
-   const { isAuth } = useAppSelector(state => state.auth)
+   const { isAuth } = useAppSelector(auth)
+   const packsState = useAppSelector(packs)
    const [searchParams, setSearchParams] = useSearchParams()
-   const packsState = useAppSelector(state => state.packs)
    const onCloseSnackbar = () => { dispatch(setNotice('')) }
    const onChangePage = (page: number) => { dispatch(setPage(page)) }
    const onChangePageCount = (pageCount: number) => { dispatch(setPageCount(pageCount)) }
@@ -48,7 +50,7 @@ export const Packs = () => {
          {packsState.isInitialized &&
             <>
                <PacksHeader />
-               <PacksTable status={packsState.status} packs={packsState.data.cardPacks} sortPacksValue={packsState.params.sortPacks} />
+               <PacksTable status={packsState.status} packs={packsState.data.cardPacks} />
                <PacksFooter
                   onChangePage={onChangePage}
                   onChangePageCount={onChangePageCount}
@@ -65,3 +67,9 @@ export const Packs = () => {
 type ParamsType = {
    [key: string]: string
 }
+
+
+
+
+
+

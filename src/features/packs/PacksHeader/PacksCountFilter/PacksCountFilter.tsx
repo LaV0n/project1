@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
-import { useAppDispatch, useAppSelector } from '../../../app/store';
-import { setFilterValues } from '../packsReducer';
+import { useAppDispatch, useAppSelector } from '../../../../app/store';
+import { setFilterValues } from '../../packsReducer';
 import style from "./packsCountFilter.module.scss"
 import "./thumb.scss"
-export const PacksFilterCount = () => {
+export const PacksCountFilter = () => {
    const dispatch = useAppDispatch()
    const { minCardsCount, maxCardsCount } = useAppSelector(state => state.packs.data)
    const [values, setValues] = useState({ min: minCardsCount, max: maxCardsCount })

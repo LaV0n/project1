@@ -1,24 +1,24 @@
 import { LoginRequestType, AuthResponseDataType, NewPasswordRequestType, RegistrationRequestType } from "../common/types"
-import { _instance } from "./_instance"
+import { instance } from "./instance"
 
 export const authAPI = {
    me() {
-      return _instance.post<AuthResponseDataType>('auth/me')
+      return instance.post<AuthResponseDataType>('auth/me')
    },
    logout() {
-      return _instance.delete('auth/me')
+      return instance.delete('auth/me')
    },
    login(data: LoginRequestType) {
-      return _instance.post<AuthResponseDataType>('auth/login', data)
+      return instance.post<AuthResponseDataType>('auth/login', data)
    },
    registration(data: RegistrationRequestType) {
-      return _instance.post('/auth/register', data)
+      return instance.post('/auth/register', data)
    },
    newPassword(data: NewPasswordRequestType) {
-      return _instance.post('auth/set-new-password', data)
+      return instance.post('auth/set-new-password', data)
    },
    restorePassword(email: string) {
-      return _instance.post('auth/forgot', {
+      return instance.post('auth/forgot', {
          email,
          from: "test-front-admin <ai73a@yandex.by>",
          message: `<div style="background-color: lime; padding: 15px">
@@ -29,7 +29,7 @@ export const authAPI = {
       })
    },
    changeName(name: string) {
-      return _instance.put<{ updatedUser: AuthResponseDataType }>('auth/me', {
+      return instance.put<{ updatedUser: AuthResponseDataType }>('auth/me', {
          name,
          avatar: "https://www.placecage.com/c/140/200"
       })
