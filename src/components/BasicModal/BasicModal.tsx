@@ -1,7 +1,7 @@
 import { Button, ButtonProps, Modal } from "@mui/material";
 import { FC, ReactNode } from "react"
-import { ReactComponent as Cross } from '../../../assets/icons/cross.svg'
-import { LoaderFullSize } from "../../../components/LoaderFullSize/LoaderFullSize";
+import { ReactComponent as Cross } from '../../assets/icons/cross.svg'
+import { LoaderFullSize } from "../LoaderFullSize/LoaderFullSize";
 import style from './basicModal.module.scss'
 export const BasicModal: FC<BasicModalPropsType> = (
    { children, cancelButton, confirmButton, title, open, className, onClose, isLoading }

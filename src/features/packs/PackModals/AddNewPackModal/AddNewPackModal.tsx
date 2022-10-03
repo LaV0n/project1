@@ -2,7 +2,7 @@ import { Checkbox, TextField } from "@mui/material"
 import { ChangeEvent, FC, SyntheticEvent, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../../../app/store"
 import { packs } from "../../../../common/selectors/selectors"
-import { BasicModal } from "../../BasicModal/BasicModal"
+import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import { addNewPack } from "../../packsReducer"
 import style from './addNewPackModal.module.scss'
 export const AddNewPackModal: FC<AddNewPackModalPropsType> = ({ isOpen, onClosehandler }) => {

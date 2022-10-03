@@ -22,13 +22,8 @@ export const cardsAPI = {
     deleteCard(id: string) {
         return instance.delete(`cards/card?id=${id}`)
     },
-    editCard(id: string) {
-        const card = {
-            _id: id,
-            question: 'NEW question',
-            comments: "NEW comments"
-        }
-        return instance.put(`cards/card`, { card: card })
+    editCard(card: EditCardRequestType) {
+        return instance.put(`cards/card`, { card })
     },
     sortData(idPack: string, direction: number, value: string) {
         return instance.get<DataType>(`cards/card?cardsPack_id=${idPack}&sortCards=${direction}${value}`)
@@ -36,4 +31,10 @@ export const cardsAPI = {
     findQuestion(id: string, cardQuestion: string) {
         return instance.get<DataType>(`cards/card?cardsPack_id=${id}&cardQuestion=${cardQuestion}`)
     }
+}
+export type EditCardRequestType = {
+    _id: string,
+    question: string
+    answer: string
+    comments?: string
 }

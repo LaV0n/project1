@@ -1,17 +1,17 @@
-import { BasicModal } from "../../BasicModal/BasicModal"
+import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import style from './deletePackModal.module.scss'
 import { FC } from 'react';
-import { StatusType } from "../../../../common/types";
-export const DeletePackModal: FC<DeletePackModalPropsType> = ({ packName, isOpen, onClose, onDeletePack, status }) => {
+export const DeletePackModal: FC<DeletePackModalPropsType> = ({ packName, isOpen, onClose, onDeletePack, isLoading }) => {
+   //  console.log('delete');
    return (
       <BasicModal
          className={style.deletePack}
          open={isOpen}
          title='Delete Pack'
          onClose={onClose}
-         cancelButton={{ title: 'Cancel', buttonProps: { onClick: onClose, disabled: status === 'pending' } }}
-         confirmButton={{ title: 'Delete', buttonProps: { onClick: onDeletePack, disabled: status === 'pending' } }}
-         isLoading={status === 'pending'}
+         cancelButton={{ title: 'Cancel', buttonProps: { onClick: onClose, disabled: isLoading } }}
+         confirmButton={{ title: 'Delete', buttonProps: { onClick: onDeletePack, disabled: isLoading } }}
+         isLoading={isLoading}
       >
          <div className={style.text}>
             Do you really want to remove <span className={style.pack_name}>{packName}?</span>
@@ -21,9 +21,9 @@ export const DeletePackModal: FC<DeletePackModalPropsType> = ({ packName, isOpen
    )
 }
 type DeletePackModalPropsType = {
+   isLoading: boolean
    packName: string
    isOpen: boolean
    onClose: () => void
    onDeletePack: () => void
-   status: StatusType
 }

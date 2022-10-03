@@ -1,11 +1,10 @@
 import { Checkbox, TextField } from "@mui/material"
-import { ChangeEvent, FC, SyntheticEvent, useEffect, useState } from "react"
+import { ChangeEvent, FC, SyntheticEvent, useState } from "react"
 import { useAppDispatch } from "../../../../app/store"
-import { StatusType } from "../../../../common/types"
-import { BasicModal } from "../../BasicModal/BasicModal"
+import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import { editPackName } from "../../packsReducer"
 import style from './editPackModal.module.scss'
-export const EditPackModal: FC<AddNewPackModalPropsType> = ({ isOpen, onClosehandler, status, packName, onChangeHandler, id }) => {
+export const EditPackModal: FC<EditPackModal> = ({ isOpen, onClosehandler, isLoading, packName, onChangeHandler, id }) => {
    const dispatch = useAppDispatch()
    const [errorMessage, setErrorMessage] = useState('')
    const [checked, setChecked] = useState(false)
@@ -21,7 +20,6 @@ export const EditPackModal: FC<AddNewPackModalPropsType> = ({ isOpen, onClosehan
       onClosehandler()
    }
    const onCancel = () => {
-      onChangeHandler('')
       setErrorMessage('')
       setChecked(false)
       onClosehandler()
@@ -43,14 +41,14 @@ export const EditPackModal: FC<AddNewPackModalPropsType> = ({ isOpen, onClosehan
          open={isOpen}
          title='Edit pack'
          onClose={onClose}
-         cancelButton={{ title: 'Cancel', buttonProps: { onClick: onCancel, disabled: status === 'pending' } }}
+         cancelButton={{ title: 'Cancel', buttonProps: { onClick: onCancel, disabled: isLoading } }}
          confirmButton={
             {
                title: 'Save',
-               buttonProps: { onClick: setEditedPack, disabled: status === 'pending' || !!errorMessage }
+               buttonProps: { onClick: setEditedPack, disabled: isLoading || !!errorMessage }
             }
          }
-         isLoading={status === 'pending'}
+         isLoading={isLoading}
       >
          <div className={style.input}>
             <TextField
@@ -71,8 +69,8 @@ export const EditPackModal: FC<AddNewPackModalPropsType> = ({ isOpen, onClosehan
       </BasicModal>
    )
 }
-type AddNewPackModalPropsType = {
-   status: StatusType
+type EditPackModal = {
+   isLoading: boolean
    isOpen: boolean
    onClosehandler: () => void
    packName: string
