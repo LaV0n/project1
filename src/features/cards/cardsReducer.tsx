@@ -140,9 +140,11 @@ export const editCardTC = (card: EditCardRequestType, packId: string) => async (
         await cardsAPI.editCard(card)
         dispatch(getCardsTC({ cardsPack_id: packId }))
         dispatch(setStatus({ status: false }))
+        return true
     } catch (err: any) {
         const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
         dispatch(setErrorNotice({ notice: error }))
+        return false
     }
 }
 

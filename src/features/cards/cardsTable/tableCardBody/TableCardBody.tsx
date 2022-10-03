@@ -7,6 +7,7 @@ import React, { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import { deleteCardTC, editCardTC } from "../../cardsReducer";
 import { DeleteCardModal } from "../../CardsModals/DeleteCardModal/DeleteCardModal";
+import { EditCardModal } from "../../CardsModals/EditCardModal/EditCardModal";
 
 type TableCardBodyType = {
    isOwner: boolean
@@ -45,9 +46,14 @@ export const TableCardBody: FC<TableCardBodyType> = ({ isOwner }) => {
       if (action) { setIsOpenDeleteModal(false) }
    }
    //edit card
-   const editCardHandler = (cardId: string, packId: string) => {
-      //   dispatch(editCardTC(cardId, packId))
+   const [isOpenEditModal, setIsOpenEditModal] = useState(false)
+   const openEditModal = (data: SelectedCardType) => {
+      setSelectedCard(data)
+      setIsOpenEditModal(true)
    }
+   const onChangeQuestionHandler = (value: string) => { setSelectedCard(data => ({ ...data, cardQuestion: value })) }
+   const onChangeAnswerHandler = (value: string) => { setSelectedCard(data => ({ ...data, cardAnswer: value })) }
+   //!
    return (
       <TableBody>
          {cards.length === 0
@@ -78,7 +84,11 @@ export const TableCardBody: FC<TableCardBodyType> = ({ isOwner }) => {
                   {isOwner &&
                      <TableCell align="right" style={{ width: '60px' }}>
                         <div className={styles.toolsIcon}>
-                           <button onClick={() => editCardHandler(card._id, card.cardsPack_id)}
+                           <button onClick={() => {
+                              openEditModal(
+                                 { cardId: card._id, packId: card.cardsPack_id, cardQuestion: card.question, cardAnswer: card.answer }
+                              )
+                           }}
                               disabled={status} style={{ backgroundColor: 'white' }}
                            >
                               <img src={editIcon} alt={'0'} className={styles.Icon} />
@@ -104,6 +114,17 @@ export const TableCardBody: FC<TableCardBodyType> = ({ isOwner }) => {
             onClose={() => { setIsOpenDeleteModal(false) }}
             onDeleteCard={deleteCardHandler}
             isLoading={status}
+         />
+         <EditCardModal
+            cardQuestion={selectedCard.cardQuestion}
+            cardAnswer={selectedCard.cardAnswer}
+            cardId={selectedCard.cardId}
+            packId={selectedCard.packId}
+            isLoading={status}
+            isOpen={isOpenEditModal}
+            onChangeQuestionHandler={onChangeQuestionHandler}
+            onChangeAnswerHandler={onChangeAnswerHandler}
+            onClosehandler={() => { setIsOpenEditModal(false) }}
          />
       </TableBody>
    )

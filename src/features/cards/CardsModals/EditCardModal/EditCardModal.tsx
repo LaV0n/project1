@@ -3,9 +3,10 @@ import { useAppDispatch } from "../../../../app/store"
 import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import style from './editCardModal.module.scss'
 import { TextField } from '@mui/material';
+import { editCardTC } from "../../cardsReducer";
 
 export const EditCardModal: FC<EditCardModal> = (
-   { isOpen, onClosehandler, isLoading, cardQuestion, cardAnswer, onChangeQuestionHandler, onChangeAnswerHandler, id }
+   { isOpen, onClosehandler, isLoading, cardQuestion, cardAnswer, onChangeQuestionHandler, onChangeAnswerHandler, cardId, packId }
 ) => {
    const dispatch = useAppDispatch()
    const [questionError, setQuestionError] = useState('')
@@ -23,10 +24,15 @@ export const EditCardModal: FC<EditCardModal> = (
          setAnswerError('enter answer')
       }
       if (!!cardQuestion.trim() && !!cardAnswer.trim()) {
-         // const action = await dispatch(editPackName({ name: packName.trim(), _id: id, private: checked }))
-         // if (editPackName.fulfilled.match(action)) {
-         //    onCancel()
-         // }
+         const card = {
+            _id: cardId,
+            question: cardQuestion,
+            answer: cardAnswer
+         }
+         const action = await dispatch(editCardTC(card, packId))
+         if (action) {
+            onClosehandler()
+         }
       }
    }
    const onChangeQuestion = (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,5 +93,6 @@ type EditCardModal = {
    cardAnswer: string
    onChangeQuestionHandler: (value: string) => void
    onChangeAnswerHandler: (value: string) => void
-   id: string
+   cardId: string
+   packId: string
 }
