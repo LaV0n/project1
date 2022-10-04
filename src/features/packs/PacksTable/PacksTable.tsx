@@ -9,16 +9,16 @@ import { PackType } from '../../../api/packs-api';
 import { dateFormat } from '../../../common/utils/dateFormat';
 import { useAppDispatch, useAppSelector } from './../../../app/store';
 import style from './packsTable.module.scss';
-import { deletePack } from '../packsReducer';
+import { deletePack, editPackName } from '../packsReducer';
 import { StatusType } from '../../../common/types';
 import { ActionTableCell } from './ActionTableCell/ActionTableCell';
 import { useNavigate } from 'react-router-dom';
 import { appPath } from '../../../common/path/appPath';
 import { useState } from 'react';
+import { auth } from './../../../common/selectors/selectors';
 import { PacksTableHead } from './PacksTableHead/PacksTableHead';
 import { DeletePackModal } from '../PackModals/DeletePackModal/DeletePackModal';
-import { EditPackModal } from './../PackModals/EditPackModal/EditPackModal';
-import { auth } from './../../../common/selectors/selectors';
+import { EditPackModal } from '../PackModals/EditPackModal/EditPackModal';
 export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
    const authUserID = useAppSelector(auth).data._id
    const navigate = useNavigate()
@@ -46,6 +46,13 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
    const openEditModal = (data: SelectedPackType) => {
       setSelectedPack(data)
       setIsOpenEditModal(true)
+   }
+   const onCloseEditModal = () => { setIsOpenEditModal(false) }
+   const onEditPack = async (isPrivate: boolean) => {
+      const action = await dispatch(editPackName({ name: selectedPack.packName.trim(), _id: selectedPack.id, private: isPrivate }))
+      if (editPackName.fulfilled.match(action)) {
+         onCloseEditModal()
+      }
    }
    const navigateToCards = (id: string) => { navigate(`${appPath.CARDSDEFAULT}${id}`) }
    return (
@@ -83,10 +90,10 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
          <EditPackModal
             isLoading={status === 'pending'}
             packName={selectedPack.packName}
-            onClosehandler={() => { setIsOpenEditModal(false) }}
+            onClosehandler={onCloseEditModal}
             onChangeHandler={onChangePackName}
             isOpen={isOpenEditModal}
-            id={selectedPack.id}
+            onEditPack={onEditPack}
          />
       </TableContainer>
    );

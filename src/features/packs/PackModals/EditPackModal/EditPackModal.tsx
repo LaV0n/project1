@@ -1,35 +1,26 @@
 import { Checkbox, TextField } from "@mui/material"
 import { ChangeEvent, FC, SyntheticEvent, useState } from "react"
-import { useAppDispatch } from "../../../../app/store"
 import { BasicModal } from "../../../../components/BasicModal/BasicModal"
-import { editPackName } from "../../packsReducer"
 import style from './editPackModal.module.scss'
-export const EditPackModal: FC<EditPackModal> = ({ isOpen, onClosehandler, isLoading, packName, onChangeHandler, id }) => {
-   const dispatch = useAppDispatch()
+export const EditPackModal: FC<EditPackModal> = ({ isOpen, onClosehandler, isLoading, packName, onChangeHandler, onEditPack }) => {
    const [errorMessage, setErrorMessage] = useState('')
-   const [checked, setChecked] = useState(false)
+   const [isPrivate, setIsPrivate] = useState(false)
    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
       setErrorMessage('')
       onChangeHandler(e.currentTarget.value)
    }
-   const onChangeCheckbox = (_: SyntheticEvent<Element, Event>, checked: boolean) => {
-      setChecked(checked)
+   const onChangeCheckbox = (_: SyntheticEvent<Element, Event>, isPrivate: boolean) => {
+      setIsPrivate(isPrivate)
    }
    const onClose = () => {
       setErrorMessage('')
+      setIsPrivate(false)
       onClosehandler()
    }
-   const onCancel = () => {
-      setErrorMessage('')
-      setChecked(false)
-      onClosehandler()
-   }
-   const setEditedPack = async () => {
+   const setEditedPack = () => {
       if (!!packName.trim()) {
-         const action = await dispatch(editPackName({ name: packName.trim(), _id: id, private: checked }))
-         if (editPackName.fulfilled.match(action)) {
-            onCancel()
-         }
+         onEditPack(isPrivate)
+         setIsPrivate(false)
       } else {
          onChangeHandler('')
          setErrorMessage('enter a pack name')
@@ -41,7 +32,7 @@ export const EditPackModal: FC<EditPackModal> = ({ isOpen, onClosehandler, isLoa
          open={isOpen}
          title='Edit pack'
          onClose={onClose}
-         cancelButton={{ title: 'Cancel', buttonProps: { onClick: onCancel, disabled: isLoading } }}
+         cancelButton={{ title: 'Cancel', buttonProps: { onClick: onClose, disabled: isLoading } }}
          confirmButton={
             {
                title: 'Save',
@@ -63,8 +54,8 @@ export const EditPackModal: FC<EditPackModal> = ({ isOpen, onClosehandler, isLoa
             {!!errorMessage && <div className={style.input__error}>{errorMessage}</div>}
          </div>
          <div className={style.control}>
-            <Checkbox onChange={onChangeCheckbox} id='private' className={style.control__checkbox} checked={checked} />
-            <label className={`${style.control__label}${checked ? ` ${style.checked}` : ''}`} htmlFor="private">Private pack</label>
+            <Checkbox onChange={onChangeCheckbox} id='private' className={style.control__checkbox} checked={isPrivate} />
+            <label className={`${style.control__label}${isPrivate ? ` ${style.checked}` : ''}`} htmlFor="private">Private pack</label>
          </div>
       </BasicModal>
    )
@@ -75,5 +66,5 @@ type EditPackModal = {
    onClosehandler: () => void
    packName: string
    onChangeHandler: (value: string) => void
-   id: string
+   onEditPack: (isPrivate: boolean) => void
 }

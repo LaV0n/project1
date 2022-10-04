@@ -1,9 +1,8 @@
-import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useAppDispatch } from "../../../app/store";
 import editIcon from "../../../assets/icons/packs/edit.svg"
 import deleteIcon from "../../../assets/icons/packs/trash.svg"
@@ -11,30 +10,36 @@ import learnIcon from "../../../assets/icons/packs/teach.svg"
 import { useNavigate } from "react-router-dom";
 import { appPath } from "../../../common/path/appPath";
 import { deletePackFromCards, editPackNameFromCards, getCardsTC } from "../cardsReducer";
+import { DeletePackModal } from '../../packs/PackModals/DeletePackModal/DeletePackModal';
+import { EditPackModal } from '../../packs/PackModals/EditPackModal/EditPackModal';
 
 const ITEM_HEIGHT = 36;
 
 type BurgerMenuType = {
     _id: string
+    packName: string
+    status: boolean
 }
 
-export const BurgerMenu: FC<BurgerMenuType> = ({ _id }) => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+export const BurgerMenu: FC<BurgerMenuType> = ({ _id, status, packName }) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const editHandler = async () => {
+    const learnHandler = () => {
         setAnchorEl(null)
-        //     await dispatch(editPackNameFromCards({ _id, name: 'illis legio' }))
-        dispatch(getCardsTC({ cardsPack_id: _id }))
+        navigate(appPath.LEARNINGDEFAULT + _id)
     }
+    //delete pack
+    const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
+    const openDeleteModal = () => { setIsOpenDeleteModal(true) }
+    const closeDeleteModal = () => { setIsOpenDeleteModal(false) }
     const deleteHandler = async () => {
         setAnchorEl(null)
         const action = await dispatch(deletePackFromCards(_id))
@@ -42,11 +47,23 @@ export const BurgerMenu: FC<BurgerMenuType> = ({ _id }) => {
             navigate(appPath.PACKS)
         }
     }
-    const learnHandler = () => {
-        setAnchorEl(null)
-        navigate(appPath.LEARNINGDEFAULT + _id)
+    //edit pack
+    const [newPackName, setNewPackName] = useState('')
+    const [isOpenEditModal, setIsOpenEditModal] = useState(false)
+    const onChangePackName = (value: string) => { setNewPackName(value) }
+    const openEditModal = () => {
+        setNewPackName(packName)
+        setIsOpenEditModal(true)
     }
-
+    const closeEditModal = () => { setIsOpenEditModal(false) }
+    const editHandler = async (isPrivate: boolean) => {
+        setAnchorEl(null)
+        const action = await dispatch(editPackNameFromCards({ name: newPackName, _id, private: isPrivate }))
+        if (editPackNameFromCards.fulfilled.match(action)) {
+            closeEditModal()
+            dispatch(getCardsTC({ cardsPack_id: _id }))
+        }
+    }
     return (
         <div>
             <IconButton
@@ -74,11 +91,11 @@ export const BurgerMenu: FC<BurgerMenuType> = ({ _id }) => {
                     },
                 }}
             >
-                <MenuItem onClick={editHandler}>
+                <MenuItem onClick={openEditModal}>
                     <img src={editIcon} alt={'0'} style={{ marginRight: '10px' }} />
                     Edit
                 </MenuItem>
-                <MenuItem onClick={deleteHandler}>
+                <MenuItem onClick={openDeleteModal}>
                     <img src={deleteIcon} alt={'0'} style={{ marginRight: '10px' }} />
                     Delete
                 </MenuItem>
@@ -87,6 +104,21 @@ export const BurgerMenu: FC<BurgerMenuType> = ({ _id }) => {
                     Learn
                 </MenuItem>
             </Menu>
+            <DeletePackModal
+                isLoading={status}
+                packName={packName}
+                isOpen={isOpenDeleteModal}
+                onClose={closeDeleteModal}
+                onDeletePack={deleteHandler}
+            />
+            <EditPackModal
+                isLoading={status}
+                packName={newPackName}
+                isOpen={isOpenEditModal}
+                onClosehandler={closeEditModal}
+                onEditPack={editHandler}
+                onChangeHandler={onChangePackName}
+            />
         </div>
     );
 }

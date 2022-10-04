@@ -31,7 +31,7 @@ export const TableHeader: FC<HeaderTableType> = ({ isOwner, packId }) => {
                     <div className={styles.title}>
                         <span>"{packName}"</span>
                         <span className={styles.owner}>My Pack</span>
-                        <span><BurgerMenu _id={packId} /></span>
+                        <span><BurgerMenu packName={packName} status={status} _id={packId} /></span>
                     </div>
                     <Button variant='contained'
                         className={styles.button}

@@ -2,7 +2,6 @@ import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import style from './deletePackModal.module.scss'
 import { FC } from 'react';
 export const DeletePackModal: FC<DeletePackModalPropsType> = ({ packName, isOpen, onClose, onDeletePack, isLoading }) => {
-   //  console.log('delete');
    return (
       <BasicModal
          className={style.deletePack}
