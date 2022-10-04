@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/project1/static/css/main.181e150f.css",
-    "main.js": "/project1/static/js/main.920fb45c.js",
+    "main.js": "/project1/static/js/main.fe85340a.js",
     "static/js/787.142da1d4.chunk.js": "/project1/static/js/787.142da1d4.chunk.js",
     "static/media/419.gif": "/project1/static/media/419.25353442322ca9a66207.gif",
     "static/media/Montserrat-VariableFont_wght.ttf": "/project1/static/media/Montserrat-VariableFont_wght.3faa3eef13649db02044.ttf",
@@ -16,11 +16,11 @@
     "static/media/cross.svg": "/project1/static/media/cross.bd72ece561ff841df80e82c1a5ce8aaf.svg",
     "static/media/drop.svg": "/project1/static/media/drop.fea3ba07db5a1e87b16c9acd04731f72.svg",
     "main.181e150f.css.map": "/project1/static/css/main.181e150f.css.map",
-    "main.920fb45c.js.map": "/project1/static/js/main.920fb45c.js.map",
+    "main.fe85340a.js.map": "/project1/static/js/main.fe85340a.js.map",
     "787.142da1d4.chunk.js.map": "/project1/static/js/787.142da1d4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.181e150f.css",
-    "static/js/main.920fb45c.js"
+    "static/js/main.fe85340a.js"
   ]
 }
