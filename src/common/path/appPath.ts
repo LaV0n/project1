@@ -9,5 +9,6 @@ export enum appPath {
    PACKS = '/packs',
    CARDS = '/cards/:id',
    CARDSDEFAULT = '/cards/',
-   LEARNING='/learning/:id'
+   LEARNING='/learning/:id',
+   LEARNINGDEFAULT='/learning/'
 }

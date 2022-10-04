@@ -4,6 +4,8 @@ import {Button} from "@mui/material";
 import React, {FC} from "react";
 import {addNewCardTC} from "../../cardsReducer";
 import {useAppDispatch, useAppSelector} from "../../../../app/store";
+import {useNavigate} from "react-router-dom";
+import {appPath} from "../../../../common/path/appPath";
 
 type HeaderTableType={
     isOwner:boolean
@@ -16,12 +18,13 @@ export const TableHeader:FC<HeaderTableType> =({isOwner,packId})=>{
     const status=useAppSelector(state => state.cards.status)
     const packName = useAppSelector(state => state.cards.data.packName)
     const cardsTotalCount = useAppSelector(state => state.cards.data.cardsTotalCount)
+    const navigate = useNavigate()
 
     const addNewCardHandler = () => {
         dispatch(addNewCardTC(packId))
     }
     const learnCardHandler = () => {
-        alert('learn')
+      navigate(appPath.LEARNINGDEFAULT+packId)
     }
 
     return(

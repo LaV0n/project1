@@ -5,10 +5,11 @@ import edit from '../../../../assets/icons/packs/edit.svg'
 import trash from '../../../../assets/icons/packs/trash.svg'
 import style from './actionTableCell.module.scss'
 import { StatusType } from '../../../../common/types';
-export const ActionTableCell: FC<ActionTableCellPropsType> = ({ packID, authUserID, packUserID, onDeleteClick, onEditClick, status }) => {
+export const ActionTableCell: FC<ActionTableCellPropsType> = ({ packID, authUserID, packUserID, onDeleteClick, onEditClick, status , onLearnClick}) => {
    return (
       <TableCell align="center" className={style.action}>
-         <button className={style.action__button} disabled={status === 'pending'}>
+         <button onClick={() => { onLearnClick(packID) }} className={style.action__button}
+                 disabled={status === 'pending'}>
             <img src={teach} alt="learn pack" />
          </button>
          {
@@ -34,4 +35,5 @@ type ActionTableCellPropsType = {
    authUserID: string
    onDeleteClick: (packID: string) => void
    onEditClick: (packID: string) => void
+   onLearnClick:(packID: string) => void
 }

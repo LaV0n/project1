@@ -44,7 +44,7 @@ export const BurgerMenu: FC<BurgerMenuType> = ({_id}) => {
     }
     const learnHandler = () => {
         setAnchorEl(null)
-        alert(`learn pack#${_id}`)
+        navigate(appPath.LEARNINGDEFAULT+_id)
     }
 
     return (

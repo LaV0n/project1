@@ -27,6 +27,9 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, sortPacksValue, sta
    const editPackNameHandler = (_id: string) => {
       dispatch(editPackName({ _id, name: 'updated' }))
    }
+   const learnPackHandler=(id:string) => {
+      navigate(appPath.LEARNINGDEFAULT+id)
+   }
    const navigateToCards = (id: string) => {
       navigate(`${appPath.CARDSDEFAULT}${id}`)
    }
@@ -59,7 +62,10 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, sortPacksValue, sta
                      <TableCell align="center">{pack.cardsCount}</TableCell>
                      <TableCell align="center">{dateFormat(pack.updated)}</TableCell>
                      <TableCell className={style.pack_created} align="center">{pack.user_name}</TableCell>
-                     <ActionTableCell status={status} onDeleteClick={deletePackHandler} onEditClick={editPackNameHandler} packID={pack._id} packUserID={pack.user_id} authUserID={authUserID} />
+                     <ActionTableCell status={status} onDeleteClick={deletePackHandler}
+                                      onEditClick={editPackNameHandler}
+                                      onLearnClick={learnPackHandler}
+                                      packID={pack._id} packUserID={pack.user_id} authUserID={authUserID} />
                   </TableRow>
                ))}
             </TableBody>
