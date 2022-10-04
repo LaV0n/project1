@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {CardsType} from "../cards/cardsReducer";
 import {AppDispatchType} from "../../app/store";
 import {cardsAPI} from "../../api/cards-api";
@@ -10,7 +10,8 @@ const initialState = {
     packName: '',
     notice: '',
     status: false,
-    initialized: false
+    initialized: false,
+    sortStepByStep:false
 }
 
 const slice = createSlice({
@@ -36,11 +37,14 @@ const slice = createSlice({
                 card.shots = action.payload.shots
                 card.grade = action.payload.grade
             }
-        }
+        },
+        setFilter(state, action: PayloadAction<{ filter: boolean }>) {
+            state.sortStepByStep = action.payload.filter
+        },
     }
 })
 export const learningReducer = slice.reducer
-export const {setErrorNotice, setStatus, getCardsData, setInitialized,changeGrade} = slice.actions
+export const {setErrorNotice, setStatus, getCardsData, setInitialized,changeGrade, setFilter} = slice.actions
 
 export const getAllCardsTC = (id: string) => async (dispatch: AppDispatchType) => {
     dispatch(setStatus({status: true}))

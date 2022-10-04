@@ -34,7 +34,7 @@ export const Learning = () => {
         <div className={styles.container}>
             {status && <CircularProgress style={{zIndex: '3', position: 'absolute', left: '50vw', top: '50vh'}}/>}
             <NavLink to={appPath.PACKS} className={styles.link}>
-                <img src={vectorIcon} alt={''}/> Back to Packs list
+                <img src={vectorIcon} alt={'0'}/> Back to Packs list
             </NavLink>
             <LearningWindow/>
             <CustomizedSnackbars message={notice} isOpen={!!notice}
