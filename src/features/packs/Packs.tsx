@@ -44,7 +44,7 @@ export const Packs = () => {
          return
       }
       dispatch(getPacks())
-   }, [dispatch, packsState.data.page, packsState.data.pageCount, packsState.params, packsState.isSettings])
+   }, [dispatch, packsState.data.page, packsState.data.pageCount, packsState.params, packsState.isSettings, isAuth])
    return (
       <div className={style.packs}>
          {packsState.isInitialized &&

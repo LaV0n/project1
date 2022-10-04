@@ -1,11 +1,11 @@
-import { useAppDispatch } from "../../app/store";
+import { useAppDispatch } from "../../../app/store";
 import style from "./login.module.scss"
-import { useAppSelector } from './../../app/store';
-import { CustomizedSnackbars } from "../../components/CustomizedSnackbars/CustomizedSnackbars";
+import { useAppSelector } from '../../../app/store';
+import { CustomizedSnackbars } from "../../../components/CustomizedSnackbars/CustomizedSnackbars";
 import { LoginForm } from "./LoginForm/LoginForm";
 import { setNotice } from "./loginReducer";
 import { Navigate } from 'react-router-dom';
-import { appPath } from './../../common/path/appPath';
+import { appPath } from '../../../common/path/appPath';
 
 export const Login = () => {
     const dispatch = useAppDispatch()

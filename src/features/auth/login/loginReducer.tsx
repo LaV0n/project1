@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import { AxiosError } from "axios"
-import { LoginRequestType, AuthResponseDataType, StatusType } from "../../common/types"
-import { authAPI } from '../../api/auth-api';
-import { setAuthData } from "../../app/authReducer";
+import { LoginRequestType, AuthResponseDataType, StatusType } from "../../../common/types"
+import { authAPI } from '../../../api/auth-api';
+import { setAuthData } from "../../../app/authReducer";
 const slice = createSlice({
    name: 'login',
    initialState: {

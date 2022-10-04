@@ -8,5 +8,7 @@ export enum appPath {
    ERRORPAGE = '/ErrorPage',
    PACKS = '/packs',
    CARDS = '/cards/:id',
-   CARDSDEFAULT = '/cards/'
+   CARDSDEFAULT = '/cards/',
+   LEARNING='/learning/:id',
+   LEARNINGDEFAULT='/learning/'
 }

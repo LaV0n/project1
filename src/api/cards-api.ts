@@ -28,6 +28,9 @@ export const cardsAPI = {
                 }
             })
     },
+    addGrade(grade: number, cardId: string) {
+        return instance.put('cards/grade', { grade: grade, card_id: cardId })
+    }
 }
 export type AddNewCardRequestType = {
     cardsPack_id: string,

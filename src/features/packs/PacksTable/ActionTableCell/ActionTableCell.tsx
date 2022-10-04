@@ -4,10 +4,11 @@ import teach from '../../../../assets/icons/packs/teach.svg'
 import edit from '../../../../assets/icons/packs/edit.svg'
 import trash from '../../../../assets/icons/packs/trash.svg'
 import style from './actionTableCell.module.scss'
-export const ActionTableCell: FC<ActionTableCellPropsType> = ({ authUserID, packUserID, openDeleteModal, openEditModal, cardsCount }) => {
+export const ActionTableCell: FC<ActionTableCellPropsType> = ({ authUserID, packUserID, openDeleteModal, openEditModal, cardsCount, learnPack }) => {
    return (
       <TableCell align="center" className={style.action}>
-         <button disabled={cardsCount === 0} className={style.action__button} ><img src={teach} alt="learn pack" /></button>
+         <button onClick={learnPack} disabled={cardsCount === 0} className={style.action__button}
+         ><img src={teach} alt="learn pack" /></button>
          {
             authUserID === packUserID &&
             <>
@@ -25,6 +26,7 @@ export const ActionTableCell: FC<ActionTableCellPropsType> = ({ authUserID, pack
    )
 }
 type ActionTableCellPropsType = {
+   learnPack: () => void
    packUserID: string
    authUserID: string
    openDeleteModal: () => void

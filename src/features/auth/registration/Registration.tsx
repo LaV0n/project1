@@ -1,17 +1,17 @@
 import style from "./Registration.module.scss"
 import { registrTC, setIsRegistrationAC, setNotice } from "./registrationReducer";
-import { useAppDispatch, useAppSelector } from "../../app/store";
-import { FormTitle } from "../../components/Form/FormTitle/FormTitle";
-import { FormFooter } from "../../components/Form/FormFooter/FormFooter";
-import { FormEmail } from "../../components/Form/FormEmail/FormEmail";
-import { FormPassword } from "../../components/Form/FormPassword/FormPassword";
+import { useAppDispatch, useAppSelector } from "../../../app/store";
+import { FormTitle } from "../../../components/Form/FormTitle/FormTitle";
+import { FormFooter } from "../../../components/Form/FormFooter/FormFooter";
+import { FormEmail } from "../../../components/Form/FormEmail/FormEmail";
+import { FormPassword } from "../../../components/Form/FormPassword/FormPassword";
 import { useFormik } from "formik";
-import { appPath } from "../../common/path/appPath";
+import { appPath } from "../../../common/path/appPath";
 import { Navigate } from 'react-router-dom'
 import { useEffect } from "react";
-import { validator } from "../../common/utils/validator";
-import { LoaderFullSize } from "../../components/LoaderFullSize/LoaderFullSize";
-import { CustomizedSnackbars } from "../../components/CustomizedSnackbars/CustomizedSnackbars";
+import { validator } from "../../../common/utils/validator";
+import { LoaderFullSize } from "../../../components/LoaderFullSize/LoaderFullSize";
+import { CustomizedSnackbars } from "../../../components/CustomizedSnackbars/CustomizedSnackbars";
 
 export const Registration = () => {
    const dispatch = useAppDispatch()

@@ -32,7 +32,7 @@ export const BurgerMenu: FC<BurgerMenuType> = ({ _id }) => {
     };
     const editHandler = async () => {
         setAnchorEl(null)
-        //  await dispatch(editPackNameFromCards({ _id, name: 'illis legio' }))
+        //     await dispatch(editPackNameFromCards({ _id, name: 'illis legio' }))
         dispatch(getCardsTC({ cardsPack_id: _id }))
     }
     const deleteHandler = async () => {
@@ -44,7 +44,7 @@ export const BurgerMenu: FC<BurgerMenuType> = ({ _id }) => {
     }
     const learnHandler = () => {
         setAnchorEl(null)
-        alert(`learn pack#${_id}`)
+        navigate(appPath.LEARNINGDEFAULT + _id)
     }
 
     return (

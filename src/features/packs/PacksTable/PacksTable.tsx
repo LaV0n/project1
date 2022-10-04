@@ -30,6 +30,9 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
       setSelectedPack(data)
       setIsOpenDeleteModal(true)
    }
+   const learnPackHandler = (id: string) => {
+      navigate(appPath.LEARNINGDEFAULT + id)
+   }
    const onDeletePack = async () => {
       const action = await dispatch(deletePack(selectedPack.id))
       if (deletePack.fulfilled.match(action)) {
@@ -59,6 +62,7 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
                      <TableCell align="center">{dateFormat(pack.updated)}</TableCell>
                      <TableCell className={style.pack_created} align="center">{pack.user_name}</TableCell>
                      <ActionTableCell
+                        learnPack={() => { learnPackHandler(pack._id) }}
                         cardsCount={pack.cardsCount}
                         openDeleteModal={() => { openDeleteModal({ packName: pack.name, id: pack._id }) }}
                         openEditModal={() => { openEditModal({ packName: pack.name, id: pack._id }) }}

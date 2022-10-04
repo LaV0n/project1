@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { appPath } from "../../common/path/appPath";
+import { appPath } from "../../../common/path/appPath";
 import styles from "./Navbar.module.css"
 
 export const Navbar = () => {

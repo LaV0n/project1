@@ -3,7 +3,10 @@ import { BurgerMenu } from "../../BurgerMenu/BurgerMenu";
 import { Button } from "@mui/material";
 import { FC, useState } from "react";
 import { useAppSelector } from "../../../../app/store";
-import { AddNewCardModal } from './../../CardsModals/AddNewCardModal/AddNewCardModal';
+import { useNavigate } from "react-router-dom";
+import { appPath } from "../../../../common/path/appPath";
+import { AddNewCardModal } from "../../CardsModals/AddNewCardModal/AddNewCardModal";
+
 type HeaderTableType = {
     isOwner: boolean
     packId: string
@@ -14,10 +17,11 @@ export const TableHeader: FC<HeaderTableType> = ({ isOwner, packId }) => {
     const status = useAppSelector(state => state.cards.status)
     const packName = useAppSelector(state => state.cards.data.packName)
     const cardsTotalCount = useAppSelector(state => state.cards.data.cardsTotalCount)
+    const navigate = useNavigate()
 
     const [isOpenNewCardModal, setIsOpenNewCardModal] = useState(false)
     const learnCardHandler = () => {
-        alert('learn')
+        navigate(appPath.LEARNINGDEFAULT + packId)
     }
 
     return (

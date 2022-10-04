@@ -1,7 +1,7 @@
 import { Dispatch } from "redux"
-import { authAPI } from "../../api/auth-api"
-import { AppDispatchType } from "../../app/store"
-import { StatusType } from "../../common/types"
+import { authAPI } from "../../../api/auth-api"
+import { AppDispatchType } from "../../../app/store"
+import { StatusType } from "../../../common/types"
 import { AxiosError } from 'axios';
 const SET_IS_REGISTRATION = 'SET-IS-REGISTRATION'
 const SET_REGISTRATION_STATUS = 'SET-REGISTRATION-STATUS'

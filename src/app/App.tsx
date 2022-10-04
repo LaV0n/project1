@@ -1,20 +1,21 @@
 import { useEffect } from 'react';
 import './App.scss';
-import { Navbar } from "../features/navbar/Navbar";
+import { Navbar } from "../components/TEMP/navbar/Navbar";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Login } from "../features/login/Login";
-import { Registration } from "../features/registration/Registration";
+import { Login } from "../features/auth/login/Login";
+import { Registration } from "../features/auth/registration/Registration";
 import { Profile } from "../features/profile/Profile";
-import { ErrorPage } from "../features/errorPage/ErrorPage";
-import { RestorePassword } from "../features/restorePassword/RestorePassword";
-import { TestPage } from "../features/testPage/TestPage";
+import { ErrorPage } from "../components/errorPage/ErrorPage";
+import { RestorePassword } from "../features/auth/restorePassword/RestorePassword";
+import { TestPage } from "../components/TEMP/testPage/TestPage";
 import { useAppDispatch, useAppSelector } from "./store";
-import { Header } from "../features/header/Header";
+import { Header } from "../components/header/Header";
 import { appPath } from '../common/path/appPath';
 import { initializeApp } from './appReducer';
-import { NewPassword } from '../features/newPassword/NewPassword';
+import { NewPassword } from '../features/auth/newPassword/NewPassword';
 import { Cards } from "../features/cards/Cards.";
 import { Packs } from '../features/packs/Packs';
+import { Learning } from "../features/learning/Learning";
 function App() {
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector(state => state.app.isInitialized)
@@ -36,6 +37,7 @@ function App() {
                     <Route path={appPath.CARDS} element={<Cards />} />
                     <Route path={appPath.MAIN} element={<Profile />} />
                     <Route path={appPath.PACKS} element={<Packs />} />
+                    <Route path={appPath.LEARNING} element={<Learning />} />
                     <Route path={'/'} element={<Navigate to={appPath.PROFILE} />} />
                     <Route path={'*'} element={<Navigate to={appPath.ERRORPAGE} />} />
                     <Route path={'/testpage'} element={<TestPage />} />
