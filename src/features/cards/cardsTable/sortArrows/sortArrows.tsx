@@ -15,11 +15,11 @@ export const SortArrows: FC<SortArrowsPropsType> = ({packId, value}) => {
     const [up, setUp] = useState(true)
 
     const sortUpDataHandler = () => {
-        dispatch(dataSortTC(packId, 0, value))
+        dispatch(dataSortTC({packId, direction:0, value}))
         setUp(!up)
     }
     const sortDownDataHandler = () => {
-        dispatch(dataSortTC(packId, 1, value))
+        dispatch(dataSortTC({packId, direction:1, value}))
         setUp(!up)
     }
 

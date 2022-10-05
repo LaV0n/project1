@@ -17,7 +17,7 @@ export const AnswerBlock =({setAnswerBlock, cardId, answer}:AnswerBlockType)=>{
 
     const nextButtonHandler=()=>{
         setAnswerBlock(false)
-        dispatch(changeGradeCardTC(cardId,Number(rating)))
+        dispatch(changeGradeCardTC({idCard:cardId,grade:Number(rating)}))
     }
     const setRatingHandler=(e:ChangeEvent<HTMLInputElement>)=>{
         setRating(e.target.value)
