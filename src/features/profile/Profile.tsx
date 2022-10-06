@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { AppRootStateType, useAppDispatch } from "../../app/store";
-import { Navigate } from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import { setNameTC } from "./profileReducer";
 import avatar from "./../../assets/image/ava.png"
 import { EditableSpan } from "../../components/EditableSpan/EditableSpan";
@@ -12,6 +12,7 @@ import photo from "./../../assets/icons/photo.png"
 import logoutIcon from "./../../assets/icons/logout.png"
 import { setLogout } from "../../app/authReducer";
 import { appPath } from "../../common/path/appPath";
+import vectorIcon from "../../assets/icons/Vector 1.png";
 
 export const Profile = () => {
     const dispatch = useAppDispatch()
@@ -36,6 +37,9 @@ export const Profile = () => {
 
     return (
         <div className={styles.container}>
+            <NavLink to={appPath.PACKS} className={styles.link}>
+                <img src={vectorIcon} alt={''}/> Back to Packs list
+            </NavLink>
             {status === 'pending' && <CircularProgress style={{zIndex:'3',position:'absolute'}}/>}
             <div className={styles.block}>
                 <h3>Personal Information</h3>

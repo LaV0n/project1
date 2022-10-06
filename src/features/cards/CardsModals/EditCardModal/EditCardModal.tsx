@@ -29,7 +29,7 @@ export const EditCardModal: FC<EditCardModalPropsType> = (
             question: question,
             answer: answer
          }
-         const action = await dispatch(editCardTC(card, packId))
+         const action = await dispatch(editCardTC({card, packId}))
          if (action) {
             onClosehandler()
          }

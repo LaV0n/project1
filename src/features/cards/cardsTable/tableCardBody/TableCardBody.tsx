@@ -42,7 +42,7 @@ export const TableCardBody: FC<TableCardBodyType> = ({ isOwner }) => {
       setIsOpenDeleteModal(true)
    }
    const deleteCardHandler = async () => {
-      const action = await dispatch(deleteCardTC(selectedCard.cardId, selectedCard.packId))
+      const action = await dispatch(deleteCardTC({cardId:selectedCard.cardId,packId: selectedCard.packId}))
       if (action) { setIsOpenDeleteModal(false) }
    }
    //edit card
