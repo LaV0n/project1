@@ -1,9 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { restorePasswordTC, setNoticeErrorAC } from "./restorePasswordReducer";
-import { AppRootStateType, useAppDispatch } from "../../../app/store";
-import { useSelector } from "react-redux";
-import { StatusType } from "../../../common/types";
+import { useAppDispatch, useAppSelector} from "../../../app/store";
 import styles from "./RestorePassword.module.scss"
 import mailIcon from "../../../assets/icons/mail.png"
 import { useNavigate } from "react-router-dom";
@@ -12,11 +10,11 @@ import { CustomizedSnackbars } from "../../../components/CustomizedSnackbars/Cus
 
 export const RestorePassword = () => {
     const [email, setEmail] = useState<string>('')
-    const sendStatus = useSelector<AppRootStateType, boolean>(state => state.restorePassword.sendStatus)
+    const sendStatus = useAppSelector(state => state.restorePassword.sendStatus)
     const dispatch = useAppDispatch()
-    const status = useSelector<AppRootStateType, StatusType>(state => state.profile.status)
+    const status = useAppSelector(state => state.profile.status)
     const navigate = useNavigate()
-    const notice = useSelector<AppRootStateType, string>(state => state.restorePassword.notice)
+    const notice = useAppSelector(state => state.restorePassword.notice)
 
     const onClickHandler = () => {
         dispatch(restorePasswordTC(email))

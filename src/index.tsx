@@ -21,13 +21,13 @@ root.render(
 
 
 //for gh pages
-// root.render(
-//     <Provider store={store}>
-//         <HashRouter>
-//             <App />
-//         </HashRouter>
-//     </Provider>
-// );
+/* root.render(
+     <Provider store={store}>
+         <HashRouter>
+             <App />
+         </HashRouter>
+    </Provider>
+ );*/
 
 
 reportWebVitals();

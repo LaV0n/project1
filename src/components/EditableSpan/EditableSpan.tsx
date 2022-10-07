@@ -36,6 +36,7 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
             <Button variant='contained'
                     className={styles.saveButton}
                     onClick={activateViewMode}
+                    disabled={title.length===0}
                     size='small'
             >SAVE</Button>
         </div>

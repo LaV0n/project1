@@ -1,7 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import { AppRootStateType, useAppDispatch } from "../../../app/store";
-import { useSelector } from "react-redux";
-import { StatusType } from "../../../common/types";
+import { useAppDispatch, useAppSelector} from "../../../app/store";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { newPasswordTC, setNoticeErrorAC } from "./newPasswordReducer";
 import { Navigate, useParams } from "react-router-dom";
@@ -15,15 +13,15 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 export const NewPassword = () => {
     const [password, setPassword] = useState<string>('')
     const dispatch = useAppDispatch()
-    const status = useSelector<AppRootStateType, StatusType>(state => state.profile.status)
-    const passwordStatus = useSelector<AppRootStateType, boolean>(state => state.newPassword.passwordStatus)
+    const status = useAppSelector(state => state.profile.status)
+    const passwordStatus = useAppSelector(state => state.newPassword.passwordStatus)
     const params = useParams()
     const token = params.token as string;
-    const notice = useSelector<AppRootStateType, string>(state => state.newPassword.notice);
+    const notice = useAppSelector(state => state.newPassword.notice);
     const [visibility, setVisibility] = useState<boolean>(false)
 
     const onClickHandler = () => {
-        dispatch(newPasswordTC(password, token))
+        dispatch(newPasswordTC({password, resetPasswordToken:token}))
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setPassword(e.currentTarget.value)

@@ -31,7 +31,7 @@ export const authAPI = {
    changeName(name: string) {
       return instance.put<{ updatedUser: AuthResponseDataType }>('auth/me', {
          name,
-         avatar: "https://www.placecage.com/c/140/200"
+         avatar: "https://www.placecage.com/c/200/219"
       })
    },
 }

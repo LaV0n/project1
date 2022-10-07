@@ -1,8 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppDispatchType } from "../../../app/store";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import { setStatusAC } from "../../profile/profileReducer";
-import { AxiosError } from "axios";
 import { authAPI } from '../../../api/auth-api';
+import {errorAsString} from "../../../common/utils/errorAsString";
 
 const initialState = {
    passwordStatus: false,
@@ -19,21 +18,32 @@ const slice = createSlice({
       setNoticeErrorAC(state, action: PayloadAction<{ notice: string }>) {
          state.notice = action.payload.notice
       }
+   },
+   extraReducers:builder => {
+      builder.addCase(newPasswordTC.rejected, (state,action)=>{
+         state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
+      })
    }
 })
 
 export const newPasswordReducer = slice.reducer
 export const { setPasswordStatusAC, setNoticeErrorAC } = slice.actions
 
-export const newPasswordTC = (password: string, resetPasswordToken: string) => async (dispatch: AppDispatchType) => {
+export const newPasswordTC = createAsyncThunk<unknown,newPasswordDataType,{ rejectValue: { error: string }} >
+('newPassword/set',async (data,{dispatch,rejectWithValue}) => {
    dispatch(setStatusAC({ status: 'pending' }))
    try {
-      await authAPI.newPassword({ password, resetPasswordToken })
+      await authAPI.newPassword({ password:data.password, resetPasswordToken:data.resetPasswordToken })
       dispatch(setStatusAC({ status: 'succeeded' }))
       dispatch(setPasswordStatusAC({ passwordStatus: true }))
-   } catch (err: any) {
-      const error: string = (err as AxiosError).response?.data ? err.response.data.error : ''
-      dispatch(setNoticeErrorAC({ notice: error }))
+   } catch (err) {
       dispatch(setStatusAC({ status: 'failed' }))
+      const error = errorAsString(err)
+      return rejectWithValue({error})
    }
+})
+
+type newPasswordDataType={
+   password: string
+   resetPasswordToken: string
 }

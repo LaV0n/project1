@@ -1,39 +1,46 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppDispatchType } from "../../app/store";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import { StatusType } from "../../common/types";
 import { authAPI } from '../../api/auth-api';
 import { setAuthData } from "../../app/authReducer";
+import {errorAsString} from "../../common/utils/errorAsString";
 
-type initialStateType = {
-   status: StatusType
-}
-const initialState: initialStateType = {
-   status: 'idle'
+const initialState = {
+   status: 'idle',
+   notice:''
 }
 
 const slice = createSlice({
    name: 'profile',
-   initialState: initialState,
+   initialState,
    reducers: {
       setStatusAC(state, action: PayloadAction<{ status: StatusType }>) {
          state.status = action.payload.status
+      },
+      setErrorNotice(state,action:PayloadAction<{notice:string}>){
+        state.notice=action.payload.notice
       }
+   },
+   extraReducers:builder => {
+      builder.addCase(setNameTC.rejected,(state, action)=>{
+         state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
+         state.status='failed'
+      })
    }
 })
 
 export const profileReducer = slice.reducer;
 
-export const { setStatusAC } = slice.actions
+export const { setStatusAC,setErrorNotice } = slice.actions
 
-
-export const setNameTC = (name: string) => async (dispatch: AppDispatchType) => {
+export const setNameTC = createAsyncThunk<unknown,string,{rejectValue:{error:string}}>
+('profile/setName',async  (name,{dispatch,rejectWithValue}) => {
    dispatch(setStatusAC({ status: 'pending' }))
    try {
       const res = await authAPI.changeName(name)
       dispatch(setStatusAC({ status: 'succeeded' }))
       dispatch(setAuthData({ data: res.data.updatedUser }));
    } catch (err) {
-      console.warn(err)
-      dispatch(setStatusAC({ status: 'failed' }))
+      const error = errorAsString(err)
+      return rejectWithValue({error})
    }
-}
+})
