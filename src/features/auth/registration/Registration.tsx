@@ -1,5 +1,5 @@
 import style from "./Registration.module.scss"
-import { registrTC, setIsRegistrationAC, setNotice } from "./registrationReducer";
+import { registrationTC, setIsRegistrationAC, setNotice } from "./registrationReducer";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import { FormTitle } from "../../../components/Form/FormTitle/FormTitle";
 import { FormFooter } from "../../../components/Form/FormFooter/FormFooter";
@@ -18,9 +18,10 @@ export const Registration = () => {
    const { isRegistration } = useAppSelector(state => state.registration)
    const { notice } = useAppSelector(state => state.registration)
    const registrationStatus = useAppSelector(state => state.registration.status)
+
    useEffect(() => {
       return () => {
-         dispatch(setIsRegistrationAC(false))
+         dispatch(setIsRegistrationAC({isRegistration:false}))
       }
    }, [dispatch])
    const onEmailFocusHandler = () => {
@@ -44,7 +45,7 @@ export const Registration = () => {
          email: formik.touched.email && !!formik.errors.email
       })
    }
-   const onCloseSnackbar = () => { dispatch(setNotice('')) }
+   const onCloseSnackbar = () => { dispatch(setNotice({notice:''})) }
    const formik = useFormik({
       initialValues: {
          email: '',
@@ -55,7 +56,7 @@ export const Registration = () => {
          return validator(values)
       },
       onSubmit: values => {
-         dispatch(registrTC(values.email, values.password));
+         dispatch(registrationTC({email:values.email, password:values.password}));
       },
    });
    if (isRegistration) {
