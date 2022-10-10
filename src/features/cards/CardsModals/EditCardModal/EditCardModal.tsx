@@ -1,4 +1,4 @@
-import {ChangeEvent, FC, useState} from "react"
+import {ChangeEvent, FC, useEffect, useState} from "react"
 import {useAppDispatch} from "../../../../app/store"
 import {BasicModal} from "../../../../components/BasicModal/BasicModal"
 import style from './editCardModal.module.scss'
@@ -7,9 +7,9 @@ import {editCardTC} from "../../cardsReducer";
 
 import {ImageInput} from "../AddNewCardModal/ImageInput/imageInput";
 import React from "react";
-import { QuestionType } from "../AddNewCardModal/AddNewCardModal";
+import {QuestionType} from "../AddNewCardModal/AddNewCardModal";
 
- export const EditCardModal: FC<EditCardModalPropsType> = (
+export const EditCardModal: FC<EditCardModalPropsType> = (
     {
         isOpen,
         onClosehandler,
@@ -23,20 +23,26 @@ import { QuestionType } from "../AddNewCardModal/AddNewCardModal";
         questionImg
     }
 ) => {
-
+    console.log(questionImg)
     const dispatch = useAppDispatch()
+
     const [questionError, setQuestionError] = useState('')
     const [answerError, setAnswerError] = useState('')
 
-    const [isImgQuestion, setIsImgQuestion] = useState<QuestionType>( 'text')
+    const [isImgQuestion, setIsImgQuestion] = useState<QuestionType>('text')
+    console.log(isImgQuestion)
+
+    useEffect(() => {
+        setIsImgQuestion(questionImg && questionImg !== 'url or base 64' ? 'image' : 'text')
+    }, [questionImg])
 
     const setTypeOfQuestionHandler = (event: SelectChangeEvent) => {
         setIsImgQuestion(event.target.value as QuestionType)
     }
 
-     const setQuestionImageHandler =()=>{
+    const setQuestionImageHandler = () => {
 
-     }
+    }
 
     const onClose = () => {
         onClosehandler()
@@ -72,6 +78,8 @@ import { QuestionType } from "../AddNewCardModal/AddNewCardModal";
         setAnswerError('')
         onChangeAnswerHandler(e.currentTarget.value)
     }
+
+
     return (
         <BasicModal
             className={style.editCard}
@@ -99,7 +107,7 @@ import { QuestionType } from "../AddNewCardModal/AddNewCardModal";
                 </Select>
             </FormControl>
             <div className={style.question}>
-                {questionImg && questionImg!=='url or base 64'
+                {isImgQuestion === 'image'
                     ? <ImageInput image={questionImg} setImage={setQuestionImageHandler}/>
                     : <TextField
                         className={style.question__value}
