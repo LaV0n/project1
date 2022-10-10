@@ -1,16 +1,17 @@
 import {useAppDispatch} from "../../../../app/store";
 import {Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 import style from "../LearningWindow.module.scss";
-import {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {changeGradeCardTC} from "../../learningReducer";
 
 type AnswerBlockType ={
     setAnswerBlock:(value:boolean)=>void
     cardId:string
     answer:string
+    answerImg:string | null
 }
 
-export const AnswerBlock =({setAnswerBlock, cardId, answer}:AnswerBlockType)=>{
+export const AnswerBlock =({setAnswerBlock, cardId, answer, answerImg}:AnswerBlockType)=>{
 
     const [rating,setRating]=useState('1')
     const dispatch=useAppDispatch()
@@ -26,7 +27,11 @@ export const AnswerBlock =({setAnswerBlock, cardId, answer}:AnswerBlockType)=>{
     return(
         <div className={style.answerBlock}>
             <div className={style.question}>
-                <span>Answer:</span> {answer}
+                <span>Answer:</span>
+                {answerImg
+                    ? <img src={answerImg} alt={'0'} className={style.questionImg}/>
+                    :answer
+                }
             </div>
             <div className={style.rateBlock}>
                 <FormControl>

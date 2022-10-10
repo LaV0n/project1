@@ -25,21 +25,25 @@ export const LearningWindow = () => {
     const sortStepByStep = useAppSelector(state => state.learning.sortStepByStep)
     const cardAll = useAppSelector<CardsType[]>(state => state.learning.data)
 
-    const [card, setCard] = useState({
+    const [card, setCard] = useState<CardsType>({
         _id: 'fake',
         cardsPack_id: '',
-
         answer: 'answer fake',
         question: 'question fake',
+        questionImg:null,
+        answerImg:null,
         grade: 0,
         shots: 0,
-
         type: '',
         rating: 0,
         more_id: '',
-
         created: '',
         updated: '',
+        __v: 0,
+        user_id: '',
+        questionVideo:'',
+        comments:'',
+        answerVideo:''
     })
 
     const [answerBlock, setAnswerBlock] = useState(false)
@@ -80,7 +84,9 @@ export const LearningWindow = () => {
             <div className={style.block}>
                 <div className={style.question}>
                     <span>Question: </span>
-                    {card.question}
+                    {card.questionImg
+                        ? <img src={card.questionImg} alt={'0'} className={style.questionImg}/>
+                        :card.question}
                 </div>
                 <div className={style.attempts}>
                     Number of attempts:
@@ -91,7 +97,7 @@ export const LearningWindow = () => {
                               className={style.button}
                               onClick={answerButtonHandler}
                     >Show answer</Button>
-                    : <AnswerBlock setAnswerBlock={setAnswerBlock} cardId={card._id} answer={card.answer}/>
+                    : <AnswerBlock setAnswerBlock={setAnswerBlock} cardId={card._id} answer={card.answer} answerImg={card.answerImg}/>
                 }
             </div>
 
