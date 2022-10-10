@@ -5,7 +5,7 @@ import { convertFileToBase64 } from "../../../../../common/utils/convertToBase64
 import styles from "./imageInput.module.scss"
 
 type ImageInputType={
-    image:string
+    image:string | null
     setImage:(value:string)=>void
 }
 

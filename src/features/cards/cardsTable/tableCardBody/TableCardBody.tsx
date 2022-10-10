@@ -66,6 +66,7 @@ export const TableCardBody: FC<TableCardBodyType> = ({isOwner}) => {
     const onChangeAnswerHandler = (value: string) => {
         setSelectedCard(data => ({...data, answer: value}))
     }
+
     return (
         <TableBody>
             {cards.length === 0

@@ -27,22 +27,21 @@ import { QuestionType } from "../AddNewCardModal/AddNewCardModal";
     const dispatch = useAppDispatch()
     const [questionError, setQuestionError] = useState('')
     const [answerError, setAnswerError] = useState('')
-    console.log(questionImg)
-    const [isImgQuestion, setIsImgQuestion] = useState<QuestionType>( 'text')
-    console.log(isImgQuestion)
-    const [questionImage, setQuestionImage] = useState<string>('')
-    console.log('image ' +questionImage)
 
+    const [isImgQuestion, setIsImgQuestion] = useState<QuestionType>( 'text')
 
     const setTypeOfQuestionHandler = (event: SelectChangeEvent) => {
         setIsImgQuestion(event.target.value as QuestionType)
     }
 
+     const setQuestionImageHandler =()=>{
+
+     }
+
     const onClose = () => {
         onClosehandler()
         setQuestionError('')
         setAnswerError('')
-
 
     }
     const setEditedCard = async () => {
@@ -100,8 +99,8 @@ import { QuestionType } from "../AddNewCardModal/AddNewCardModal";
                 </Select>
             </FormControl>
             <div className={style.question}>
-                {isImgQuestion === 'image'
-                    ? <ImageInput image={questionImage} setImage={setQuestionImage}/>
+                {questionImg && questionImg!=='url or base 64'
+                    ? <ImageInput image={questionImg} setImage={setQuestionImageHandler}/>
                     : <TextField
                         className={style.question__value}
                         error={!!questionError}
