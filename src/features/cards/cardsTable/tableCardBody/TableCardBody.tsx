@@ -12,7 +12,8 @@ import {EditCardModal} from "../../CardsModals/EditCardModal/EditCardModal";
 type TableCardBodyType = {
     isOwner: boolean
 }
-type SelectedCardType = { cardId: string, packId: string, question: string, answer: string }
+type SelectedCardType = { cardId: string, packId: string, question: string, answer: string, questionImg: string | null }
+
 const formatDate = (dateCard: string) => {
     const date = new Date(dateCard)
     const yyyy = date.getFullYear();
@@ -38,7 +39,8 @@ export const TableCardBody: FC<TableCardBodyType> = ({isOwner}) => {
         cardId: '',
         packId: '',
         question: '',
-        answer: ''
+        answer: '',
+        questionImg: null
     })
     //delete card
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
@@ -82,13 +84,13 @@ export const TableCardBody: FC<TableCardBodyType> = ({isOwner}) => {
                         sx={{'&:last-child td, &:last-child th': {border: 0}, backgroundColor: 'white'}}
                     >
                         <TableCell component="th" scope="row">
-                            {card.questionImg
+                            {card.questionImg && card.questionImg !== 'url or base 64'
                                 ? <img src={card.questionImg} alt={'0'} className={styles.questionImg}/>
                                 : card.question
                             }
                         </TableCell>
                         <TableCell align="right">
-                            {card.answerImg
+                            {card.answerImg && card.answerImg !== 'url or base 64'
                                 ? <img src={card.answerImg} alt={'0'} className={styles.questionImg}/>
                                 : card.answer
                             }
@@ -108,7 +110,8 @@ export const TableCardBody: FC<TableCardBodyType> = ({isOwner}) => {
                                                 cardId: card._id,
                                                 packId: card.cardsPack_id,
                                                 question: card.question,
-                                                answer: card.answer
+                                                answer: card.answer,
+                                                questionImg: card.questionImg
                                             }
                                         )
                                     }}
@@ -123,7 +126,8 @@ export const TableCardBody: FC<TableCardBodyType> = ({isOwner}) => {
                                                     cardId: card._id,
                                                     packId: card.cardsPack_id,
                                                     question: card.question,
-                                                    answer: card.answer
+                                                    answer: card.answer,
+                                                    questionImg: card.questionImg
                                                 }
                                             )
                                         }}
@@ -146,6 +150,7 @@ export const TableCardBody: FC<TableCardBodyType> = ({isOwner}) => {
                 isLoading={status}
             />
             <EditCardModal
+                questionImg={selectedCard.questionImg}
                 question={selectedCard.question}
                 answer={selectedCard.answer}
                 cardId={selectedCard.cardId}

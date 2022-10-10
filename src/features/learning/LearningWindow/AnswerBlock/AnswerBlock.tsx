@@ -28,7 +28,7 @@ export const AnswerBlock =({setAnswerBlock, cardId, answer, answerImg}:AnswerBlo
         <div className={style.answerBlock}>
             <div className={style.question}>
                 <span>Answer:</span>
-                {answerImg
+                {answerImg && answerImg!=='url or base 64'
                     ? <img src={answerImg} alt={'0'} className={style.questionImg}/>
                     :answer
                 }

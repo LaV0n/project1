@@ -84,7 +84,7 @@ export const LearningWindow = () => {
             <div className={style.block}>
                 <div className={style.question}>
                     <span>Question: </span>
-                    {card.questionImg
+                    {card.questionImg && card.questionImg!=='url or base 64'
                         ? <img src={card.questionImg} alt={'0'} className={style.questionImg}/>
                         :card.question}
                 </div>
