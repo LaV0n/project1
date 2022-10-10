@@ -57,47 +57,47 @@ const slice = createSlice({
       builder.addCase(getPacks.pending, state => {
          state.status = 'pending'
       })
-      builder.addCase(addNewPack.pending, state => {
-         state.status = 'pending'
-      })
-      builder.addCase(deletePack.pending, state => {
-         state.status = 'pending'
-      })
-      builder.addCase(editPackName.pending, state => {
-         state.status = 'pending'
-      })
+         .addCase(addNewPack.pending, state => {
+            state.status = 'pending'
+         })
+         .addCase(deletePack.pending, state => {
+            state.status = 'pending'
+         })
+         .addCase(editPackName.pending, state => {
+            state.status = 'pending'
+         })
       //fulfilled CRUD operation
       builder.addCase(getPacks.fulfilled, (state, action) => {
          state.data = action.payload
          state.isInitialized = true
          state.status = 'succeeded'
       })
-      builder.addCase(addNewPack.fulfilled, state => {
-         state.status = 'succeeded'
-      })
-      builder.addCase(deletePack.fulfilled, state => {
-         state.status = 'succeeded'
-      })
-      builder.addCase(editPackName.fulfilled, state => {
-         state.status = 'succeeded'
-      })
+         .addCase(addNewPack.fulfilled, state => {
+            state.status = 'succeeded'
+         })
+         .addCase(deletePack.fulfilled, state => {
+            state.status = 'succeeded'
+         })
+         .addCase(editPackName.fulfilled, state => {
+            state.status = 'succeeded'
+         })
       //reject packs CRUD operation
       builder.addCase(getPacks.rejected, (state, action) => {
          state.status = 'failed'
          state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
       })
-      builder.addCase(addNewPack.rejected, (state, action) => {
-         state.status = 'failed'
-         state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
-      })
-      builder.addCase(deletePack.rejected, (state, action) => {
-         state.status = 'failed'
-         state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
-      })
-      builder.addCase(editPackName.rejected, (state, action) => {
-         state.status = 'failed'
-         state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
-      })
+         .addCase(addNewPack.rejected, (state, action) => {
+            state.status = 'failed'
+            state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
+         })
+         .addCase(deletePack.rejected, (state, action) => {
+            state.status = 'failed'
+            state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
+         })
+         .addCase(editPackName.rejected, (state, action) => {
+            state.status = 'failed'
+            state.notice = action.payload ? action.payload.error : 'unknown error, please try again later'
+         })
    }
 })
 

@@ -1,0 +1,39 @@
+import style from './packsModalCover.module.scss'
+import { FC, ChangeEvent } from 'react';
+import { Button, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { UploadButton } from '../../../../components/UploadButton/UploadButton';
+
+export const PacksModalCover: FC<PacksModalCoverPropsType> = ({ uploadHandler, onDeleteClick, cover, error }) => {
+   return (
+      <div className={style.cover}>
+         {
+            !!cover ?
+               <>
+                  <div className={style.cover__head}>
+                     <div className={style.cover__title}>Cover</div>
+                     <Button variant="text" component="label">
+                        Change cover
+                        <input onChange={uploadHandler} hidden accept="image/*" multiple type="file" />
+                     </Button>
+                     <IconButton onClick={onDeleteClick} aria-label="delete" color="primary">
+                        <DeleteIcon />
+                     </IconButton>
+                  </div>
+                  <div className={style.cover__image}>
+                     <img src={cover} alt="image" />
+                  </div>
+               </>
+               :
+               <UploadButton uploadHandler={uploadHandler} />
+         }
+         {error && <div className={style.cover__error}>{error}</div>}
+      </div>
+   )
+}
+type PacksModalCoverPropsType = {
+   uploadHandler: (e: ChangeEvent<HTMLInputElement>) => void
+   onDeleteClick: () => void
+   cover: string | null
+   error: string | null
+}

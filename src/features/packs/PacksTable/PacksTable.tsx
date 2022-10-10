@@ -23,7 +23,7 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
    const authUserID = useAppSelector(auth).data._id
    const navigate = useNavigate()
    const dispatch = useAppDispatch()
-   const [selectedPack, setSelectedPack] = useState<SelectedPackType>({ packName: '', id: '' })
+   const [selectedPack, setSelectedPack] = useState<SelectedPackType>({ packName: '', id: '', cover: null })
    //delete pack
    const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false)
    const openDeleteModal = (data: SelectedPackType) => {
@@ -55,6 +55,18 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
       }
    }
    const navigateToCards = (id: string) => { navigate(`${appPath.CARDSDEFAULT}${id}`) }
+
+   const validate = (cover: string | null) => {
+      const regexBase64 = /^data:image\/(?:gif|png|jpeg|bmp|webp|svg\+xml)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/;
+      if (cover) {
+         return regexBase64.test(cover) ? cover : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBB7mlN1ig5dMMIyIH6By55HE-WueNoR4sUhwA7LiSpCYvXHSICslhLsWd-A9abLaAb3U&usqp=CAU'
+      } else {
+         return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBB7mlN1ig5dMMIyIH6By55HE-WueNoR4sUhwA7LiSpCYvXHSICslhLsWd-A9abLaAb3U&usqp=CAU'
+      }
+   }
+
+
+   validate('123123')
    return (
       <TableContainer component={Paper}>
          <Table sx={{ minWidth: 650 }} size="small" >
@@ -62,6 +74,9 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
             <TableBody>
                {packs.map((pack) => (
                   <TableRow key={pack._id} sx={{ 'height:48px ,&:last-child td, &:last-child th': { border: 0 } }} style={{ height: '48px' }} >
+                     <TableCell className={style.pack_cover} align="center">
+                        <img onError={() => { console.log('object'); }} src={validate(pack.deckCover)} alt="" />
+                     </TableCell>
                      <TableCell onClick={() => { navigateToCards(pack._id) }} className={style.pack_name} component="th" scope="row">
                         {pack.name}
                      </TableCell>
@@ -72,7 +87,7 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
                         learnPack={() => { learnPackHandler(pack._id) }}
                         cardsCount={pack.cardsCount}
                         openDeleteModal={() => { openDeleteModal({ packName: pack.name, id: pack._id }) }}
-                        openEditModal={() => { openEditModal({ packName: pack.name, id: pack._id }) }}
+                        openEditModal={() => { openEditModal({ packName: pack.name, id: pack._id, cover: pack.deckCover }) }}
                         packUserID={pack.user_id}
                         authUserID={authUserID}
                      />
@@ -88,6 +103,7 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
             onDeletePack={onDeletePack}
          />
          <EditPackModal
+            cover={selectedPack.cover ? selectedPack.cover : null}
             isLoading={status === 'pending'}
             packName={selectedPack.packName}
             onClosehandler={onCloseEditModal}
@@ -105,4 +121,5 @@ type PacksTablePropsType = {
 type SelectedPackType = {
    packName: string
    id: string
+   cover?: null | string
 }

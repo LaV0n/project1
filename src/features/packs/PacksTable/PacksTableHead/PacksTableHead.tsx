@@ -22,6 +22,7 @@ export const PacksTableHead = () => {
    return (
       <TableHead>
          <TableRow style={{ height: '48px' }}>
+            <TableCell align="center">Cover</TableCell>
             <TableCell style={{ padding: '10px' }}>Name</TableCell>
             <TableCellSort
                onClick={() => { sortPacksHandler('cardsCount') }}

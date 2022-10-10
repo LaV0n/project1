@@ -3,7 +3,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { FC, useState } from "react";
-import {useAppDispatch, useAppSelector} from "../../../app/store";
+import { useAppDispatch, useAppSelector } from "../../../app/store";
 import editIcon from "../../../assets/icons/packs/edit.svg"
 import deleteIcon from "../../../assets/icons/packs/trash.svg"
 import learnIcon from "../../../assets/icons/packs/teach.svg"
@@ -24,7 +24,7 @@ type BurgerMenuType = {
 export const BurgerMenu: FC<BurgerMenuType> = ({ _id, status, packName }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const cardsCount=useAppSelector(state => state.cards.data.cardsTotalCount)
+    const cardsCount = useAppSelector(state => state.cards.data.cardsTotalCount)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -100,7 +100,7 @@ export const BurgerMenu: FC<BurgerMenuType> = ({ _id, status, packName }) => {
                     <img src={deleteIcon} alt={'0'} style={{ marginRight: '10px' }} />
                     Delete
                 </MenuItem>
-                <MenuItem onClick={learnHandler} disabled={cardsCount===0}>
+                <MenuItem onClick={learnHandler} disabled={cardsCount === 0}>
                     <img src={learnIcon} alt={'0'} style={{ marginRight: '10px' }} />
                     Learn
                 </MenuItem>
@@ -113,6 +113,7 @@ export const BurgerMenu: FC<BurgerMenuType> = ({ _id, status, packName }) => {
                 onDeletePack={deleteHandler}
             />
             <EditPackModal
+                cover='123'
                 isLoading={status}
                 packName={newPackName}
                 isOpen={isOpenEditModal}

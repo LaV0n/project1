@@ -43,6 +43,7 @@ export type PackType = {
    created: Date
    updated: Date
    user_name: string
+   deckCover: string
 }
 export type PacksDataType = {
    cardPacks: PackType[]
