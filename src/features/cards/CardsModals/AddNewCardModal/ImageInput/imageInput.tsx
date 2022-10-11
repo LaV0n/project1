@@ -32,7 +32,7 @@ export const ImageInput = ({image,setImage}:ImageInputType) =>{
     }
     return(
         <div>
-            {image && <img src={isImgBroken? defaultImg :image} alt={'0'} onError={errorHandler} className={styles.image}/>}
+            {image && image!=='url or base 64' && <img src={isImgBroken? defaultImg :image} alt={'0'} onError={errorHandler} className={styles.image}/>}
             <IconButton component="label">
                 <div>Question Image</div>
                 <input type={'file'} hidden onChange={setQuestionImgHandler}/>

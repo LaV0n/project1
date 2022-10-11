@@ -35,6 +35,7 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = (
         setAnswer('')
         setQuestion('')
         onClosehandler()
+        setQuestionImg('')
     }
     const setEditedCard = async () => {
         if (isImgQuestion==='text'){
@@ -76,7 +77,7 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = (
         <BasicModal
             className={style.addCard}
             open={isOpen}
-            title='Edit card'
+            title='Add card'
             onClose={onClose}
             cancelButton={{title: 'Cancel', buttonProps: {onClick: onClose, disabled: isLoading}}}
             confirmButton={

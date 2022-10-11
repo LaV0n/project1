@@ -3,7 +3,7 @@ import {useAppDispatch} from "../../../../app/store"
 import {BasicModal} from "../../../../components/BasicModal/BasicModal"
 import style from './editCardModal.module.scss'
 import {FormControl, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import {editCardTC} from "../../cardsReducer";
+import { editCardTC} from "../../cardsReducer";
 
 import {ImageInput} from "../AddNewCardModal/ImageInput/imageInput";
 import React from "react";
@@ -23,34 +23,33 @@ export const EditCardModal: FC<EditCardModalPropsType> = (
         questionImg
     }
 ) => {
-    console.log(questionImg)
+
     const dispatch = useAppDispatch()
 
     const [questionError, setQuestionError] = useState('')
     const [answerError, setAnswerError] = useState('')
 
     const [isImgQuestion, setIsImgQuestion] = useState<QuestionType>('text')
-    console.log(isImgQuestion)
+    const [imageForQuestion, setImageForQuestion] = useState(questionImg)
+    console.log(imageForQuestion)
 
     useEffect(() => {
         setIsImgQuestion(questionImg && questionImg !== 'url or base 64' ? 'image' : 'text')
+        setImageForQuestion(questionImg)
     }, [questionImg])
 
     const setTypeOfQuestionHandler = (event: SelectChangeEvent) => {
         setIsImgQuestion(event.target.value as QuestionType)
     }
 
-    const setQuestionImageHandler = () => {
-
-    }
-
     const onClose = () => {
         onClosehandler()
         setQuestionError('')
         setAnswerError('')
-
+        setImageForQuestion('url or base 64')
     }
     const setEditedCard = async () => {
+        if (isImgQuestion==='text'){
         if (!question.trim()) {
             setQuestionError('enter a question')
         }
@@ -61,11 +60,27 @@ export const EditCardModal: FC<EditCardModalPropsType> = (
             const card = {
                 _id: cardId,
                 question: question,
-                answer: answer
+                answer: answer,
+                questionImg:'url or base 64'
             }
             const action = await dispatch(editCardTC({card, packId}))
             if (action) {
                 onClosehandler()
+            }
+        }}else {
+            if (!answer.trim()) {
+                setAnswerError('enter answer')
+            }
+            if (imageForQuestion && !!answer.trim()) {
+                const card = {
+                    _id: cardId,
+                    questionImg: imageForQuestion,
+                    answer: answer
+                }
+                const action = await dispatch(editCardTC({card,packId}))
+                if (action) {
+                    onClosehandler()
+                }
             }
         }
     }
@@ -108,7 +123,7 @@ export const EditCardModal: FC<EditCardModalPropsType> = (
             </FormControl>
             <div className={style.question}>
                 {isImgQuestion === 'image'
-                    ? <ImageInput image={questionImg} setImage={setQuestionImageHandler}/>
+                    ? <ImageInput image={imageForQuestion} setImage={setImageForQuestion}/>
                     : <TextField
                         className={style.question__value}
                         error={!!questionError}
