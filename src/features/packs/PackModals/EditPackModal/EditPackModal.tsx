@@ -1,16 +1,17 @@
 import { Checkbox, TextField } from "@mui/material"
 import { ChangeEvent, FC, SyntheticEvent, useState } from "react"
+import { convertImageToBase64 } from "../../../../common/utils/convertImageToBase64"
 import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import { PacksModalCover } from "../PacksModalCover/PacksModalCover"
 import style from './editPackModal.module.scss'
 export const EditPackModal: FC<EditPackModal> =
-   ({ isOpen, onClosehandler, isLoading, onChangeHandler, onEditPack, packName, cover }) => {
+   ({ isOpen, onClosehandler, isLoading, onChangeHandler, setEditedPackHandler, packName, cover, onUpdatePack }) => {
+      const [errorCover, setErrorCover] = useState<string | null>(null)
       const [errorMessage, setErrorMessage] = useState('')
       const [isPrivate, setIsPrivate] = useState(false)
-      const [errorCover, setErrorCover] = useState<string | null>(null)
-      const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const onChangePackName = (e: ChangeEvent<HTMLInputElement>) => {
          setErrorMessage('')
-         onChangeHandler(e.currentTarget.value)
+         onUpdatePack && onUpdatePack({ packName: e.currentTarget.value })
       }
       const onChangeCheckbox = (_: SyntheticEvent<Element, Event>, isPrivate: boolean) => {
          setIsPrivate(isPrivate)
@@ -22,12 +23,30 @@ export const EditPackModal: FC<EditPackModal> =
       }
       const setEditedPack = () => {
          if (!!packName.trim()) {
-            onEditPack(isPrivate)
+            setEditedPackHandler(isPrivate)
             setIsPrivate(false)
          } else {
             onChangeHandler('')
             setErrorMessage('enter a pack name')
          }
+      }
+      const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+         const files = e.currentTarget.files
+         if (files && files.length) {
+            convertImageToBase64(files[0],
+               {
+                  errorHandler: coverErrorHandler,
+                  successHandler: coverSuccessHandler
+               }
+            )
+         }
+      }
+      const coverErrorHandler = (error: string) => {
+         setErrorCover(error)
+      }
+      const coverSuccessHandler = (deckCover: string) => {
+         onUpdatePack && onUpdatePack({ deckCover });
+         setErrorCover(null)
       }
       return (
          <BasicModal
@@ -44,14 +63,14 @@ export const EditPackModal: FC<EditPackModal> =
             }
             isLoading={isLoading}
          >
-            <PacksModalCover cover={cover} error={null} onDeleteClick={() => { }} uploadHandler={() => { }} />
+            <PacksModalCover cover={cover} error={errorCover} onDeleteClick={() => { }} uploadHandler={uploadHandler} />
             <div className={style.input}>
                <TextField
                   className={style.input__value}
                   error={!!errorMessage}
                   color={errorMessage ? 'error' : 'info'}
                   value={packName}
-                  onChange={onChange}
+                  onChange={onChangePackName}
                   id="outlined-basic" label="Name pack"
                   variant="standard"
                />
@@ -70,6 +89,7 @@ type EditPackModal = {
    onClosehandler: () => void
    packName: string
    onChangeHandler: (value: string) => void
-   onEditPack: (isPrivate: boolean) => void
+   setEditedPackHandler: (isPrivate: boolean) => void
    cover: string | null
+   onUpdatePack?: (value: { [key: string]: string | null }) => void
 }

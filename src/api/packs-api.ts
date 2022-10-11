@@ -28,11 +28,12 @@ type GetPacksRequestType = {
 export type CreateNewPackRequestType = {
    name: string
    private: boolean
-   deckCover?: string | null
+   deckCover: string | null
 }
 export type UpdatePackNameRequestType = {
    _id: string
    name: string
+   deckCover?: string | null
    private: boolean
 }
 export type PackType = {

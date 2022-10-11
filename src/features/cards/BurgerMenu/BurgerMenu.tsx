@@ -118,7 +118,7 @@ export const BurgerMenu: FC<BurgerMenuType> = ({ _id, status, packName }) => {
                 packName={newPackName}
                 isOpen={isOpenEditModal}
                 onClosehandler={closeEditModal}
-                onEditPack={editHandler}
+                setEditedPackHandler={editHandler}
                 onChangeHandler={onChangePackName}
             />
         </div>
