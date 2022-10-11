@@ -5,13 +5,13 @@ import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import { PacksModalCover } from "../PacksModalCover/PacksModalCover"
 import style from './editPackModal.module.scss'
 export const EditPackModal: FC<EditPackModal> =
-   ({ isOpen, onClosehandler, isLoading, onChangeHandler, setEditedPackHandler, packName, cover, onUpdatePack }) => {
+   ({ isOpen, onClosehandler, isLoading, setEditedPackHandler, packName, cover, onUpdatePack }) => {
       const [errorCover, setErrorCover] = useState<string | null>(null)
       const [errorMessage, setErrorMessage] = useState('')
       const [isPrivate, setIsPrivate] = useState(false)
       const onChangePackName = (e: ChangeEvent<HTMLInputElement>) => {
          setErrorMessage('')
-         onUpdatePack && onUpdatePack({ packName: e.currentTarget.value })
+         onUpdatePack({ packName: e.currentTarget.value })
       }
       const onChangeCheckbox = (_: SyntheticEvent<Element, Event>, isPrivate: boolean) => {
          setIsPrivate(isPrivate)
@@ -26,7 +26,7 @@ export const EditPackModal: FC<EditPackModal> =
             setEditedPackHandler(isPrivate)
             setIsPrivate(false)
          } else {
-            onChangeHandler('')
+            onUpdatePack({ packName: '' })
             setErrorMessage('enter a pack name')
          }
       }
@@ -45,7 +45,11 @@ export const EditPackModal: FC<EditPackModal> =
          setErrorCover(error)
       }
       const coverSuccessHandler = (deckCover: string) => {
-         onUpdatePack && onUpdatePack({ deckCover });
+         onUpdatePack({ deckCover });
+         setErrorCover(null)
+      }
+      const onDeleteCoverClickHandler = () => {
+         onUpdatePack({ deckCover: null });
          setErrorCover(null)
       }
       return (
@@ -63,7 +67,7 @@ export const EditPackModal: FC<EditPackModal> =
             }
             isLoading={isLoading}
          >
-            <PacksModalCover cover={cover} error={errorCover} onDeleteClick={() => { }} uploadHandler={uploadHandler} />
+            <PacksModalCover cover={cover} error={errorCover} onDeleteClick={onDeleteCoverClickHandler} uploadHandler={uploadHandler} />
             <div className={style.input}>
                <TextField
                   className={style.input__value}
@@ -88,8 +92,7 @@ type EditPackModal = {
    isOpen: boolean
    onClosehandler: () => void
    packName: string
-   onChangeHandler: (value: string) => void
    setEditedPackHandler: (isPrivate: boolean) => void
    cover: string | null
-   onUpdatePack?: (value: { [key: string]: string | null }) => void
+   onUpdatePack: (value: { [key: string]: string | null }) => void
 }

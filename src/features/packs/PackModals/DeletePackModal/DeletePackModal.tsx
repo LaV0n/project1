@@ -1,7 +1,8 @@
 import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import style from './deletePackModal.module.scss'
 import { FC } from 'react';
-export const DeletePackModal: FC<DeletePackModalPropsType> = ({ packName, isOpen, onClose, onDeletePack, isLoading }) => {
+import { validateImage } from "../../../../common/utils/validator";
+export const DeletePackModal: FC<DeletePackModalPropsType> = ({ packName, isOpen, onClose, onDeletePack, isLoading, cover }) => {
    return (
       <BasicModal
          className={style.deletePack}
@@ -12,6 +13,9 @@ export const DeletePackModal: FC<DeletePackModalPropsType> = ({ packName, isOpen
          confirmButton={{ title: 'Delete', buttonProps: { onClick: onDeletePack, disabled: isLoading } }}
          isLoading={isLoading}
       >
+         <div className={style.cover}>
+            {cover && <img src={validateImage(cover)} alt="" />}
+         </div>
          <div className={style.text}>
             Do you really want to remove <span className={style.pack_name}>{packName}?</span>
             <div>All cards will be deleted.</div>
@@ -25,4 +29,5 @@ type DeletePackModalPropsType = {
    isOpen: boolean
    onClose: () => void
    onDeletePack: () => void
+   cover: string | null
 }

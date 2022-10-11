@@ -18,13 +18,13 @@ const slice = createSlice({
       builder.addCase(setLogin.pending, (state) => {
          state.status = 'pending'
       })
-      builder.addCase(setLogin.fulfilled, (state) => {
-         state.status = 'succeeded'
-      })
-      builder.addCase(setLogin.rejected, (state, action) => {
-         state.status = 'failed'
-         action.payload ? state.notice = action.payload : state.notice = 'unexpected error'
-      })
+         .addCase(setLogin.fulfilled, (state) => {
+            state.status = 'succeeded'
+         })
+         .addCase(setLogin.rejected, (state, action) => {
+            state.status = 'failed'
+            action.payload ? state.notice = action.payload : state.notice = 'unexpected error'
+         })
    }
 })
 export const loginReducer = slice.reducer

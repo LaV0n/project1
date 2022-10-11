@@ -1,8 +1,8 @@
-import style from './packsModalCover.module.scss'
-import { FC, ChangeEvent } from 'react';
-import { Button, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, IconButton } from '@mui/material';
+import { ChangeEvent, FC } from 'react';
 import { UploadButton } from '../../../../components/UploadButton/UploadButton';
+import style from './packsModalCover.module.scss';
 
 export const PacksModalCover: FC<PacksModalCoverPropsType> = ({ uploadHandler, onDeleteClick, cover, error }) => {
    return (

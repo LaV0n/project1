@@ -31,3 +31,12 @@ export const validator = (values: FormikErrorsType) => {
    }
    return errors
 }
+export const validateImage = (cover: string | null) => {
+   const regexBase64 = /^data:image\/(?:gif|png|jpeg|bmp|webp|svg\+xml)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/;
+   if (cover) {
+      return regexBase64.test(cover) ? cover :
+         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBB7mlN1ig5dMMIyIH6By55HE-WueNoR4sUhwA7LiSpCYvXHSICslhLsWd-A9abLaAb3U&usqp=CAU'
+   } else {
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBB7mlN1ig5dMMIyIH6By55HE-WueNoR4sUhwA7LiSpCYvXHSICslhLsWd-A9abLaAb3U&usqp=CAU'
+   }
+}

@@ -13,7 +13,6 @@ type HeaderTableType = {
 }
 
 export const TableHeader: FC<HeaderTableType> = ({ isOwner, packId }) => {
-
     const status = useAppSelector(state => state.cards.status)
     const packName = useAppSelector(state => state.cards.data.packName)
     const cardsTotalCount = useAppSelector(state => state.cards.data.cardsTotalCount)
@@ -31,7 +30,7 @@ export const TableHeader: FC<HeaderTableType> = ({ isOwner, packId }) => {
                     <div className={styles.title}>
                         <span>"{packName}"</span>
                         <span className={styles.owner}>My Pack</span>
-                        <span><BurgerMenu packName={packName} status={status} _id={packId} /></span>
+                        <span><BurgerMenu status={status} _id={packId} /></span>
                     </div>
                     <Button variant='contained'
                         className={styles.button}

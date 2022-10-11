@@ -17,11 +17,11 @@ const ITEM_HEIGHT = 36;
 
 type BurgerMenuType = {
     _id: string
-    packName: string
     status: boolean
 }
 
-export const BurgerMenu: FC<BurgerMenuType> = ({ _id, status, packName }) => {
+export const BurgerMenu: FC<BurgerMenuType> = ({ _id, status }) => {
+    const { packName, packDeckCover } = useAppSelector(state => state.cards.data)
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const cardsCount = useAppSelector(state => state.cards.data.cardsTotalCount)
@@ -49,17 +49,21 @@ export const BurgerMenu: FC<BurgerMenuType> = ({ _id, status, packName }) => {
         }
     }
     //edit pack
-    const [newPackName, setNewPackName] = useState('')
     const [isOpenEditModal, setIsOpenEditModal] = useState(false)
-    const onChangePackName = (value: string) => { setNewPackName(value) }
+    const [updatedPack, setUpdatedPackk] = useState<{ packName: '', deckCover: null }>({ packName: '', deckCover: null })
+    const onUpdatePackHandler = (value: { [key: string]: string | null }) => {
+        setUpdatedPackk(data => ({ ...data, ...value }))
+    }
     const openEditModal = () => {
-        setNewPackName(packName)
+        onUpdatePackHandler({ packName })
         setIsOpenEditModal(true)
     }
+
     const closeEditModal = () => { setIsOpenEditModal(false) }
     const editHandler = async (isPrivate: boolean) => {
+        const { packName, deckCover } = updatedPack
         setAnchorEl(null)
-        const action = await dispatch(editPackNameFromCards({ name: newPackName, _id, private: isPrivate }))
+        const action = await dispatch(editPackNameFromCards({ name: packName, _id, private: isPrivate, deckCover }))
         if (editPackNameFromCards.fulfilled.match(action)) {
             closeEditModal()
             dispatch(getCardsTC({ cardsPack_id: _id }))
@@ -106,6 +110,7 @@ export const BurgerMenu: FC<BurgerMenuType> = ({ _id, status, packName }) => {
                 </MenuItem>
             </Menu>
             <DeletePackModal
+                cover={packDeckCover}
                 isLoading={status}
                 packName={packName}
                 isOpen={isOpenDeleteModal}
@@ -113,13 +118,13 @@ export const BurgerMenu: FC<BurgerMenuType> = ({ _id, status, packName }) => {
                 onDeletePack={deleteHandler}
             />
             <EditPackModal
-                cover='123'
+                cover={updatedPack.deckCover}
+                onUpdatePack={onUpdatePackHandler}
                 isLoading={status}
-                packName={newPackName}
+                packName={updatedPack.packName}
                 isOpen={isOpenEditModal}
                 onClosehandler={closeEditModal}
                 setEditedPackHandler={editHandler}
-                onChangeHandler={onChangePackName}
             />
         </div>
     );
