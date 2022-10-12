@@ -8,7 +8,7 @@ import {errorAsString} from "../../common/utils/errorAsString";
 export type DataType = typeof Data
 export type CardsType = {
     answer: string
-    answerImg: string
+    answerImg: string | null
     answerVideo: string
     cardsPack_id: string
     comments: string
@@ -16,7 +16,7 @@ export type CardsType = {
     grade: number
     more_id: string
     question: string
-    questionImg: string
+    questionImg: string | null
     questionVideo: string
     rating: number
     shots: number
@@ -33,7 +33,7 @@ const Data = {
     maxGrade: 0,
     minGrade: 0,
     packCreated: '',
-    packDeckCover: null,
+    packDeckCover: '',
     packName: '',
     packPrivate: false,
     packUpdated: '',

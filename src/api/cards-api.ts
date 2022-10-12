@@ -34,7 +34,7 @@ export const cardsAPI = {
 }
 export type AddNewCardRequestType = {
     cardsPack_id: string,
-    question: string,
+    question?: string,
     answer: string,
     //optional
     grade?: number,
