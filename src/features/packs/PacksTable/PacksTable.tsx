@@ -65,7 +65,7 @@ export const PacksTable: FC<PacksTablePropsType> = ({ packs, status }) => {
             <TableBody>
                {packs.map((pack) => (
                   <TableRow key={pack._id} sx={{ 'height:48px ,&:last-child td, &:last-child th': { border: 0 } }} style={{ height: '48px' }} >
-                     <TableCell className={style.pack_cover} align="center">
+                     <TableCell className={style.pack_cover} align="center" onClick={() => { navigateToCards(pack._id) }}>
                         <img src={validateImage(pack.deckCover)} alt="" />
                      </TableCell>
                      <TableCell onClick={() => { navigateToCards(pack._id) }} className={style.pack_name} component="th" scope="row">

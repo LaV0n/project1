@@ -28,12 +28,11 @@ export const authAPI = {
                    </div>`
       })
    },
-
-   //*!!!!! edit profile
-   changeName(name: string) {
-      return instance.put<{ updatedUser: AuthResponseDataType }>('auth/me', {
-         name,
-         avatar: "https://www.placecage.com/c/200/219"
-      })
+   updateProfile(data: UpdateProfileRequestType) {
+      return instance.put<{ updatedUser: AuthResponseDataType }>('auth/me', data)
    },
+}
+export type UpdateProfileRequestType = {
+   name?: string
+   avatar?: string
 }
