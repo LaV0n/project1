@@ -1,13 +1,13 @@
-import {ChangeEvent, FC, useEffect, useState} from "react"
-import {useAppDispatch} from "../../../../app/store"
-import {BasicModal} from "../../../../components/BasicModal/BasicModal"
+import { ChangeEvent, FC, useEffect, useState } from "react"
+import { useAppDispatch } from "../../../../app/store"
+import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import style from './editCardModal.module.scss'
-import {FormControl, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
-import { editCardTC} from "../../cardsReducer";
+import { FormControl, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { editCardTC } from "../../cardsReducer";
 
-import {ImageInput} from "../AddNewCardModal/ImageInput/imageInput";
+import { ImageInput } from "../AddNewCardModal/ImageInput/imageInput";
 import React from "react";
-import {QuestionType} from "../AddNewCardModal/AddNewCardModal";
+import { QuestionType } from "../AddNewCardModal/AddNewCardModal";
 
 export const EditCardModal: FC<EditCardModalPropsType> = (
     {
@@ -31,7 +31,6 @@ export const EditCardModal: FC<EditCardModalPropsType> = (
 
     const [isImgQuestion, setIsImgQuestion] = useState<QuestionType>('text')
     const [imageForQuestion, setImageForQuestion] = useState(questionImg)
-    console.log(imageForQuestion)
 
     useEffect(() => {
         setIsImgQuestion(questionImg && questionImg !== 'url or base 64' ? 'image' : 'text')
@@ -49,25 +48,26 @@ export const EditCardModal: FC<EditCardModalPropsType> = (
         setImageForQuestion('url or base 64')
     }
     const setEditedCard = async () => {
-        if (isImgQuestion==='text'){
-        if (!question.trim()) {
-            setQuestionError('enter a question')
-        }
-        if (!answer.trim()) {
-            setAnswerError('enter answer')
-        }
-        if (!!question.trim() && !!answer.trim()) {
-            const card = {
-                _id: cardId,
-                question: question,
-                answer: answer,
-                questionImg:'url or base 64'
+        if (isImgQuestion === 'text') {
+            if (!question.trim()) {
+                setQuestionError('enter a question')
             }
-            const action = await dispatch(editCardTC({card, packId}))
-            if (action) {
-                onClosehandler()
+            if (!answer.trim()) {
+                setAnswerError('enter answer')
             }
-        }}else {
+            if (!!question.trim() && !!answer.trim()) {
+                const card = {
+                    _id: cardId,
+                    question: question,
+                    answer: answer,
+                    questionImg: 'url or base 64'
+                }
+                const action = await dispatch(editCardTC({ card, packId }))
+                if (action) {
+                    onClosehandler()
+                }
+            }
+        } else {
             if (!answer.trim()) {
                 setAnswerError('enter answer')
             }
@@ -77,7 +77,7 @@ export const EditCardModal: FC<EditCardModalPropsType> = (
                     questionImg: imageForQuestion,
                     answer: answer
                 }
-                const action = await dispatch(editCardTC({card,packId}))
+                const action = await dispatch(editCardTC({ card, packId }))
                 if (action) {
                     onClosehandler()
                 }
@@ -101,11 +101,11 @@ export const EditCardModal: FC<EditCardModalPropsType> = (
             open={isOpen}
             title='Edit card'
             onClose={onClose}
-            cancelButton={{title: 'Cancel', buttonProps: {onClick: onClose, disabled: isLoading}}}
+            cancelButton={{ title: 'Cancel', buttonProps: { onClick: onClose, disabled: isLoading } }}
             confirmButton={
                 {
                     title: 'Save',
-                    buttonProps: {onClick: setEditedCard, disabled: isLoading || !!questionError || !!answerError}
+                    buttonProps: { onClick: setEditedCard, disabled: isLoading || !!questionError || !!answerError }
                 }
             }
             isLoading={isLoading}
@@ -123,7 +123,7 @@ export const EditCardModal: FC<EditCardModalPropsType> = (
             </FormControl>
             <div className={style.question}>
                 {isImgQuestion === 'image'
-                    ? <ImageInput image={imageForQuestion} setImage={setImageForQuestion}/>
+                    ? <ImageInput image={imageForQuestion} setImage={setImageForQuestion} />
                     : <TextField
                         className={style.question__value}
                         error={!!questionError}

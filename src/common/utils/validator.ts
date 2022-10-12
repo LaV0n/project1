@@ -1,3 +1,4 @@
+import coverDefault from '../../assets/image/coverDefault.jpg'
 type FormikErrorsType = { email?: string, password?: string, confirmPassword?: string }
 export const validator = (values: FormikErrorsType) => {
    const emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
@@ -35,8 +36,8 @@ export const validateImage = (cover: string | null) => {
    const regexBase64 = /^data:image\/(?:gif|png|jpeg|bmp|webp|svg\+xml)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/;
    if (cover) {
       return regexBase64.test(cover) ? cover :
-         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBB7mlN1ig5dMMIyIH6By55HE-WueNoR4sUhwA7LiSpCYvXHSICslhLsWd-A9abLaAb3U&usqp=CAU'
+         coverDefault
    } else {
-      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBB7mlN1ig5dMMIyIH6By55HE-WueNoR4sUhwA7LiSpCYvXHSICslhLsWd-A9abLaAb3U&usqp=CAU'
+      return coverDefault
    }
 }

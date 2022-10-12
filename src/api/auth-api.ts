@@ -28,6 +28,8 @@ export const authAPI = {
                    </div>`
       })
    },
+
+   //*!!!!! edit profile
    changeName(name: string) {
       return instance.put<{ updatedUser: AuthResponseDataType }>('auth/me', {
          name,

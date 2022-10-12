@@ -1,13 +1,13 @@
-import {FormControl, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material"
-import {ChangeEvent, FC, useState} from "react"
-import {useAppDispatch} from "../../../../app/store"
-import {BasicModal} from "../../../../components/BasicModal/BasicModal"
+import { FormControl, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
+import { ChangeEvent, FC, useState } from "react"
+import { useAppDispatch } from "../../../../app/store"
+import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import style from './addNewCardModal.module.scss'
-import {addNewCardTC} from '../../cardsReducer';
-import {ImageInput} from "./ImageInput/imageInput";
+import { addNewCardTC } from '../../cardsReducer';
+import { ImageInput } from "./ImageInput/imageInput";
 
 export const AddNewCardModal: FC<AddNewCardModalPropsType> = (
-    {isOpen, onClosehandler, isLoading, packId}
+    { isOpen, onClosehandler, isLoading, packId }
 ) => {
     const dispatch = useAppDispatch()
     const [question, setQuestion] = useState('')
@@ -38,7 +38,7 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = (
         setQuestionImg('')
     }
     const setEditedCard = async () => {
-        if (isImgQuestion==='text'){
+        if (isImgQuestion === 'text') {
             if (!question.trim()) {
                 setQuestionError('enter a question')
             }
@@ -56,11 +56,11 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = (
                     onClose()
                 }
             }
-       }else{
+        } else {
             if (!answer.trim()) {
                 setAnswerError('enter answer')
             }
-            if (questionImg.length>1 && !!answer.trim()) {
+            if (questionImg.length > 1 && !!answer.trim()) {
                 const card = {
                     cardsPack_id: packId,
                     questionImg: questionImg,
@@ -71,7 +71,8 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = (
                     onClose()
                 }
             }
-    }}
+        }
+    }
 
     return (
         <BasicModal
@@ -79,11 +80,11 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = (
             open={isOpen}
             title='Add card'
             onClose={onClose}
-            cancelButton={{title: 'Cancel', buttonProps: {onClick: onClose, disabled: isLoading}}}
+            cancelButton={{ title: 'Cancel', buttonProps: { onClick: onClose, disabled: isLoading } }}
             confirmButton={
                 {
                     title: 'Save',
-                    buttonProps: {onClick: setEditedCard, disabled: isLoading || !!questionError || !!answerError}
+                    buttonProps: { onClick: setEditedCard, disabled: isLoading || !!questionError || !!answerError }
                 }
             }
             isLoading={isLoading}
@@ -110,7 +111,7 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = (
                         id="outlined-basic" label="Question"
                         variant="standard"
                     />
-                    : <ImageInput image={questionImg} setImage={setQuestionImg}/>
+                    : <ImageInput image={questionImg} setImage={setQuestionImg} />
                 }
                 {!!questionError && <div className={style.question__error}>{questionError}</div>}
             </div>
@@ -121,7 +122,8 @@ export const AddNewCardModal: FC<AddNewCardModalPropsType> = (
                     color={answerError ? 'error' : 'info'}
                     value={answer}
                     onChange={onChangeAnswer}
-                    id="outlined-basic" label="Name pack"
+                    id="outlined-basic"
+                    label="Answer"
                     variant="standard"
                 />
                 {!!answerError && <div className={style.answer__error}>{answerError}</div>}
