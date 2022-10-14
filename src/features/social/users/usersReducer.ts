@@ -3,7 +3,7 @@ import {usersAPI, UsersGetType} from "../../../api/users-api";
 import {errorAsString} from "../../../common/utils/errorAsString";
 
 export type UserDataType = {
-    id: string
+    _id: string
     email: string
     name: string
     avatar?: string

@@ -11,5 +11,7 @@ export enum appPath {
    CARDSDEFAULT = '/cards/',
    LEARNING='/learning/:id',
    LEARNINGDEFAULT='/learning/',
-   USERS='/users'
+   USERS='/users',
+   USER='/user/:id',
+   USERDEFAULT='/user/'
 }

@@ -6,6 +6,8 @@ import {getUsersTC, setPage, setPageCount} from "../usersReducer";
 import {CustomSelect} from "../../../../components/CustomSelect/CustomSelect";
 import {CustomPagination} from "../../../../components/CustomPagination/CustomPagination";
 import defaultAvatar from "../../../../assets/image/ava.png"
+import {useNavigate} from "react-router-dom";
+import {appPath} from "../../../../common/path/appPath";
 
 const formatDate = (dateCard: string) => {
     const date = new Date(dateCard)
@@ -29,12 +31,16 @@ export const UsersTable = () => {
     const usersTotalCount = useAppSelector(state => state.users.data.usersTotalCount)
     const pageCount = useAppSelector(state => state.users.pageCount)
     const status = useAppSelector(state => state.users.status)
+    const navigate = useNavigate()
 
     const onChangePage = (page: number) => {
         dispatch(setPage(page))
     }
     const onChangePageCount = (pageCount: number) => {
         dispatch(setPageCount(pageCount))
+    }
+    const friendProfileHandler = (userId:string) => {
+        navigate(appPath.USERDEFAULT + userId)
     }
 
     useEffect(() => {
@@ -50,9 +56,9 @@ export const UsersTable = () => {
                         <TableRow>
                             <TableCell>Users</TableCell>
                             <TableCell align="right">email</TableCell>
-                            <TableCell align="right">date</TableCell>
+                            <TableCell align="right">update date</TableCell>
                             <TableCell align="right">cards packs</TableCell>
-                            <TableCell align="right">is Admin</TableCell>
+                            <TableCell align="right">role</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -61,10 +67,10 @@ export const UsersTable = () => {
                                 key={user.name}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
-                                <TableCell className={styles.nameBlock}>
-                                    <img src={user.avatar ? user.avatar : defaultAvatar} alt={'0'}
-                                         className={styles.avatar} />
-                                    <div>{user.name}</div>
+                                <TableCell className={styles.nameBlock} onClick={()=>friendProfileHandler(user._id)} >
+                                        <img src={user.avatar ? user.avatar : defaultAvatar} alt={'0'}
+                                             className={styles.avatar} />
+                                        <div>{user.name}</div>
                                 </TableCell>
                                 <TableCell align="right">{user.email}</TableCell>
                                 <TableCell align="right">{formatDate(user.updated)}</TableCell>

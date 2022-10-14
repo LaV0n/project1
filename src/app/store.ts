@@ -13,6 +13,7 @@ import { cardsReducer } from "../features/cards/cardsReducer";
 import { packsReducer } from '../features/packs/packsReducer';
 import { learningReducer } from "../features/learning/learningReducer";
 import {userReducer} from "../features/social/users/usersReducer";
+import {friendProfileReducer} from "../features/social/friendProfile/friendProfileReducer";
 
 const rootReducer = combineReducers({
     app: appReducer,
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
     cards: cardsReducer,
     packs: packsReducer,
     learning: learningReducer,
-    users: userReducer
+    users: userReducer,
+    friendProfile:friendProfileReducer
 })
 
 export const store = configureStore({ reducer: rootReducer })

@@ -16,8 +16,9 @@
   .nameBlock{
     display: flex;
     flex-direction: row;
-   gap: 30px;
+    gap: 30px;
     align-items: center;
+    cursor: pointer;
     .avatar{
       width: 100px;
       height: 100px;
