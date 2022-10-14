@@ -10,8 +10,9 @@ import { restorePasswordReducer } from "../features/auth/restorePassword/restore
 import { authReducer } from "./authReducer";
 import { appReducer } from './appReducer';
 import { cardsReducer } from "../features/cards/cardsReducer";
-import { packsReducer } from './../features/packs/packsReducer';
+import { packsReducer } from '../features/packs/packsReducer';
 import { learningReducer } from "../features/learning/learningReducer";
+import {userReducer} from "../features/social/users/usersReducer";
 
 const rootReducer = combineReducers({
     app: appReducer,
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
     newPassword: newPasswordReducer,
     cards: cardsReducer,
     packs: packsReducer,
-    learning: learningReducer
+    learning: learningReducer,
+    users: userReducer
 })
 
 export const store = configureStore({ reducer: rootReducer })

@@ -16,6 +16,7 @@ import { NewPassword } from '../features/auth/newPassword/NewPassword';
 import { Cards } from "../features/cards/Cards.";
 import { Packs } from '../features/packs/Packs';
 import { Learning } from "../features/learning/Learning";
+import {Users} from "../features/social/users/Users";
 function App() {
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector(state => state.app.isInitialized)
@@ -38,6 +39,7 @@ function App() {
                     <Route path={appPath.MAIN} element={<Profile />} />
                     <Route path={appPath.PACKS} element={<Packs />} />
                     <Route path={appPath.LEARNING} element={<Learning />} />
+                    <Route path={appPath.USERS} element={<Users />} />
                     <Route path={'/'} element={<Navigate to={appPath.PROFILE} />} />
                     <Route path={'*'} element={<Navigate to={appPath.ERRORPAGE} />} />
                     <Route path={'/testpage'} element={<TestPage />} />
