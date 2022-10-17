@@ -3,6 +3,7 @@ import {ChangeEvent, useState} from "react";
 import defaultImg from "../../../../../assets/icons/broken-image.png"
 import { convertFileToBase64 } from "../../../../../common/utils/convertToBase64";
 import styles from "./imageInput.module.scss"
+import AddPhotoAlternateRoundedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
 
 type ImageInputType={
     image:string | null
@@ -28,13 +29,13 @@ export const ImageInput = ({image,setImage}:ImageInputType) =>{
 
     const errorHandler = () => {
         setIsImgBroken(true)
-        alert('Broken image')
     }
     return(
         <div>
             {image && image!=='url or base 64' && <img src={isImgBroken? defaultImg :image} alt={'0'} onError={errorHandler} className={styles.image}/>}
             <IconButton component="label">
-                <div>Question Image</div>
+                <AddPhotoAlternateRoundedIcon/>
+                <div> Question</div>
                 <input type={'file'} hidden onChange={setQuestionImgHandler}/>
             </IconButton>
         </div>

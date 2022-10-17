@@ -49,7 +49,7 @@ function App() {
                     <Route path={'*'} element={<Navigate to={appPath.ERRORPAGE}/>}/>
                     <Route path={'/testpage'} element={<TestPage/>}/>
                 </Routes>
-                <Navbar/>
+            {/*    <Navbar/>*/}
             </div>
         </div>
     );
