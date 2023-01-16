@@ -4,24 +4,24 @@ with API and authentication
 
 [link](https://lav0n.github.io/project1/)
 
-##Main page with packs
+## Main page with packs
 
 ![](https://github.com/LaV0n/project1/blob/main/src/assets/image/1.png)
-##Cards page.
+## Cards page.
 
 ![](https://github.com/LaV0n/project1/blob/main/src/assets/image/2.png)
-##Learnig process
+## Learnig process
 
 ![](https://github.com/LaV0n/project1/blob/main/src/assets/image/3.png)
-##Adding new card in you own pack
+## Adding new card in you own pack
 
 ![](https://github.com/LaV0n/project1/blob/main/src/assets/image/4.png)
-##Users list page
+## Users list page
 
 ![](https://github.com/LaV0n/project1/blob/main/src/assets/image/5.png)
-##User page
+## User page
 
 ![](https://github.com/LaV0n/project1/blob/main/src/assets/image/6.png)
-##Login page
+## Login page
 
 ![](https://github.com/LaV0n/project1/blob/main/src/assets/image/7.png)
