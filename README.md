@@ -1,6 +1,7 @@
 # Learning Cards Project with open source
 
 with API and authentication
+Stack: *React/Redux-Toolkit/MUI/Axios/Formik*
 
 [link](https://lav0n.github.io/project1/)
 
