@@ -23,6 +23,16 @@ export const LoginForm = () => {
    const onPasswordFocusHandler = () => {
       formik.setTouched({ password: false, email: formik.touched.email && !!formik.errors.email })
    }
+
+   const testUserLogin=()=>{
+      const values={
+         email: 'test2@test.ts',
+         password: '12345678',
+         rememberMe: false
+      }
+      dispatch(setLogin(values))
+   }
+
    const formik = useFormik({
       initialValues: {
          email: '',
@@ -75,6 +85,10 @@ export const LoginForm = () => {
                Don't have an account yet?
             </FormFooter>
          </form>
+         <div className={style.test_account_title}>
+            or use
+            <span className={style.test_account_title__link} onClick={testUserLogin}>test account</span>
+         </div>
          {loginStatus === 'pending' && <LoaderFullSize />}
       </div>
    )

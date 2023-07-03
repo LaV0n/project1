@@ -8,6 +8,8 @@ import {useAppDispatch, useAppSelector} from "../../../../app/store";
 import {deleteCardTC} from "../../cardsReducer";
 import {DeleteCardModal} from "../../CardsModals/DeleteCardModal/DeleteCardModal";
 import {EditCardModal} from "../../CardsModals/EditCardModal/EditCardModal";
+import brokenImg from '../../../../assets/icons/broken-image.png'
+import {isCorrectImgUrl} from "../../../../common/utils/isCorrectImgUrl";
 
 type TableCardBodyType = {
     isOwner: boolean
@@ -86,13 +88,15 @@ export const TableCardBody: FC<TableCardBodyType> = ({isOwner}) => {
                     >
                         <TableCell component="th" scope="row">
                             {card.questionImg && card.questionImg !== 'url or base 64'
-                                ? <img src={card.questionImg} alt={'0'} className={styles.questionImg}/>
+                                ? <img src={isCorrectImgUrl(card.questionImg) ? card.questionImg: brokenImg}
+                                       alt={'0'} className={styles.questionImg} />
                                 : card.question
                             }
                         </TableCell>
                         <TableCell align="right">
                             {card.answerImg && card.answerImg !== 'url or base 64'
-                                ? <img src={card.answerImg} alt={'0'} className={styles.questionImg}/>
+                                ? <img src={isCorrectImgUrl(card.answerImg) ? card.answerImg : brokenImg}
+                                       alt={'0'} className={styles.questionImg}/>
                                 : card.answer
                             }
                         </TableCell>

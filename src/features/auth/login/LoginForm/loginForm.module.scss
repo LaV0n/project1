@@ -46,4 +46,17 @@
          color: #000000;
       }
    }
+   .test_account_title{
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 24px;
+      opacity: 0.5;
+      width: 100%;
+      text-align: center;
+      &__link{
+         margin-left: 7px;
+         text-decoration: underline;
+         cursor: pointer;
+      }
+   }
 }
