@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import {AnswerBlock} from "./AnswerBlock/AnswerBlock";
 import {CardsType} from "../../cards/cardsReducer";
 import {setFilter} from "../learningReducer";
+import {CustomImg} from "../../../components/CustomImg/CustomImg";
 
 
 const getCard = (cards: CardsType[]) => {
@@ -85,7 +86,7 @@ export const LearningWindow = () => {
                 <div className={style.question}>
                     <span>Question: </span>
                     {card.questionImg && card.questionImg!=='url or base 64'
-                        ? <img src={card.questionImg} alt={'0'} className={style.questionImg}/>
+                        ? <CustomImg url={card.questionImg} style={style.questionImg}/>
                         :card.question}
                 </div>
                 <div className={style.attempts}>

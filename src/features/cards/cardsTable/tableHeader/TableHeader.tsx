@@ -52,7 +52,8 @@ export const TableHeader: FC<HeaderTableType> = ({ isOwner, packId }) => {
                             packId={packId}
                         />
                     </div>
-                    <img src={packCover && packCover !== "url or base64" ? packCover : coverDefault} alt={'0'} className={styles.packCover} />
+                    <img src={packCover && packCover !== "url or base64" ? packCover : coverDefault}
+                         alt={'0'} className={styles.packCover} />
                 </div>
                 : <div>
                     <div className={styles.headerBlock}>

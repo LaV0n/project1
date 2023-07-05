@@ -3,6 +3,7 @@ import {Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} fro
 import style from "../LearningWindow.module.scss";
 import React, {ChangeEvent, useState} from "react";
 import {changeGradeCardTC} from "../../learningReducer";
+import {CustomImg} from "../../../../components/CustomImg/CustomImg";
 
 type AnswerBlockType ={
     setAnswerBlock:(value:boolean)=>void
@@ -29,7 +30,7 @@ export const AnswerBlock =({setAnswerBlock, cardId, answer, answerImg}:AnswerBlo
             <div className={style.question}>
                 <span>Answer:</span>
                 {answerImg && answerImg!=='url or base 64'
-                    ? <img src={answerImg} alt={'0'} className={style.questionImg}/>
+                    ? <CustomImg url={answerImg} style={style.questionImg}/>
                     :answer
                 }
             </div>

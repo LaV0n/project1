@@ -8,29 +8,13 @@ import {useAppDispatch, useAppSelector} from "../../../../app/store";
 import {deleteCardTC} from "../../cardsReducer";
 import {DeleteCardModal} from "../../CardsModals/DeleteCardModal/DeleteCardModal";
 import {EditCardModal} from "../../CardsModals/EditCardModal/EditCardModal";
-import brokenImg from '../../../../assets/icons/broken-image.png'
-import {isCorrectImgUrl} from "../../../../common/utils/isCorrectImgUrl";
 import {CustomImg} from "../../../../components/CustomImg/CustomImg";
+import {formatDate} from "../../../../common/utils/dateFormat";
 
 type TableCardBodyType = {
     isOwner: boolean
 }
 type SelectedCardType = { cardId: string, packId: string, question: string, answer: string, questionImg: string | null }
-
-const formatDate = (dateCard: string) => {
-    const date = new Date(dateCard)
-    const yyyy = date.getFullYear();
-    let mm: any = date.getMonth() + 1;
-    let dd: any = date.getDate();
-    if (dd < 10) {
-        dd = '0' + dd
-    }
-    if (mm < 10) {
-        mm = '0' + mm
-    }
-    return `${dd}.${mm}.${yyyy}`
-}
-
 
 export const TableCardBody: FC<TableCardBodyType> = ({isOwner}) => {
 
