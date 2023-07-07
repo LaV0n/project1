@@ -12,7 +12,7 @@ Stack: *React/Redux-Toolkit/MUI/Axios/Formik*
 ## Cards page.
 
 ![](https://github.com/LaV0n/project1/blob/main/src/assets/image/2.png)
-## Learnig process
+## Learning process
 
 ![](https://github.com/LaV0n/project1/blob/main/src/assets/image/3.png)
 ## Adding new card in you own pack
@@ -24,6 +24,6 @@ Stack: *React/Redux-Toolkit/MUI/Axios/Formik*
 ## User page
 
 ![](https://github.com/LaV0n/project1/blob/main/src/assets/image/6.png)
-## Login page
+## Login page with test account link
 
 ![](https://github.com/LaV0n/project1/blob/main/src/assets/image/7.png)
